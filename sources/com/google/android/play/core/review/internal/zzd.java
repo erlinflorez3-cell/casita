@@ -1,0 +1,25 @@
+package com.google.android.play.core.review.internal;
+
+import android.os.Bundle;
+import android.os.IBinder;
+import android.os.Parcel;
+import android.os.RemoteException;
+
+/* JADX INFO: loaded from: classes9.dex */
+public final class zzd extends zza implements zzf {
+    zzd(IBinder iBinder) {
+        super(iBinder, "com.google.android.play.core.inappreview.protocol.IInAppReviewService");
+    }
+
+    /* JADX WARN: Multi-variable type inference failed */
+    @Override // com.google.android.play.core.review.internal.zzf
+    public final void zzc(String str, Bundle bundle, zzh zzhVar) throws RemoteException {
+        Parcel parcelZza = zza();
+        parcelZza.writeString(str);
+        int i2 = zzc.zza;
+        parcelZza.writeInt(1);
+        bundle.writeToParcel(parcelZza, 0);
+        parcelZza.writeStrongBinder(zzhVar);
+        zzb(2, parcelZza);
+    }
+}

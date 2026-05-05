@@ -1,0 +1,32 @@
+package androidx.appcompat.app;
+
+import android.view.View;
+import android.widget.AdapterView;
+import androidx.appcompat.app.ActionBar;
+import com.dynatrace.android.callback.Callback;
+
+/* JADX INFO: loaded from: classes.dex */
+class NavItemSelectedListener implements AdapterView.OnItemSelectedListener {
+    private final ActionBar.OnNavigationListener mListener;
+
+    @Override // android.widget.AdapterView.OnItemSelectedListener
+    public void onNothingSelected(AdapterView<?> adapterView) {
+    }
+
+    public NavItemSelectedListener(ActionBar.OnNavigationListener onNavigationListener) {
+        this.mListener = onNavigationListener;
+    }
+
+    @Override // android.widget.AdapterView.OnItemSelectedListener
+    public void onItemSelected(AdapterView<?> adapterView, View view, int i2, long j2) {
+        Callback.onItemSelected_enter(view, i2);
+        try {
+            ActionBar.OnNavigationListener onNavigationListener = this.mListener;
+            if (onNavigationListener != null) {
+                onNavigationListener.onNavigationItemSelected(i2, j2);
+            }
+        } finally {
+            Callback.onItemSelected_exit();
+        }
+    }
+}

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="backgroundColor">#ebecf0</color>
+    <color name="boxes">#f80505</color>
+    <color name="boxes_transparent">#75fa0505</color>
+    <color name="colorPrimary">#2b2a2a</color>
+    <color name="onboard_sdk_btn_primary_background_color">#e1111c</color>
+    <color name="onboard_sdk_btn_primary_border_color">#e1111c</color>
+    <color name="onboard_sdk_state_unknown">#0000ff</color>
+    <color name="primaryColor">#e1111c</color>
+</resources>

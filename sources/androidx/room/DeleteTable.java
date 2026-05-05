@@ -1,0 +1,65 @@
+package androidx.room;
+
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Repeatable;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+import kotlin.Metadata;
+import kotlin.annotation.AnnotationRetention;
+import kotlin.annotation.AnnotationTarget;
+import yg.InterfaceC1492Gx;
+
+/*  JADX ERROR: Error in decompile pass: KotlinMetadataDecompile
+    kotlin.metadata.InconsistentKotlinMetadataException: Exception occurred when reading Kotlin metadata
+    	at kotlin.metadata.jvm.internal.JvmReadUtils.readMetadataImpl$kotlin_metadata_jvm(JvmReadUtils.kt:108)
+    	at kotlin.metadata.jvm.KotlinClassMetadata$Companion.readLenient(KotlinClassMetadata.kt:418)
+    	at jadx.plugins.kotlin.metadata.utils.KotlinMetadataExtKt.getKotlinClassMetadata(KotlinMetadataExt.kt:71)
+    	at jadx.plugins.kotlin.metadata.utils.KmClassWrapper$Companion.getWrapper(KmClassWrapper.kt:37)
+    	at jadx.plugins.kotlin.metadata.pass.KotlinMetadataDecompilePass.visit(KotlinMetadataDecompilePass.kt:35)
+    	at jadx.plugins.kotlin.metadata.pass.KotlinMetadataDecompilePass.visit(KotlinMetadataDecompilePass.kt:33)
+    Caused by: kotlin.metadata.internal.protobuf.InvalidProtocolBufferException: Protocol message tag had invalid wire type.
+    	at kotlin.metadata.internal.protobuf.InvalidProtocolBufferException.invalidWireType(InvalidProtocolBufferException.java:99)
+    	at kotlin.metadata.internal.protobuf.CodedInputStream.skipField(CodedInputStream.java:268)
+    	at kotlin.metadata.internal.protobuf.GeneratedMessageLite.parseUnknownField(GeneratedMessageLite.java:73)
+    	at kotlin.metadata.internal.metadata.jvm.JvmProtoBuf$StringTableTypes.<init>(JvmProtoBuf.java:110)
+    	at kotlin.metadata.internal.metadata.jvm.JvmProtoBuf$StringTableTypes.<init>(JvmProtoBuf.java:69)
+    	at kotlin.metadata.internal.metadata.jvm.JvmProtoBuf$StringTableTypes$1.parsePartialFrom(JvmProtoBuf.java:175)
+    	at kotlin.metadata.internal.metadata.jvm.JvmProtoBuf$StringTableTypes$1.parsePartialFrom(JvmProtoBuf.java:170)
+    	at kotlin.metadata.internal.protobuf.AbstractParser.parsePartialFrom(AbstractParser.java:192)
+    	at kotlin.metadata.internal.protobuf.AbstractParser.parsePartialDelimitedFrom(AbstractParser.java:233)
+    	at kotlin.metadata.internal.protobuf.AbstractParser.parseDelimitedFrom(AbstractParser.java:245)
+    	at kotlin.metadata.internal.protobuf.AbstractParser.parseDelimitedFrom(AbstractParser.java:49)
+    	at kotlin.metadata.internal.metadata.jvm.JvmProtoBuf$StringTableTypes.parseDelimitedFrom(JvmProtoBuf.java:1736)
+    	at kotlin.metadata.internal.metadata.jvm.deserialization.JvmProtoBufUtil.readNameResolver(JvmProtoBufUtil.kt:57)
+    	at kotlin.metadata.internal.metadata.jvm.deserialization.JvmProtoBufUtil.readClassDataFrom(JvmProtoBufUtil.kt:37)
+    	at kotlin.metadata.internal.metadata.jvm.deserialization.JvmProtoBufUtil.readClassDataFrom(JvmProtoBufUtil.kt:32)
+    	at kotlin.metadata.jvm.internal.JvmReadUtils.readKmClass$kotlin_metadata_jvm(JvmReadUtils.kt:27)
+    	at kotlin.metadata.jvm.KotlinClassMetadata$Class.<init>(KotlinClassMetadata.kt:95)
+    	at kotlin.metadata.jvm.internal.JvmReadUtils.readMetadataImpl$kotlin_metadata_jvm(JvmReadUtils.kt:50)
+    	... 5 more
+    */
+/* JADX INFO: compiled from: DeleteTable.kt */
+/* JADX INFO: loaded from: classes4.dex */
+@Target({ElementType.TYPE})
+@InterfaceC1492Gx
+@kotlin.annotation.Target(allowedTargets = {AnnotationTarget.CLASS})
+@Retention(RetentionPolicy.CLASS)
+@kotlin.annotation.Retention(AnnotationRetention.BINARY)
+@Metadata(bv = {}, d1 = {"Я\u0014\u001d<K!&i\u000e]Lш|\u0004O\u00128\u000b4C\u0005Ӵ,(Մ7f\u00198hCh\t4bW8\u000f\u0004{b%,1\u007fCSUH~̀\rSfimnX\\ŸG\u0013"}, d2 = {"\u001a`]1e6BR,H\bh6\u0005R\u000ee\u0007(\u000b@o\u0013\u0014Noc", "", "B`Q9X\u0015:[\u0019", "", "u(;7T=:\u001d z\u0004`uj\u0018<i\t*Q", "\u0013mc?\\,L", "@n^: *H[!\t\u0004"}, k = 1, mv = {1, 8, 0}, pn = "", xi = 48, xs = "")
+@Repeatable(Entries.class)
+public @interface DeleteTable {
+
+    /* JADX INFO: compiled from: DeleteTable.kt */
+    @Target({ElementType.TYPE})
+    @InterfaceC1492Gx
+    @Metadata(bv = {}, d1 = {"Я\u0018\u001d<K!&i\u000e]Lш|\u0004O\u00158\u000bDB\u0007\"2\u0012}Ѡf\u0001ˎ`D\u0014Gndc:\u001dk\u0014<4_*pS;\u0004\u001c,#)O|i8\u0004XZ#K\u001f\n\u001cwz,wW'^ܫ\u00136ZqE3[r\u07b2=d"}, d2 = {"\u001a`]1e6BR,H\bh6\u0005R\u000ee\u0007(\u000b@o\u0013\u0014NoL\u001c\u007f4B]}.\r", "", "D`[BX", "", "\u001a`]1e6BR,H\bh6\u0005R\u000ee\u0007(\u000b@o\u0013\u0014Noc", "u(J\u0019T5=`#\u0003yqu\n\u00139mI\u0007{G\u0001&\u00176k\u000bCvz", "@n^: *H[!\t\u0004"}, k = 1, mv = {1, 8, 0}, pn = "", xi = 48, xs = "")
+    @kotlin.annotation.Target(allowedTargets = {AnnotationTarget.CLASS})
+    @Retention(RetentionPolicy.CLASS)
+    @kotlin.annotation.Retention(AnnotationRetention.BINARY)
+    public @interface Entries {
+        DeleteTable[] value();
+    }
+
+    String tableName();
+}

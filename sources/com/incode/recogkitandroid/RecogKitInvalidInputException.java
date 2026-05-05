@@ -1,0 +1,8 @@
+package com.incode.recogkitandroid;
+
+/* JADX INFO: loaded from: classes7.dex */
+public class RecogKitInvalidInputException extends Exception {
+    RecogKitInvalidInputException(String str) {
+        super(str);
+    }
+}

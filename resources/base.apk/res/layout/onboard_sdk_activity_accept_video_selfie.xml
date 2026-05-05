@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:fitsSystemWindows="true"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <com.incode.welcome_sdk.views.IncodeTextView
+            android:id="@+id/tvTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="@string/onboard_sdk_accept_video_selfie_title"
+            android:layout_marginStart="@dimen/onboard_sdk_standard_margins"
+            android:layout_marginEnd="@dimen/onboard_sdk_standard_margins"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            style="@style/onboard_sdk_Headline2"/>
+        <com.incode.welcome_sdk.views.IncodeTextView
+            android:id="@+id/tvContent"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/onboard_sdk_lorem_ipsum"
+            android:layout_marginStart="@dimen/onboard_sdk_standard_margins"
+            android:layout_marginEnd="@dimen/onboard_sdk_standard_margins"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvTitle"
+            style="@style/onboard_sdk_BodyLongText"/>
+        <com.incode.welcome_sdk.views.IncodeButton
+            android:id="@+id/btnAccept"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="40dp"
+            android:text="@string/onboard_sdk_accept_video_selfie_accept"
+            android:layout_marginStart="@dimen/onboard_sdk_btn_margins"
+            android:layout_marginEnd="@dimen/onboard_sdk_btn_margins"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvContent"
+            style="@style/onboard_sdk_ButtonPrimaryBig"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

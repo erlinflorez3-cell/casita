@@ -1,0 +1,12 @@
+package com.google.android.gms.internal.mlkit_vision_internal_vkp;
+
+/* JADX INFO: loaded from: classes8.dex */
+public final class zzyp extends zzbef implements zzbft {
+    private zzyp() {
+        throw null;
+    }
+
+    /* synthetic */ zzyp(zzny zznyVar) {
+        super(zzyq.zzb);
+    }
+}

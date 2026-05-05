@@ -1,0 +1,106 @@
+package org.bouncycastle.math.ec.tools;
+
+import com.dynatrace.android.agent.Global;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.math.BigInteger;
+import java.security.SecureRandom;
+import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.TreeSet;
+import org.bouncycastle.asn1.x9.ECNamedCurveTable;
+import org.bouncycastle.asn1.x9.X9ECParameters;
+import org.bouncycastle.crypto.ec.CustomNamedCurves;
+import org.bouncycastle.math.ec.ECAlgorithms;
+import org.bouncycastle.math.ec.ECCurve;
+import org.bouncycastle.math.ec.ECFieldElement;
+import org.bouncycastle.util.Integers;
+import yg.C1561oA;
+import yg.C1633zX;
+
+/* JADX INFO: loaded from: classes2.dex */
+public class TraceOptimizer {
+    private static final BigInteger ONE = BigInteger.valueOf(1);
+    private static final SecureRandom R;
+
+    static {
+        Object[] objArr = new Object[0];
+        Constructor<?> constructor = Class.forName(C1561oA.Xd("1)?+x?21DB:FL\u0002(;:MK?-=KBNM", (short) (C1633zX.Xd() ^ (-16315)))).getConstructor(new Class[0]);
+        try {
+            constructor.setAccessible(true);
+            R = (SecureRandom) constructor.newInstance(objArr);
+        } catch (InvocationTargetException e2) {
+            throw e2.getCause();
+        }
+    }
+
+    private static int calculateTrace(ECFieldElement eCFieldElement) {
+        int fieldSize = eCFieldElement.getFieldSize();
+        ECFieldElement eCFieldElementSquare = eCFieldElement;
+        for (int i2 = 1; i2 < fieldSize; i2++) {
+            eCFieldElementSquare = eCFieldElementSquare.square();
+            eCFieldElement = eCFieldElement.add(eCFieldElementSquare);
+        }
+        BigInteger bigInteger = eCFieldElement.toBigInteger();
+        if (bigInteger.bitLength() <= 1) {
+            return bigInteger.intValue();
+        }
+        throw new IllegalStateException();
+    }
+
+    private static ArrayList enumToList(Enumeration enumeration) {
+        ArrayList arrayList = new ArrayList();
+        while (enumeration.hasMoreElements()) {
+            arrayList.add(enumeration.nextElement());
+        }
+        return arrayList;
+    }
+
+    public static void implPrintNonZeroTraceBits(X9ECParameters x9ECParameters) {
+        ECCurve curve = x9ECParameters.getCurve();
+        int fieldSize = curve.getFieldSize();
+        ArrayList arrayList = new ArrayList();
+        for (int i2 = 0; i2 < fieldSize; i2++) {
+            if (calculateTrace(curve.fromBigInteger(ONE.shiftLeft(i2))) != 0) {
+                arrayList.add(Integers.valueOf(i2));
+                System.out.print(Global.BLANK + i2);
+            }
+        }
+        System.out.println();
+        for (int i3 = 0; i3 < 1000; i3++) {
+            BigInteger bigInteger = new BigInteger(fieldSize, R);
+            int iCalculateTrace = calculateTrace(curve.fromBigInteger(bigInteger));
+            int i4 = 0;
+            for (int i5 = 0; i5 < arrayList.size(); i5++) {
+                if (bigInteger.testBit(((Integer) arrayList.get(i5)).intValue())) {
+                    i4 ^= 1;
+                }
+            }
+            if (iCalculateTrace != i4) {
+                throw new IllegalStateException("Optimized-trace sanity check failed");
+            }
+        }
+    }
+
+    public static void main(String[] strArr) {
+        TreeSet<String> treeSet = new TreeSet(enumToList(ECNamedCurveTable.getNames()));
+        treeSet.addAll(enumToList(CustomNamedCurves.getNames()));
+        for (String str : treeSet) {
+            X9ECParameters byName = CustomNamedCurves.getByName(str);
+            if (byName == null) {
+                byName = ECNamedCurveTable.getByName(str);
+            }
+            if (byName != null && ECAlgorithms.isF2mCurve(byName.getCurve())) {
+                System.out.print(str + Global.COLON);
+                implPrintNonZeroTraceBits(byName);
+            }
+        }
+    }
+
+    public static void printNonZeroTraceBits(X9ECParameters x9ECParameters) {
+        if (!ECAlgorithms.isF2mCurve(x9ECParameters.getCurve())) {
+            throw new IllegalArgumentException("Trace only defined over characteristic-2 fields");
+        }
+        implPrintNonZeroTraceBits(x9ECParameters);
+    }
+}

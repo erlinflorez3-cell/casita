@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/root"
+    android:background="@color/onboard_sdk_BackgroundDark"
+    android:fitsSystemWindows="true"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <FrameLayout
+        android:id="@+id/camera_preview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="32dp">
+        <ImageView
+            android:layout_gravity="center"
+            android:id="@+id/ivDocumentOverlay"
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:adjustViewBounds="true"/>
+    </FrameLayout>
+    <include layout="@layout/onboard_sdk_camera_feedback_and_photo_preview"/>
+    <ImageView
+        android:layout_gravity="end|top"
+        android:id="@+id/btnClose"
+        android:padding="8dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/onboard_sdk_standard_margins"
+        android:layout_marginEnd="@dimen/onboard_sdk_standard_margins"
+        app:srcCompat="@drawable/onboard_sdk_close_button_inverted"/>
+</FrameLayout>

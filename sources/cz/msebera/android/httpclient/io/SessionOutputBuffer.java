@@ -1,0 +1,21 @@
+package cz.msebera.android.httpclient.io;
+
+import cz.msebera.android.httpclient.util.CharArrayBuffer;
+import java.io.IOException;
+
+/* JADX INFO: loaded from: classes5.dex */
+public interface SessionOutputBuffer {
+    void flush() throws IOException;
+
+    HttpTransportMetrics getMetrics();
+
+    void write(int i2) throws IOException;
+
+    void write(byte[] bArr) throws IOException;
+
+    void write(byte[] bArr, int i2, int i3) throws IOException;
+
+    void writeLine(CharArrayBuffer charArrayBuffer) throws IOException;
+
+    void writeLine(String str) throws IOException;
+}

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+        <com.incode.welcome_sdk.commons.ui.IncodeLottieAnimationView
+            android:id="@+id/lottieAnimationView"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:maxHeight="250dp"
+            android:layout_marginStart="@dimen/onboard_sdk_standard_margins"
+            android:layout_marginEnd="@dimen/onboard_sdk_standard_margins"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            app:lottie_rawRes="@raw/onboard_sdk_lottie_id_processing"/>
+        <com.incode.welcome_sdk.views.IncodeTextView
+            android:id="@+id/tvLoadingTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/onboard_sdk_process_id_loading_title"
+            android:layout_marginStart="@dimen/onboard_sdk_standard_margins"
+            android:layout_marginEnd="@dimen/onboard_sdk_standard_margins"
+            style="@style/onboard_sdk_Headline3"/>
+        <com.incode.welcome_sdk.views.IncodeTextView
+            android:textColor="@color/onboard_sdk_TextColorLabel"
+            android:id="@+id/tvLoadingSubtitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@string/onboard_sdk_process_id_loading_subtitle"
+            android:layout_marginStart="@dimen/onboard_sdk_standard_margins"
+            android:layout_marginEnd="@dimen/onboard_sdk_standard_margins"
+            app:onboard_sdk_textColor="@color/onboard_sdk_TextColorLabel"
+            style="@style/onboard_sdk_Headline4"/>
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

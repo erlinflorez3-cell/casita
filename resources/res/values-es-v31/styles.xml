@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="SplashTheme" parent="?unknown_ref: 7f140315">
+        <item name="android:windowBackground">?unknown_ref: 7f0803aa</item>
+        <item name="android:textColor">#000000</item>
+        <item name="android:windowSplashScreenAnimatedIcon">?unknown_ref: 7f0803b4</item>
+    </style>
+</resources>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/bottomBarWrapper"
+    android:visibility="gone"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_gravity="bottom"
+        android:id="@+id/bottomBarLayout"
+        android:background="@color/onboard_sdk_IncodeSnackbar_Background_Color"
+        android:padding="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="68dp">
+        <ImageView
+            android:id="@+id/onboard_sdk_imageview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/onboard_sdk_snackbar_icon_warn"
+            android:importantForAccessibility="no"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+        <TextView
+            android:id="@+id/onboard_sdk_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/onboard_sdk_face_scan_no_network"
+            android:layout_marginStart="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/onboard_sdk_imageview"
+            app:layout_constraintTop_toTopOf="parent"
+            style="@style/onboard_sdk_IncodeSnackbar_Content"/>
+        <Button
+            android:id="@+id/bottomBarActionButton"
+            android:padding="0dp"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:text="@string/onboard_sdk_no_network_snackbar_action_text"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            style="@style/onboard_sdk_IncodeSnackbar_Action"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>

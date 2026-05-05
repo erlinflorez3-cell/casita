@@ -1,0 +1,18 @@
+package com.google.android.gms.measurement.internal;
+
+/* JADX INFO: loaded from: classes8.dex */
+final class zzil implements Runnable {
+    private final /* synthetic */ zzo zza;
+    private final /* synthetic */ zzic zzb;
+
+    zzil(zzic zzicVar, zzo zzoVar) {
+        this.zza = zzoVar;
+        this.zzb = zzicVar;
+    }
+
+    @Override // java.lang.Runnable
+    public final void run() throws Throwable {
+        this.zzb.zza.zzr();
+        this.zzb.zza.zzc(this.zza);
+    }
+}

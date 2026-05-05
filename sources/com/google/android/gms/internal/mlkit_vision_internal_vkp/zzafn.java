@@ -1,0 +1,10 @@
+package com.google.android.gms.internal.mlkit_vision_internal_vkp;
+
+import java.io.IOException;
+
+/* JADX INFO: loaded from: classes8.dex */
+public final class zzafn extends IOException {
+    public zzafn(String str) {
+        super(str);
+    }
+}

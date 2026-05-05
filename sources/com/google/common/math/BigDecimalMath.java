@@ -1,0 +1,47 @@
+package com.google.common.math;
+
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+
+/* JADX INFO: loaded from: classes7.dex */
+@ElementTypesAreNonnullByDefault
+public class BigDecimalMath {
+
+    private static class BigDecimalToDoubleRounder extends ToDoubleRounder<BigDecimal> {
+        static final BigDecimalToDoubleRounder INSTANCE = new BigDecimalToDoubleRounder();
+
+        private BigDecimalToDoubleRounder() {
+        }
+
+        /* JADX INFO: Access modifiers changed from: package-private */
+        @Override // com.google.common.math.ToDoubleRounder
+        public BigDecimal minus(BigDecimal a2, BigDecimal b2) {
+            return a2.subtract(b2);
+        }
+
+        /* JADX INFO: Access modifiers changed from: package-private */
+        @Override // com.google.common.math.ToDoubleRounder
+        public double roundToDoubleArbitrarily(BigDecimal bigDecimal) {
+            return bigDecimal.doubleValue();
+        }
+
+        /* JADX INFO: Access modifiers changed from: package-private */
+        @Override // com.google.common.math.ToDoubleRounder
+        public int sign(BigDecimal bigDecimal) {
+            return bigDecimal.signum();
+        }
+
+        /* JADX INFO: Access modifiers changed from: package-private */
+        @Override // com.google.common.math.ToDoubleRounder
+        public BigDecimal toX(double d2, RoundingMode mode) {
+            return new BigDecimal(d2);
+        }
+    }
+
+    private BigDecimalMath() {
+    }
+
+    public static double roundToDouble(BigDecimal x2, RoundingMode mode) {
+        return BigDecimalToDoubleRounder.INSTANCE.roundToDouble(x2, mode);
+    }
+}

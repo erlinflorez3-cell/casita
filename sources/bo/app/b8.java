@@ -1,0 +1,20 @@
+package bo.app;
+
+import kotlin.jvm.functions.Function0;
+import kotlin.jvm.internal.Lambda;
+
+/* JADX INFO: loaded from: classes4.dex */
+public final class b8 extends Lambda implements Function0 {
+
+    /* JADX INFO: renamed from: a, reason: collision with root package name */
+    public static final b8 f250a = new b8();
+
+    public b8() {
+        super(0);
+    }
+
+    @Override // kotlin.jvm.functions.Function0
+    public final /* bridge */ /* synthetic */ Object invoke() {
+        return "Found an override api key. Using it to configure the Braze SDK";
+    }
+}

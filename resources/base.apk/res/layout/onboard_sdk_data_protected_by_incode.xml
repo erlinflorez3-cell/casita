@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+    <ImageView
+        android:id="@+id/ivDataProtection"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:adjustViewBounds="true"
+        android:layout_marginStart="@dimen/onboard_sdk_standard_margins"
+        app:layout_constraintEnd_toStartOf="@+id/tvDataProtectedLabel"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/onboard_sdk_intro_data_protection"/>
+    <com.incode.welcome_sdk.views.IncodeTextView
+        android:id="@+id/tvDataProtectedLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/onboard_sdk_intro_data_protected_label"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:layout_marginEnd="@dimen/onboard_sdk_standard_margins"
+        app:layout_constraintBottom_toBottomOf="@+id/ivDataProtection"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/ivDataProtection"
+        app:layout_constraintTop_toTopOf="@+id/ivDataProtection"
+        style="@style/onboard_sdk_LabelBig"/>
+</merge>

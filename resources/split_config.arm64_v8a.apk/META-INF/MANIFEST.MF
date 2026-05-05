@@ -1,0 +1,101 @@
+Manifest-Version: 1.0
+
+Name: AndroidManifest.xml
+SHA1-Digest: lzbkP2Fy7d76WJm5kpkRlq1FZzM=
+
+Name: lib/arm64-v8a/libElliptic-Now.so
+SHA1-Digest: Cc44mkDo+n/x16mkR5UWzz5ZrEc=
+
+Name: lib/arm64-v8a/libPhoenixAndroid.so
+SHA1-Digest: WOCrejaOwJ0/nmkHqlD1SmwEHbE=
+
+Name: lib/arm64-v8a/libRecogKitAndroid.so
+SHA1-Digest: oN4Ty7CA70Myqe/6FQYuEnNJjtE=
+
+Name: lib/arm64-v8a/libandroidx.graphics.path.so
+SHA1-Digest: 18F/y0SzCm7+idQ2qhAqvlLgCKY=
+
+Name: lib/arm64-v8a/libbarhopper_v3.so
+SHA1-Digest: uHDsT9xT6obbMJTZT5usErweuv4=
+
+Name: lib/arm64-v8a/libc++_shared.so
+SHA1-Digest: dijX8PS9oo8UqLCpZq2SELawOYI=
+
+Name: lib/arm64-v8a/libc130.so
+SHA1-Digest: Z84NCVz1y3DaWiXRUx8dLV4601M=
+
+Name: lib/arm64-v8a/libcaf2.so
+SHA1-Digest: zDFYBB8Wpyn7irEraFpiEvEEeS8=
+
+Name: lib/arm64-v8a/libcrashlytics-common.so
+SHA1-Digest: ESVMpJcwi4WSEosGfX/YQx8hyxk=
+
+Name: lib/arm64-v8a/libcrashlytics-handler.so
+SHA1-Digest: flk2cLX04uPi5ro9sM3w92FdtyU=
+
+Name: lib/arm64-v8a/libcrashlytics-trampoline.so
+SHA1-Digest: c1qlNbyUsjo6AqgkjH8rr39jK4o=
+
+Name: lib/arm64-v8a/libcrashlytics.so
+SHA1-Digest: XqU4Dxglg/iTpO0PXkS/HmVbr9o=
+
+Name: lib/arm64-v8a/libd81463.so
+SHA1-Digest: Vbznk5PLvX7+x9pKuPdNmVa3eAE=
+
+Name: lib/arm64-v8a/libfbjni.so
+SHA1-Digest: iiwvN+qKzm71f3gXOfvfO9JkKsI=
+
+Name: lib/arm64-v8a/libhermes.so
+SHA1-Digest: +BqVF9uiIl7qna+hQ1VHAL5fnB0=
+
+Name: lib/arm64-v8a/libhermestooling.so
+SHA1-Digest: +NBqNU89+7IhDRpMo/gK8c7AYbQ=
+
+Name: lib/arm64-v8a/libimage_processing_util_jni.so
+SHA1-Digest: vUJZDlsVpdNx2vtRqx8qA3UafRw=
+
+Name: lib/arm64-v8a/libimagepipeline.so
+SHA1-Digest: HdhghXryta6aUhQEt8FDb7ufOT8=
+
+Name: lib/arm64-v8a/libjsi.so
+SHA1-Digest: 5gc41WnRqeQSgoXtHHCQPWVFM0I=
+
+Name: lib/arm64-v8a/libmlkitcommonpipeline.so
+SHA1-Digest: +/dOTR1v4W0b0D9fEUrr2YuBE5I=
+
+Name: lib/arm64-v8a/libnative-filters.so
+SHA1-Digest: 5aLlgNBoSYsb77ENfld/UFO/1ok=
+
+Name: lib/arm64-v8a/libnative-imagetranscoder.so
+SHA1-Digest: Vf2MPVisbXWjc12nvL4JvUryHc4=
+
+Name: lib/arm64-v8a/librdstieuonyi.so
+SHA1-Digest: tPTLZA7tvnfH6JLqLTOApOVkW0s=
+
+Name: lib/arm64-v8a/libreactnative.so
+SHA1-Digest: yzXhDNXp8Xzvig8qdS9Olw1vXgM=
+
+Name: lib/arm64-v8a/libreanimated.so
+SHA1-Digest: X8HriU5+pevwaCWnN7GLYvqgD0s=
+
+Name: lib/arm64-v8a/librnscreens.so
+SHA1-Digest: SbDCdEcSLYKZyF/zpDLr0+tiAlk=
+
+Name: lib/arm64-v8a/libscm.so
+SHA1-Digest: Zlw85+hTYvvopF+5jcqlo4M+w5s=
+
+Name: lib/arm64-v8a/libsentry-android.so
+SHA1-Digest: MBQYA7iBY3eW8FKsAFJ+18iuEgc=
+
+Name: lib/arm64-v8a/libsentry.so
+SHA1-Digest: n6yNTOYDRELD8ewHZfEj6BJbOI4=
+
+Name: lib/arm64-v8a/libsurface_util_jni.so
+SHA1-Digest: RuucNBozK+K0qZYKOrzqdSR1QCQ=
+
+Name: lib/arm64-v8a/libworklets.so
+SHA1-Digest: NG8epOV8Hn4xxEK6yE/dhAuWxQQ=
+
+Name: stamp-cert-sha256
+SHA1-Digest: 5vTkm69vqAbusD/fho7oWwc7j+I=
+

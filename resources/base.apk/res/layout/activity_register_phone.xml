@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/constraintLayoutBackground"
+    style="@style/constraintLayoutBackground">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayoutSurface"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        style="@style/constraintLayoutSurface">
+        <ImageView
+            android:id="@+id/imageViewBack"
+            android:src="@drawable/ic_back"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            style="@style/buttonBack"/>
+        <ImageView
+            android:id="@+id/imageViewClose"
+            android:src="@drawable/ic_close"
+            app:layout_constraintEnd_toEndOf="@+id/constraintLayoutSurface"
+            app:layout_constraintTop_toTopOf="@+id/constraintLayoutSurface"
+            style="@style/buttonClose"/>
+        <ImageView
+            android:id="@+id/imageViewEnterpriseLogo"
+            android:src="@drawable/ic_enterprise_logo"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            style="@style/enterpriseLogo"/>
+        <TextView
+            android:id="@+id/textViewTittle"
+            android:text="Ingrese telefono"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageViewEnterpriseLogo"
+            style="@style/textViewTittle"/>
+        <TextView
+            android:id="@+id/textViewDescription"
+            android:text="Ingrese su numero de telefono, le llegará un mensaje de texto con un codigo que debe ingresar en el paso siguiente."
+            android:textAlignment="center"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewTittle"
+            style="@style/textViewSubTittle"/>
+        <EditText
+            android:id="@+id/editTextPhone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="phone"
+            android:textAlignment="center"
+            app:layout_constraintBottom_toTopOf="@+id/buttonContinue"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewDescription"/>
+        <Button
+            android:id="@+id/buttonContinue"
+            android:text="Continuar"
+            app:layout_constraintBottom_toBottomOf="@+id/constraintLayoutSurface"
+            app:layout_constraintEnd_toEndOf="@+id/constraintLayoutSurface"
+            app:layout_constraintStart_toStartOf="@+id/constraintLayoutSurface"
+            style="@style/buttonContinueEnabled"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

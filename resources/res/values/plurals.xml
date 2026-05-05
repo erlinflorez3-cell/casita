@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <plurals name="mtrl_badge_content_description">
+        <item quantity="one">%d new notification</item>
+        <item quantity="other">%d new notifications</item>
+    </plurals>
+    <plurals name="onboard_sdk_captcha_x_seconds_left">
+        <item quantity="one">Tiene %d segundo</item>
+        <item quantity="other">Tiene %d segundos</item>
+    </plurals>
+    <plurals name="onboard_sdk_face_scan_attempts_remaining">
+        <item quantity="one">%d intento restante</item>
+        <item quantity="other">%d intentos restantes</item>
+    </plurals>
+    <plurals name="onboard_sdk_validation_attempts_remaining">
+        <item quantity="one">Le queda solo %d intento</item>
+        <item quantity="other">Tiene otros %d intentos</item>
+    </plurals>
+</resources>

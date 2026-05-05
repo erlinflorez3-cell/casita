@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="onboard_sdk_country_names">
+        <item>Estados Unidos</item>
+        <item>Brasil</item>
+        <item>México</item>
+        <item>Afganistán</item>
+        <item>Samoa Americana</item>
+        <item>Argentina</item>
+        <item>Austria</item>
+        <item>Australia</item>
+        <item>Bélgica</item>
+        <item>Canadá</item>
+        <item>Camboya</item>
+        <item>Chile</item>
+        <item>China</item>
+        <item>Colombia</item>
+        <item>Costa Rica</item>
+        <item>Dinamarca</item>
+        <item>Ecuador</item>
+        <item>España</item>
+        <item>Finlandia</item>
+        <item>Francia</item>
+        <item>Alemania</item>
+        <item>Guam</item>
+        <item>Islandia</item>
+        <item>India</item>
+        <item>Irlanda</item>
+        <item>Italia</item>
+        <item>Hong Kong</item>
+        <item>Japón</item>
+        <item>Laos</item>
+        <item>Liechtenstein</item>
+        <item>Lituania</item>
+        <item>Luxemburgo</item>
+        <item>Malasia</item>
+        <item>Malta</item>
+        <item>Islas Marshall</item>
+        <item>Myanmar</item>
+        <item>Micronesia</item>
+        <item>Países Bajos</item>
+        <item>Nueva Zelanda</item>
+        <item>Islas Marianas del Norte</item>
+        <item>Noruega</item>
+        <item>Palau</item>
+        <item>Portugal</item>
+        <item>Puerto Rico</item>
+        <item>Suecia</item>
+        <item>Suiza</item>
+        <item>Taiwán</item>
+        <item>Tailandia</item>
+        <item>Reino Unido</item>
+        <item>Vietnam</item>
+        <item>Islas Vírgenes</item>
+    </array>
+    <array name="onboard_sdk_genders">
+        <item>Hombre</item>
+        <item>Mujer</item>
+    </array>
+    <array name="onboard_sdk_id_results_mode_array">
+        <item>Preciso</item>
+        <item>Rápido</item>
+    </array>
+    <array name="onboard_sdk_mexico_states">
+        <item>Extranjero</item>
+        <item>Aguascalientes</item>
+        <item>Baja California</item>
+        <item>Baja California Sur</item>
+        <item>Campeche</item>
+        <item>Coahuila</item>
+        <item>Colima</item>
+        <item>Chiapas</item>
+        <item>Chihuahua</item>
+        <item>Ciudad De Mexico</item>
+        <item>Durango</item>
+        <item>Guanajuato</item>
+        <item>Guerrero</item>
+        <item>Hidalgo</item>
+        <item>Jalisco</item>
+        <item>Mexico</item>
+        <item>Michoacan</item>
+        <item>Morelos</item>
+        <item>Nayarit</item>
+        <item>Nuevo Leon</item>
+        <item>Oaxaca</item>
+        <item>Puebla</item>
+        <item>Queretaro</item>
+        <item>Quintana Roo</item>
+        <item>San Luis Potosi</item>
+        <item>Sinaloa</item>
+        <item>Sonora</item>
+        <item>Tabasco</item>
+        <item>Tamaulipas</item>
+        <item>Tlaxcala</item>
+        <item>Veracruz</item>
+        <item>Yucatan</item>
+        <item>Zacatecas</item>
+    </array>
+</resources>

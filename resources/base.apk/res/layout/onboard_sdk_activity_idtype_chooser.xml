@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:fitsSystemWindows="true"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <com.incode.welcome_sdk.views.IncodeTextView
+        android:id="@+id/tvTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="80dp"
+        android:text="@string/onboard_sdk_id_type_chooser_title"
+        android:layout_marginStart="@dimen/onboard_sdk_standard_margins"
+        android:layout_marginEnd="@dimen/onboard_sdk_standard_margins"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        style="@style/onboard_sdk_Headline2"/>
+    <com.incode.welcome_sdk.views.IncodeButton
+        android:id="@+id/btnID"
+        android:layout_width="0dp"
+        android:layout_marginBottom="16dp"
+        android:text="@string/onboard_sdk_btn_id"
+        android:drawablePadding="20dp"
+        android:drawableStart="@drawable/onboard_sdk_id_scan_ic_id"
+        android:layout_marginStart="@dimen/onboard_sdk_btn_rounded_alt_side_margin"
+        android:layout_marginEnd="@dimen/onboard_sdk_btn_rounded_alt_side_margin"
+        app:layout_constraintBottom_toTopOf="@+id/btnPassport"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintVertical_chainStyle="packed"
+        style="@style/onboard_sdk_ButtonPrimaryBigAlt"/>
+    <com.incode.welcome_sdk.views.IncodeButton
+        android:id="@+id/btnPassport"
+        android:layout_width="0dp"
+        android:layout_marginBottom="48dp"
+        android:text="@string/onboard_sdk_btn_passport"
+        android:drawablePadding="20dp"
+        android:drawableStart="@drawable/onboard_sdk_id_scan_ic_passport"
+        android:layout_marginStart="@dimen/onboard_sdk_btn_rounded_alt_side_margin"
+        android:layout_marginEnd="@dimen/onboard_sdk_btn_rounded_alt_side_margin"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        style="@style/onboard_sdk_ButtonPrimaryBigAlt"/>
+</androidx.constraintlayout.widget.ConstraintLayout>

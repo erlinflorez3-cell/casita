@@ -1,0 +1,32 @@
+package com.google.android.play.core.splitinstall;
+
+import android.os.RemoteException;
+import com.google.android.gms.tasks.TaskCompletionSource;
+
+/* JADX INFO: loaded from: classes9.dex */
+final class zzaq extends com.google.android.play.core.splitinstall.internal.zzv {
+    final /* synthetic */ int zza;
+    final /* synthetic */ TaskCompletionSource zzb;
+    final /* synthetic */ zzbc zzc;
+
+    /* JADX WARN: 'super' call moved to the top of the method (can break code semantics) */
+    zzaq(zzbc zzbcVar, TaskCompletionSource taskCompletionSource, int i2, TaskCompletionSource taskCompletionSource2) {
+        super(taskCompletionSource);
+        this.zzc = zzbcVar;
+        this.zza = i2;
+        this.zzb = taskCompletionSource2;
+    }
+
+    /* JADX WARN: Type inference failed for: r5v0, types: [android.os.IInterface, com.google.android.play.core.splitinstall.internal.zzbo] */
+    @Override // com.google.android.play.core.splitinstall.internal.zzv
+    protected final void zzc() {
+        try {
+            ?? Zze = this.zzc.zza.zze();
+            zzbc zzbcVar = this.zzc;
+            Zze.zzh(zzbcVar.zzd, this.zza, new zzay(zzbcVar, this.zzb));
+        } catch (RemoteException e2) {
+            zzbc.zzb.zzc(e2, "getSessionState(%d)", Integer.valueOf(this.zza));
+            this.zzb.trySetException(new RuntimeException(e2));
+        }
+    }
+}

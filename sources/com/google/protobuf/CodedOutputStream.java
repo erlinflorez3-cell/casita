@@ -1,0 +1,2340 @@
+package com.google.protobuf;
+
+import com.google.protobuf.Utf8;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.nio.BufferOverflowException;
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
+import java.util.Locale;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+/* JADX INFO: loaded from: classes7.dex */
+public abstract class CodedOutputStream extends ByteOutput {
+    public static final int DEFAULT_BUFFER_SIZE = 4096;
+
+    @Deprecated
+    public static final int LITTLE_ENDIAN_32_SIZE = 4;
+    private boolean serializationDeterministic;
+    CodedOutputStreamWriter wrapper;
+    private static final Logger logger = Logger.getLogger(CodedOutputStream.class.getName());
+    private static final boolean HAS_UNSAFE_ARRAY_OPERATIONS = UnsafeUtil.hasUnsafeArrayOperations();
+
+    private static abstract class AbstractBufferedEncoder extends CodedOutputStream {
+        final byte[] buffer;
+        final int limit;
+        int position;
+        int totalBytesWritten;
+
+        AbstractBufferedEncoder(int bufferSize) {
+            super();
+            if (bufferSize < 0) {
+                throw new IllegalArgumentException("bufferSize must be >= 0");
+            }
+            byte[] bArr = new byte[Math.max(bufferSize, 20)];
+            this.buffer = bArr;
+            this.limit = bArr.length;
+        }
+
+        final void buffer(byte value) {
+            int i2 = this.position;
+            this.buffer[i2] = value;
+            this.position = i2 + 1;
+            this.totalBytesWritten++;
+        }
+
+        final void bufferFixed32NoTag(int value) {
+            int i2 = this.position;
+            byte[] bArr = this.buffer;
+            bArr[i2] = (byte) value;
+            bArr[i2 + 1] = (byte) (value >> 8);
+            bArr[i2 + 2] = (byte) (value >> 16);
+            bArr[i2 + 3] = (byte) (value >> 24);
+            this.position = i2 + 4;
+            this.totalBytesWritten += 4;
+        }
+
+        final void bufferFixed64NoTag(long value) {
+            int i2 = this.position;
+            byte[] bArr = this.buffer;
+            bArr[i2] = (byte) value;
+            bArr[i2 + 1] = (byte) (value >> 8);
+            bArr[i2 + 2] = (byte) (value >> 16);
+            bArr[i2 + 3] = (byte) (value >> 24);
+            bArr[i2 + 4] = (byte) (value >> 32);
+            bArr[i2 + 5] = (byte) (value >> 40);
+            bArr[i2 + 6] = (byte) (value >> 48);
+            bArr[i2 + 7] = (byte) (value >> 56);
+            this.position = i2 + 8;
+            this.totalBytesWritten += 8;
+        }
+
+        final void bufferInt32NoTag(final int value) {
+            if (value >= 0) {
+                bufferUInt32NoTag(value);
+            } else {
+                bufferUInt64NoTag(value);
+            }
+        }
+
+        final void bufferTag(final int fieldNumber, final int wireType) {
+            bufferUInt32NoTag(WireFormat.makeTag(fieldNumber, wireType));
+        }
+
+        final void bufferUInt32NoTag(int value) {
+            if (!CodedOutputStream.HAS_UNSAFE_ARRAY_OPERATIONS) {
+                while (((-128) & value) != 0) {
+                    byte[] bArr = this.buffer;
+                    int i2 = this.position;
+                    this.position = i2 + 1;
+                    bArr[i2] = (byte) ((value + 128) - (128 & value));
+                    this.totalBytesWritten++;
+                    value >>>= 7;
+                }
+                byte[] bArr2 = this.buffer;
+                int i3 = this.position;
+                this.position = i3 + 1;
+                bArr2[i3] = (byte) value;
+                this.totalBytesWritten++;
+                return;
+            }
+            long j2 = this.position;
+            while (((-128) & value) != 0) {
+                byte[] bArr3 = this.buffer;
+                int i4 = this.position;
+                this.position = i4 + 1;
+                UnsafeUtil.putByte(bArr3, i4, (byte) ((value + 128) - (128 & value)));
+                value >>>= 7;
+            }
+            byte[] bArr4 = this.buffer;
+            int i5 = this.position;
+            this.position = i5 + 1;
+            UnsafeUtil.putByte(bArr4, i5, (byte) value);
+            this.totalBytesWritten += (int) (((long) this.position) - j2);
+        }
+
+        final void bufferUInt64NoTag(long value) {
+            if (!CodedOutputStream.HAS_UNSAFE_ARRAY_OPERATIONS) {
+                while ((-1) - (((-1) - value) | ((-1) - (-128))) != 0) {
+                    byte[] bArr = this.buffer;
+                    int i2 = this.position;
+                    this.position = i2 + 1;
+                    int i3 = (int) value;
+                    bArr[i2] = (byte) ((i3 + 128) - (i3 & 128));
+                    this.totalBytesWritten++;
+                    value >>>= 7;
+                }
+                byte[] bArr2 = this.buffer;
+                int i4 = this.position;
+                this.position = i4 + 1;
+                bArr2[i4] = (byte) value;
+                this.totalBytesWritten++;
+                return;
+            }
+            long j2 = this.position;
+            while ((value & (-128)) != 0) {
+                byte[] bArr3 = this.buffer;
+                int i5 = this.position;
+                this.position = i5 + 1;
+                int i6 = (int) value;
+                UnsafeUtil.putByte(bArr3, i5, (byte) ((i6 + 128) - (i6 & 128)));
+                value >>>= 7;
+            }
+            byte[] bArr4 = this.buffer;
+            int i7 = this.position;
+            this.position = i7 + 1;
+            UnsafeUtil.putByte(bArr4, i7, (byte) value);
+            this.totalBytesWritten += (int) (((long) this.position) - j2);
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream
+        public final int getTotalBytesWritten() {
+            return this.totalBytesWritten;
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream
+        public final int spaceLeft() {
+            throw new UnsupportedOperationException("spaceLeft() can only be called on CodedOutputStreams that are writing to a flat array or ByteBuffer.");
+        }
+    }
+
+    private static class ArrayEncoder extends CodedOutputStream {
+        private final byte[] buffer;
+        private final int limit;
+        private final int offset;
+        private int position;
+
+        ArrayEncoder(byte[] buffer, int offset, int length) {
+            super();
+            if (buffer == null) {
+                throw new NullPointerException("buffer");
+            }
+            int i2 = offset | length;
+            int i3 = offset + length;
+            int length2 = buffer.length - i3;
+            if ((i2 + length2) - (i2 & length2) < 0) {
+                throw new IllegalArgumentException(String.format(Locale.US, "Array range is invalid. Buffer.length=%d, offset=%d, length=%d", Integer.valueOf(buffer.length), Integer.valueOf(offset), Integer.valueOf(length)));
+            }
+            this.buffer = buffer;
+            this.offset = offset;
+            this.position = offset;
+            this.limit = i3;
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream
+        public void flush() {
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream
+        public final int getTotalBytesWritten() {
+            return this.position - this.offset;
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream
+        public final int spaceLeft() {
+            return this.limit - this.position;
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream, com.google.protobuf.ByteOutput
+        public final void write(byte value) throws IOException {
+            int i2 = this.position;
+            try {
+                int i3 = i2 + 1;
+                try {
+                    this.buffer[i2] = value;
+                    this.position = i3;
+                } catch (IndexOutOfBoundsException e2) {
+                    e = e2;
+                    i2 = i3;
+                    throw new OutOfSpaceException(i2, this.limit, 1, (Throwable) e);
+                }
+            } catch (IndexOutOfBoundsException e3) {
+                e = e3;
+            }
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream, com.google.protobuf.ByteOutput
+        public final void write(ByteBuffer value) throws IOException {
+            int iRemaining = value.remaining();
+            try {
+                value.get(this.buffer, this.position, iRemaining);
+                this.position += iRemaining;
+            } catch (IndexOutOfBoundsException e2) {
+                throw new OutOfSpaceException(this.position, this.limit, iRemaining, (Throwable) e2);
+            }
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream, com.google.protobuf.ByteOutput
+        public final void write(byte[] value, int offset, int length) throws IOException {
+            try {
+                System.arraycopy(value, offset, this.buffer, this.position, length);
+                this.position += length;
+            } catch (IndexOutOfBoundsException e2) {
+                throw new OutOfSpaceException(this.position, this.limit, length, (Throwable) e2);
+            }
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream
+        public final void writeBool(int i2, boolean z2) throws IOException {
+            writeTag(i2, 0);
+            write(z2 ? (byte) 1 : (byte) 0);
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream
+        public final void writeByteArray(final int fieldNumber, final byte[] value) throws IOException {
+            writeByteArray(fieldNumber, value, 0, value.length);
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream
+        public final void writeByteArray(final int fieldNumber, final byte[] value, final int offset, final int length) throws IOException {
+            writeTag(fieldNumber, 2);
+            writeByteArrayNoTag(value, offset, length);
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream
+        public final void writeByteArrayNoTag(final byte[] value, int offset, int length) throws IOException {
+            writeUInt32NoTag(length);
+            write(value, offset, length);
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream
+        public final void writeByteBuffer(final int fieldNumber, final ByteBuffer value) throws IOException {
+            writeTag(fieldNumber, 2);
+            writeUInt32NoTag(value.capacity());
+            writeRawBytes(value);
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream
+        public final void writeBytes(final int fieldNumber, final ByteString value) throws IOException {
+            writeTag(fieldNumber, 2);
+            writeBytesNoTag(value);
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream
+        public final void writeBytesNoTag(final ByteString value) throws IOException {
+            writeUInt32NoTag(value.size());
+            value.writeTo(this);
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream
+        public final void writeFixed32(final int fieldNumber, final int value) throws IOException {
+            writeTag(fieldNumber, 5);
+            writeFixed32NoTag(value);
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream
+        public final void writeFixed32NoTag(int value) throws IOException {
+            int i2 = this.position;
+            try {
+                byte[] bArr = this.buffer;
+                bArr[i2] = (byte) value;
+                bArr[i2 + 1] = (byte) (value >> 8);
+                bArr[i2 + 2] = (byte) (value >> 16);
+                bArr[i2 + 3] = (byte) (value >> 24);
+                this.position = i2 + 4;
+            } catch (IndexOutOfBoundsException e2) {
+                throw new OutOfSpaceException(i2, this.limit, 4, (Throwable) e2);
+            }
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream
+        public final void writeFixed64(final int fieldNumber, final long value) throws IOException {
+            writeTag(fieldNumber, 1);
+            writeFixed64NoTag(value);
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream
+        public final void writeFixed64NoTag(long value) throws IOException {
+            int i2 = this.position;
+            try {
+                byte[] bArr = this.buffer;
+                bArr[i2] = (byte) value;
+                bArr[i2 + 1] = (byte) (value >> 8);
+                bArr[i2 + 2] = (byte) (value >> 16);
+                bArr[i2 + 3] = (byte) (value >> 24);
+                bArr[i2 + 4] = (byte) (value >> 32);
+                bArr[i2 + 5] = (byte) (value >> 40);
+                bArr[i2 + 6] = (byte) (value >> 48);
+                bArr[i2 + 7] = (byte) (value >> 56);
+                this.position = i2 + 8;
+            } catch (IndexOutOfBoundsException e2) {
+                throw new OutOfSpaceException(i2, this.limit, 8, (Throwable) e2);
+            }
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream
+        public final void writeInt32(final int fieldNumber, final int value) throws IOException {
+            writeTag(fieldNumber, 0);
+            writeInt32NoTag(value);
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream
+        public final void writeInt32NoTag(int value) throws IOException {
+            if (value >= 0) {
+                writeUInt32NoTag(value);
+            } else {
+                writeUInt64NoTag(value);
+            }
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream, com.google.protobuf.ByteOutput
+        public final void writeLazy(ByteBuffer value) throws IOException {
+            write(value);
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream, com.google.protobuf.ByteOutput
+        public final void writeLazy(byte[] value, int offset, int length) throws IOException {
+            write(value, offset, length);
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream
+        public final void writeMessage(final int fieldNumber, final MessageLite value) throws IOException {
+            writeTag(fieldNumber, 2);
+            writeMessageNoTag(value);
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream
+        final void writeMessage(final int fieldNumber, final MessageLite value, Schema schema) throws IOException {
+            writeTag(fieldNumber, 2);
+            writeUInt32NoTag(((AbstractMessageLite) value).getSerializedSize(schema));
+            schema.writeTo(value, this.wrapper);
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream
+        public final void writeMessageNoTag(final MessageLite value) throws IOException {
+            writeUInt32NoTag(value.getSerializedSize());
+            value.writeTo(this);
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream
+        final void writeMessageNoTag(final MessageLite value, Schema schema) throws IOException {
+            writeUInt32NoTag(((AbstractMessageLite) value).getSerializedSize(schema));
+            schema.writeTo(value, this.wrapper);
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream
+        public final void writeMessageSetExtension(final int fieldNumber, final MessageLite value) throws IOException {
+            writeTag(1, 3);
+            writeUInt32(2, fieldNumber);
+            writeMessage(3, value);
+            writeTag(1, 4);
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream
+        public final void writeRawBytes(final ByteBuffer value) throws IOException {
+            if (value.hasArray()) {
+                write(value.array(), value.arrayOffset(), value.capacity());
+                return;
+            }
+            ByteBuffer byteBufferDuplicate = value.duplicate();
+            Java8Compatibility.clear(byteBufferDuplicate);
+            write(byteBufferDuplicate);
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream
+        public final void writeRawMessageSetExtension(final int fieldNumber, final ByteString value) throws IOException {
+            writeTag(1, 3);
+            writeUInt32(2, fieldNumber);
+            writeBytes(3, value);
+            writeTag(1, 4);
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream
+        public final void writeString(final int fieldNumber, final String value) throws IOException {
+            writeTag(fieldNumber, 2);
+            writeStringNoTag(value);
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream
+        public final void writeStringNoTag(String value) throws IOException {
+            int i2 = this.position;
+            try {
+                int iComputeUInt32SizeNoTag = computeUInt32SizeNoTag(value.length() * 3);
+                int iComputeUInt32SizeNoTag2 = computeUInt32SizeNoTag(value.length());
+                if (iComputeUInt32SizeNoTag2 == iComputeUInt32SizeNoTag) {
+                    int i3 = i2 + iComputeUInt32SizeNoTag2;
+                    this.position = i3;
+                    int iEncode = Utf8.encode(value, this.buffer, i3, spaceLeft());
+                    this.position = i2;
+                    writeUInt32NoTag((iEncode - i2) - iComputeUInt32SizeNoTag2);
+                    this.position = iEncode;
+                } else {
+                    writeUInt32NoTag(Utf8.encodedLength(value));
+                    this.position = Utf8.encode(value, this.buffer, this.position, spaceLeft());
+                }
+            } catch (Utf8.UnpairedSurrogateException e2) {
+                this.position = i2;
+                inefficientWriteStringNoTag(value, e2);
+            } catch (IndexOutOfBoundsException e3) {
+                throw new OutOfSpaceException(e3);
+            }
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream
+        public final void writeTag(final int fieldNumber, final int wireType) throws IOException {
+            writeUInt32NoTag(WireFormat.makeTag(fieldNumber, wireType));
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream
+        public final void writeUInt32(final int fieldNumber, final int value) throws IOException {
+            writeTag(fieldNumber, 0);
+            writeUInt32NoTag(value);
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream
+        public final void writeUInt32NoTag(int value) throws IOException {
+            int i2;
+            int i3 = this.position;
+            while ((-1) - (((-1) - value) | ((-1) - (-128))) != 0) {
+                try {
+                    i2 = i3 + 1;
+                } catch (IndexOutOfBoundsException e2) {
+                    e = e2;
+                    throw new OutOfSpaceException(i3, this.limit, 1, (Throwable) e);
+                }
+                try {
+                    this.buffer[i3] = (byte) ((value + 128) - (128 & value));
+                    value >>>= 7;
+                    i3 = i2;
+                } catch (IndexOutOfBoundsException e3) {
+                    e = e3;
+                    i3 = i2;
+                    throw new OutOfSpaceException(i3, this.limit, 1, (Throwable) e);
+                }
+            }
+            i2 = i3 + 1;
+            this.buffer[i3] = (byte) value;
+            this.position = i2;
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream
+        public final void writeUInt64(final int fieldNumber, final long value) throws IOException {
+            writeTag(fieldNumber, 0);
+            writeUInt64NoTag(value);
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream
+        public final void writeUInt64NoTag(long value) throws IOException {
+            int i2;
+            int i3;
+            int i4;
+            int i5 = this.position;
+            if (!CodedOutputStream.HAS_UNSAFE_ARRAY_OPERATIONS || spaceLeft() < 10) {
+                while ((value - 128) - (value | (-128)) != 0) {
+                    try {
+                        i3 = i5 + 1;
+                        i4 = (int) value;
+                    } catch (IndexOutOfBoundsException e2) {
+                        e = e2;
+                    }
+                    try {
+                        this.buffer[i5] = (byte) ((i4 + 128) - (i4 & 128));
+                        value >>>= 7;
+                        i5 = i3;
+                    } catch (IndexOutOfBoundsException e3) {
+                        e = e3;
+                        i5 = i3;
+                        throw new OutOfSpaceException(i5, this.limit, 1, (Throwable) e);
+                    }
+                }
+                i2 = i5 + 1;
+                try {
+                    this.buffer[i5] = (byte) value;
+                } catch (IndexOutOfBoundsException e4) {
+                    e = e4;
+                    i5 = i2;
+                    throw new OutOfSpaceException(i5, this.limit, 1, (Throwable) e);
+                }
+            } else {
+                while ((value & (-128)) != 0) {
+                    UnsafeUtil.putByte(this.buffer, i5, (byte) ((-1) - (((-1) - ((int) value)) & ((-1) - 128))));
+                    value >>>= 7;
+                    i5++;
+                }
+                i2 = i5 + 1;
+                UnsafeUtil.putByte(this.buffer, i5, (byte) value);
+            }
+            this.position = i2;
+        }
+    }
+
+    private static final class ByteOutputEncoder extends AbstractBufferedEncoder {
+        private final ByteOutput out;
+
+        ByteOutputEncoder(ByteOutput out, int bufferSize) {
+            super(bufferSize);
+            if (out == null) {
+                throw new NullPointerException("out");
+            }
+            this.out = out;
+        }
+
+        private void doFlush() throws IOException {
+            this.out.write(this.buffer, 0, this.position);
+            this.position = 0;
+        }
+
+        private void flushIfNotAvailable(int requiredSize) throws IOException {
+            if (this.limit - this.position < requiredSize) {
+                doFlush();
+            }
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream
+        public void flush() throws IOException {
+            if (this.position > 0) {
+                doFlush();
+            }
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream, com.google.protobuf.ByteOutput
+        public void write(byte value) throws IOException {
+            if (this.position == this.limit) {
+                doFlush();
+            }
+            buffer(value);
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream, com.google.protobuf.ByteOutput
+        public void write(ByteBuffer value) throws IOException {
+            flush();
+            int iRemaining = value.remaining();
+            this.out.write(value);
+            this.totalBytesWritten += iRemaining;
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream, com.google.protobuf.ByteOutput
+        public void write(byte[] value, int offset, int length) throws IOException {
+            flush();
+            this.out.write(value, offset, length);
+            this.totalBytesWritten += length;
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream
+        public void writeBool(int i2, boolean z2) throws IOException {
+            flushIfNotAvailable(11);
+            bufferTag(i2, 0);
+            buffer(z2 ? (byte) 1 : (byte) 0);
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream
+        public void writeByteArray(final int fieldNumber, final byte[] value) throws IOException {
+            writeByteArray(fieldNumber, value, 0, value.length);
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream
+        public void writeByteArray(final int fieldNumber, final byte[] value, final int offset, final int length) throws IOException {
+            writeTag(fieldNumber, 2);
+            writeByteArrayNoTag(value, offset, length);
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream
+        public void writeByteArrayNoTag(final byte[] value, int offset, int length) throws IOException {
+            writeUInt32NoTag(length);
+            write(value, offset, length);
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream
+        public void writeByteBuffer(final int fieldNumber, final ByteBuffer value) throws IOException {
+            writeTag(fieldNumber, 2);
+            writeUInt32NoTag(value.capacity());
+            writeRawBytes(value);
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream
+        public void writeBytes(final int fieldNumber, final ByteString value) throws IOException {
+            writeTag(fieldNumber, 2);
+            writeBytesNoTag(value);
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream
+        public void writeBytesNoTag(final ByteString value) throws IOException {
+            writeUInt32NoTag(value.size());
+            value.writeTo(this);
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream
+        public void writeFixed32(final int fieldNumber, final int value) throws IOException {
+            flushIfNotAvailable(14);
+            bufferTag(fieldNumber, 5);
+            bufferFixed32NoTag(value);
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream
+        public void writeFixed32NoTag(final int value) throws IOException {
+            flushIfNotAvailable(4);
+            bufferFixed32NoTag(value);
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream
+        public void writeFixed64(final int fieldNumber, final long value) throws IOException {
+            flushIfNotAvailable(18);
+            bufferTag(fieldNumber, 1);
+            bufferFixed64NoTag(value);
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream
+        public void writeFixed64NoTag(final long value) throws IOException {
+            flushIfNotAvailable(8);
+            bufferFixed64NoTag(value);
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream
+        public void writeInt32(final int fieldNumber, final int value) throws IOException {
+            flushIfNotAvailable(20);
+            bufferTag(fieldNumber, 0);
+            bufferInt32NoTag(value);
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream
+        public void writeInt32NoTag(int value) throws IOException {
+            if (value >= 0) {
+                writeUInt32NoTag(value);
+            } else {
+                writeUInt64NoTag(value);
+            }
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream, com.google.protobuf.ByteOutput
+        public void writeLazy(ByteBuffer value) throws IOException {
+            flush();
+            int iRemaining = value.remaining();
+            this.out.writeLazy(value);
+            this.totalBytesWritten += iRemaining;
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream, com.google.protobuf.ByteOutput
+        public void writeLazy(byte[] value, int offset, int length) throws IOException {
+            flush();
+            this.out.writeLazy(value, offset, length);
+            this.totalBytesWritten += length;
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream
+        public void writeMessage(final int fieldNumber, final MessageLite value) throws IOException {
+            writeTag(fieldNumber, 2);
+            writeMessageNoTag(value);
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream
+        void writeMessage(final int fieldNumber, final MessageLite value, Schema schema) throws IOException {
+            writeTag(fieldNumber, 2);
+            writeMessageNoTag(value, schema);
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream
+        public void writeMessageNoTag(final MessageLite value) throws IOException {
+            writeUInt32NoTag(value.getSerializedSize());
+            value.writeTo(this);
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream
+        void writeMessageNoTag(final MessageLite value, Schema schema) throws IOException {
+            writeUInt32NoTag(((AbstractMessageLite) value).getSerializedSize(schema));
+            schema.writeTo(value, this.wrapper);
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream
+        public void writeMessageSetExtension(final int fieldNumber, final MessageLite value) throws IOException {
+            writeTag(1, 3);
+            writeUInt32(2, fieldNumber);
+            writeMessage(3, value);
+            writeTag(1, 4);
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream
+        public void writeRawBytes(final ByteBuffer value) throws IOException {
+            if (value.hasArray()) {
+                write(value.array(), value.arrayOffset(), value.capacity());
+                return;
+            }
+            ByteBuffer byteBufferDuplicate = value.duplicate();
+            Java8Compatibility.clear(byteBufferDuplicate);
+            write(byteBufferDuplicate);
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream
+        public void writeRawMessageSetExtension(final int fieldNumber, final ByteString value) throws IOException {
+            writeTag(1, 3);
+            writeUInt32(2, fieldNumber);
+            writeBytes(3, value);
+            writeTag(1, 4);
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream
+        public void writeString(final int fieldNumber, final String value) throws IOException {
+            writeTag(fieldNumber, 2);
+            writeStringNoTag(value);
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream
+        public void writeStringNoTag(String value) throws IOException {
+            int length = value.length() * 3;
+            int iComputeUInt32SizeNoTag = computeUInt32SizeNoTag(length);
+            int i2 = iComputeUInt32SizeNoTag + length;
+            if (i2 > this.limit) {
+                byte[] bArr = new byte[length];
+                int iEncode = Utf8.encode(value, bArr, 0, length);
+                writeUInt32NoTag(iEncode);
+                writeLazy(bArr, 0, iEncode);
+                return;
+            }
+            if (i2 > this.limit - this.position) {
+                doFlush();
+            }
+            int i3 = this.position;
+            try {
+                int iComputeUInt32SizeNoTag2 = computeUInt32SizeNoTag(value.length());
+                if (iComputeUInt32SizeNoTag2 == iComputeUInt32SizeNoTag) {
+                    this.position = i3 + iComputeUInt32SizeNoTag2;
+                    int iEncode2 = Utf8.encode(value, this.buffer, this.position, this.limit - this.position);
+                    this.position = i3;
+                    int i4 = (iEncode2 - i3) - iComputeUInt32SizeNoTag2;
+                    bufferUInt32NoTag(i4);
+                    this.position = iEncode2;
+                    this.totalBytesWritten += i4;
+                } else {
+                    int iEncodedLength = Utf8.encodedLength(value);
+                    bufferUInt32NoTag(iEncodedLength);
+                    this.position = Utf8.encode(value, this.buffer, this.position, iEncodedLength);
+                    this.totalBytesWritten += iEncodedLength;
+                }
+            } catch (Utf8.UnpairedSurrogateException e2) {
+                this.totalBytesWritten -= this.position - i3;
+                this.position = i3;
+                inefficientWriteStringNoTag(value, e2);
+            } catch (IndexOutOfBoundsException e3) {
+                throw new OutOfSpaceException(e3);
+            }
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream
+        public void writeTag(final int fieldNumber, final int wireType) throws IOException {
+            writeUInt32NoTag(WireFormat.makeTag(fieldNumber, wireType));
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream
+        public void writeUInt32(final int fieldNumber, final int value) throws IOException {
+            flushIfNotAvailable(20);
+            bufferTag(fieldNumber, 0);
+            bufferUInt32NoTag(value);
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream
+        public void writeUInt32NoTag(int value) throws IOException {
+            flushIfNotAvailable(5);
+            bufferUInt32NoTag(value);
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream
+        public void writeUInt64(final int fieldNumber, final long value) throws IOException {
+            flushIfNotAvailable(20);
+            bufferTag(fieldNumber, 0);
+            bufferUInt64NoTag(value);
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream
+        public void writeUInt64NoTag(long value) throws IOException {
+            flushIfNotAvailable(10);
+            bufferUInt64NoTag(value);
+        }
+    }
+
+    private static final class HeapNioEncoder extends ArrayEncoder {
+        private final ByteBuffer byteBuffer;
+        private int initialPosition;
+
+        HeapNioEncoder(ByteBuffer byteBuffer) {
+            super(byteBuffer.array(), byteBuffer.arrayOffset() + byteBuffer.position(), byteBuffer.remaining());
+            this.byteBuffer = byteBuffer;
+            this.initialPosition = byteBuffer.position();
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream.ArrayEncoder, com.google.protobuf.CodedOutputStream
+        public void flush() {
+            Java8Compatibility.position(this.byteBuffer, this.initialPosition + getTotalBytesWritten());
+        }
+    }
+
+    public static class OutOfSpaceException extends IOException {
+        private static final String MESSAGE = "CodedOutputStream was writing to a flat byte array and ran out of space.";
+        private static final long serialVersionUID = -6947486886997889499L;
+
+        OutOfSpaceException() {
+            super(MESSAGE);
+        }
+
+        OutOfSpaceException(int position, int limit, int length) {
+            this(position, limit, length, (Throwable) null);
+        }
+
+        OutOfSpaceException(int position, int limit, int length, Throwable cause) {
+            this(position, limit, length, cause);
+        }
+
+        OutOfSpaceException(long position, long limit, int length) {
+            this(position, limit, length, (Throwable) null);
+        }
+
+        OutOfSpaceException(long position, long limit, int length, Throwable cause) {
+            this(String.format(Locale.US, "Pos: %d, limit: %d, len: %d", Long.valueOf(position), Long.valueOf(limit), Integer.valueOf(length)), cause);
+        }
+
+        OutOfSpaceException(String explanationMessage) {
+            super("CodedOutputStream was writing to a flat byte array and ran out of space.: " + explanationMessage);
+        }
+
+        OutOfSpaceException(String explanationMessage, Throwable cause) {
+            super("CodedOutputStream was writing to a flat byte array and ran out of space.: " + explanationMessage, cause);
+        }
+
+        OutOfSpaceException(Throwable cause) {
+            super(MESSAGE, cause);
+        }
+    }
+
+    private static final class OutputStreamEncoder extends AbstractBufferedEncoder {
+        private final OutputStream out;
+
+        OutputStreamEncoder(OutputStream out, int bufferSize) {
+            super(bufferSize);
+            if (out == null) {
+                throw new NullPointerException("out");
+            }
+            this.out = out;
+        }
+
+        private void doFlush() throws IOException {
+            this.out.write(this.buffer, 0, this.position);
+            this.position = 0;
+        }
+
+        private void flushIfNotAvailable(int requiredSize) throws IOException {
+            if (this.limit - this.position < requiredSize) {
+                doFlush();
+            }
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream
+        public void flush() throws IOException {
+            if (this.position > 0) {
+                doFlush();
+            }
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream, com.google.protobuf.ByteOutput
+        public void write(byte value) throws IOException {
+            if (this.position == this.limit) {
+                doFlush();
+            }
+            buffer(value);
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream, com.google.protobuf.ByteOutput
+        public void write(ByteBuffer value) throws IOException {
+            int iRemaining = value.remaining();
+            if (this.limit - this.position >= iRemaining) {
+                value.get(this.buffer, this.position, iRemaining);
+                this.position += iRemaining;
+                this.totalBytesWritten += iRemaining;
+                return;
+            }
+            int i2 = this.limit - this.position;
+            value.get(this.buffer, this.position, i2);
+            int i3 = iRemaining - i2;
+            this.position = this.limit;
+            this.totalBytesWritten += i2;
+            doFlush();
+            while (i3 > this.limit) {
+                value.get(this.buffer, 0, this.limit);
+                this.out.write(this.buffer, 0, this.limit);
+                i3 -= this.limit;
+                this.totalBytesWritten += this.limit;
+            }
+            value.get(this.buffer, 0, i3);
+            this.position = i3;
+            this.totalBytesWritten += i3;
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream, com.google.protobuf.ByteOutput
+        public void write(byte[] value, int offset, int length) throws IOException {
+            if (this.limit - this.position >= length) {
+                System.arraycopy(value, offset, this.buffer, this.position, length);
+                this.position += length;
+                this.totalBytesWritten += length;
+                return;
+            }
+            int i2 = this.limit - this.position;
+            System.arraycopy(value, offset, this.buffer, this.position, i2);
+            int i3 = offset + i2;
+            int i4 = length - i2;
+            this.position = this.limit;
+            this.totalBytesWritten += i2;
+            doFlush();
+            if (i4 <= this.limit) {
+                System.arraycopy(value, i3, this.buffer, 0, i4);
+                this.position = i4;
+            } else {
+                this.out.write(value, i3, i4);
+            }
+            this.totalBytesWritten += i4;
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream
+        public void writeBool(int i2, boolean z2) throws IOException {
+            flushIfNotAvailable(11);
+            bufferTag(i2, 0);
+            buffer(z2 ? (byte) 1 : (byte) 0);
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream
+        public void writeByteArray(final int fieldNumber, final byte[] value) throws IOException {
+            writeByteArray(fieldNumber, value, 0, value.length);
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream
+        public void writeByteArray(final int fieldNumber, final byte[] value, final int offset, final int length) throws IOException {
+            writeTag(fieldNumber, 2);
+            writeByteArrayNoTag(value, offset, length);
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream
+        public void writeByteArrayNoTag(final byte[] value, int offset, int length) throws IOException {
+            writeUInt32NoTag(length);
+            write(value, offset, length);
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream
+        public void writeByteBuffer(final int fieldNumber, final ByteBuffer value) throws IOException {
+            writeTag(fieldNumber, 2);
+            writeUInt32NoTag(value.capacity());
+            writeRawBytes(value);
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream
+        public void writeBytes(final int fieldNumber, final ByteString value) throws IOException {
+            writeTag(fieldNumber, 2);
+            writeBytesNoTag(value);
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream
+        public void writeBytesNoTag(final ByteString value) throws IOException {
+            writeUInt32NoTag(value.size());
+            value.writeTo(this);
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream
+        public void writeFixed32(final int fieldNumber, final int value) throws IOException {
+            flushIfNotAvailable(14);
+            bufferTag(fieldNumber, 5);
+            bufferFixed32NoTag(value);
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream
+        public void writeFixed32NoTag(final int value) throws IOException {
+            flushIfNotAvailable(4);
+            bufferFixed32NoTag(value);
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream
+        public void writeFixed64(final int fieldNumber, final long value) throws IOException {
+            flushIfNotAvailable(18);
+            bufferTag(fieldNumber, 1);
+            bufferFixed64NoTag(value);
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream
+        public void writeFixed64NoTag(final long value) throws IOException {
+            flushIfNotAvailable(8);
+            bufferFixed64NoTag(value);
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream
+        public void writeInt32(final int fieldNumber, final int value) throws IOException {
+            flushIfNotAvailable(20);
+            bufferTag(fieldNumber, 0);
+            bufferInt32NoTag(value);
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream
+        public void writeInt32NoTag(int value) throws IOException {
+            if (value >= 0) {
+                writeUInt32NoTag(value);
+            } else {
+                writeUInt64NoTag(value);
+            }
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream, com.google.protobuf.ByteOutput
+        public void writeLazy(ByteBuffer value) throws IOException {
+            write(value);
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream, com.google.protobuf.ByteOutput
+        public void writeLazy(byte[] value, int offset, int length) throws IOException {
+            write(value, offset, length);
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream
+        public void writeMessage(final int fieldNumber, final MessageLite value) throws IOException {
+            writeTag(fieldNumber, 2);
+            writeMessageNoTag(value);
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream
+        void writeMessage(final int fieldNumber, final MessageLite value, Schema schema) throws IOException {
+            writeTag(fieldNumber, 2);
+            writeMessageNoTag(value, schema);
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream
+        public void writeMessageNoTag(final MessageLite value) throws IOException {
+            writeUInt32NoTag(value.getSerializedSize());
+            value.writeTo(this);
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream
+        void writeMessageNoTag(final MessageLite value, Schema schema) throws IOException {
+            writeUInt32NoTag(((AbstractMessageLite) value).getSerializedSize(schema));
+            schema.writeTo(value, this.wrapper);
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream
+        public void writeMessageSetExtension(final int fieldNumber, final MessageLite value) throws IOException {
+            writeTag(1, 3);
+            writeUInt32(2, fieldNumber);
+            writeMessage(3, value);
+            writeTag(1, 4);
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream
+        public void writeRawBytes(final ByteBuffer value) throws IOException {
+            if (value.hasArray()) {
+                write(value.array(), value.arrayOffset(), value.capacity());
+                return;
+            }
+            ByteBuffer byteBufferDuplicate = value.duplicate();
+            Java8Compatibility.clear(byteBufferDuplicate);
+            write(byteBufferDuplicate);
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream
+        public void writeRawMessageSetExtension(final int fieldNumber, final ByteString value) throws IOException {
+            writeTag(1, 3);
+            writeUInt32(2, fieldNumber);
+            writeBytes(3, value);
+            writeTag(1, 4);
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream
+        public void writeString(final int fieldNumber, final String value) throws IOException {
+            writeTag(fieldNumber, 2);
+            writeStringNoTag(value);
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream
+        public void writeStringNoTag(String value) throws IOException {
+            int iEncodedLength;
+            try {
+                int length = value.length() * 3;
+                int iComputeUInt32SizeNoTag = computeUInt32SizeNoTag(length);
+                int i2 = iComputeUInt32SizeNoTag + length;
+                if (i2 > this.limit) {
+                    byte[] bArr = new byte[length];
+                    int iEncode = Utf8.encode(value, bArr, 0, length);
+                    writeUInt32NoTag(iEncode);
+                    writeLazy(bArr, 0, iEncode);
+                    return;
+                }
+                if (i2 > this.limit - this.position) {
+                    doFlush();
+                }
+                int iComputeUInt32SizeNoTag2 = computeUInt32SizeNoTag(value.length());
+                int i3 = this.position;
+                try {
+                    if (iComputeUInt32SizeNoTag2 == iComputeUInt32SizeNoTag) {
+                        this.position = i3 + iComputeUInt32SizeNoTag2;
+                        int iEncode2 = Utf8.encode(value, this.buffer, this.position, this.limit - this.position);
+                        this.position = i3;
+                        iEncodedLength = (iEncode2 - i3) - iComputeUInt32SizeNoTag2;
+                        bufferUInt32NoTag(iEncodedLength);
+                        this.position = iEncode2;
+                    } else {
+                        iEncodedLength = Utf8.encodedLength(value);
+                        bufferUInt32NoTag(iEncodedLength);
+                        this.position = Utf8.encode(value, this.buffer, this.position, iEncodedLength);
+                    }
+                    this.totalBytesWritten += iEncodedLength;
+                } catch (Utf8.UnpairedSurrogateException e2) {
+                    this.totalBytesWritten -= this.position - i3;
+                    this.position = i3;
+                    throw e2;
+                } catch (ArrayIndexOutOfBoundsException e3) {
+                    throw new OutOfSpaceException(e3);
+                }
+            } catch (Utf8.UnpairedSurrogateException e4) {
+                inefficientWriteStringNoTag(value, e4);
+            }
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream
+        public void writeTag(final int fieldNumber, final int wireType) throws IOException {
+            writeUInt32NoTag(WireFormat.makeTag(fieldNumber, wireType));
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream
+        public void writeUInt32(final int fieldNumber, final int value) throws IOException {
+            flushIfNotAvailable(20);
+            bufferTag(fieldNumber, 0);
+            bufferUInt32NoTag(value);
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream
+        public void writeUInt32NoTag(int value) throws IOException {
+            flushIfNotAvailable(5);
+            bufferUInt32NoTag(value);
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream
+        public void writeUInt64(final int fieldNumber, final long value) throws IOException {
+            flushIfNotAvailable(20);
+            bufferTag(fieldNumber, 0);
+            bufferUInt64NoTag(value);
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream
+        public void writeUInt64NoTag(long value) throws IOException {
+            flushIfNotAvailable(10);
+            bufferUInt64NoTag(value);
+        }
+    }
+
+    private static final class SafeDirectNioEncoder extends CodedOutputStream {
+        private final ByteBuffer buffer;
+        private final int initialPosition;
+        private final ByteBuffer originalBuffer;
+
+        SafeDirectNioEncoder(ByteBuffer buffer) {
+            super();
+            this.originalBuffer = buffer;
+            this.buffer = buffer.duplicate().order(ByteOrder.LITTLE_ENDIAN);
+            this.initialPosition = buffer.position();
+        }
+
+        private void encode(String value) throws IOException {
+            try {
+                Utf8.encodeUtf8(value, this.buffer);
+            } catch (IndexOutOfBoundsException e2) {
+                throw new OutOfSpaceException(e2);
+            }
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream
+        public void flush() {
+            Java8Compatibility.position(this.originalBuffer, this.buffer.position());
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream
+        public int getTotalBytesWritten() {
+            return this.buffer.position() - this.initialPosition;
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream
+        public int spaceLeft() {
+            return this.buffer.remaining();
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream, com.google.protobuf.ByteOutput
+        public void write(byte value) throws IOException {
+            try {
+                this.buffer.put(value);
+            } catch (BufferOverflowException e2) {
+                throw new OutOfSpaceException(this.buffer.position(), this.buffer.limit(), 1, (Throwable) e2);
+            }
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream, com.google.protobuf.ByteOutput
+        public void write(ByteBuffer value) throws IOException {
+            try {
+                this.buffer.put(value);
+            } catch (BufferOverflowException e2) {
+                throw new OutOfSpaceException(e2);
+            }
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream, com.google.protobuf.ByteOutput
+        public void write(byte[] value, int offset, int length) throws IOException {
+            try {
+                this.buffer.put(value, offset, length);
+            } catch (IndexOutOfBoundsException e2) {
+                throw new OutOfSpaceException(e2);
+            } catch (BufferOverflowException e3) {
+                throw new OutOfSpaceException(e3);
+            }
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream
+        public void writeBool(int i2, boolean z2) throws IOException {
+            writeTag(i2, 0);
+            write(z2 ? (byte) 1 : (byte) 0);
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream
+        public void writeByteArray(final int fieldNumber, final byte[] value) throws IOException {
+            writeByteArray(fieldNumber, value, 0, value.length);
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream
+        public void writeByteArray(final int fieldNumber, final byte[] value, final int offset, final int length) throws IOException {
+            writeTag(fieldNumber, 2);
+            writeByteArrayNoTag(value, offset, length);
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream
+        public void writeByteArrayNoTag(final byte[] value, int offset, int length) throws IOException {
+            writeUInt32NoTag(length);
+            write(value, offset, length);
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream
+        public void writeByteBuffer(final int fieldNumber, final ByteBuffer value) throws IOException {
+            writeTag(fieldNumber, 2);
+            writeUInt32NoTag(value.capacity());
+            writeRawBytes(value);
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream
+        public void writeBytes(final int fieldNumber, final ByteString value) throws IOException {
+            writeTag(fieldNumber, 2);
+            writeBytesNoTag(value);
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream
+        public void writeBytesNoTag(final ByteString value) throws IOException {
+            writeUInt32NoTag(value.size());
+            value.writeTo(this);
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream
+        public void writeFixed32(final int fieldNumber, final int value) throws IOException {
+            writeTag(fieldNumber, 5);
+            writeFixed32NoTag(value);
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream
+        public void writeFixed32NoTag(int value) throws IOException {
+            try {
+                this.buffer.putInt(value);
+            } catch (BufferOverflowException e2) {
+                throw new OutOfSpaceException(this.buffer.position(), this.buffer.limit(), 4, (Throwable) e2);
+            }
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream
+        public void writeFixed64(final int fieldNumber, final long value) throws IOException {
+            writeTag(fieldNumber, 1);
+            writeFixed64NoTag(value);
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream
+        public void writeFixed64NoTag(long value) throws IOException {
+            try {
+                this.buffer.putLong(value);
+            } catch (BufferOverflowException e2) {
+                throw new OutOfSpaceException(this.buffer.position(), this.buffer.limit(), 8, (Throwable) e2);
+            }
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream
+        public void writeInt32(final int fieldNumber, final int value) throws IOException {
+            writeTag(fieldNumber, 0);
+            writeInt32NoTag(value);
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream
+        public void writeInt32NoTag(int value) throws IOException {
+            if (value >= 0) {
+                writeUInt32NoTag(value);
+            } else {
+                writeUInt64NoTag(value);
+            }
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream, com.google.protobuf.ByteOutput
+        public void writeLazy(ByteBuffer value) throws IOException {
+            write(value);
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream, com.google.protobuf.ByteOutput
+        public void writeLazy(byte[] value, int offset, int length) throws IOException {
+            write(value, offset, length);
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream
+        public void writeMessage(final int fieldNumber, final MessageLite value) throws IOException {
+            writeTag(fieldNumber, 2);
+            writeMessageNoTag(value);
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream
+        void writeMessage(final int fieldNumber, final MessageLite value, Schema schema) throws IOException {
+            writeTag(fieldNumber, 2);
+            writeMessageNoTag(value, schema);
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream
+        public void writeMessageNoTag(final MessageLite value) throws IOException {
+            writeUInt32NoTag(value.getSerializedSize());
+            value.writeTo(this);
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream
+        void writeMessageNoTag(final MessageLite value, Schema schema) throws IOException {
+            writeUInt32NoTag(((AbstractMessageLite) value).getSerializedSize(schema));
+            schema.writeTo(value, this.wrapper);
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream
+        public void writeMessageSetExtension(final int fieldNumber, final MessageLite value) throws IOException {
+            writeTag(1, 3);
+            writeUInt32(2, fieldNumber);
+            writeMessage(3, value);
+            writeTag(1, 4);
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream
+        public void writeRawBytes(final ByteBuffer value) throws IOException {
+            if (value.hasArray()) {
+                write(value.array(), value.arrayOffset(), value.capacity());
+                return;
+            }
+            ByteBuffer byteBufferDuplicate = value.duplicate();
+            Java8Compatibility.clear(byteBufferDuplicate);
+            write(byteBufferDuplicate);
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream
+        public void writeRawMessageSetExtension(final int fieldNumber, final ByteString value) throws IOException {
+            writeTag(1, 3);
+            writeUInt32(2, fieldNumber);
+            writeBytes(3, value);
+            writeTag(1, 4);
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream
+        public void writeString(final int fieldNumber, final String value) throws IOException {
+            writeTag(fieldNumber, 2);
+            writeStringNoTag(value);
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream
+        public void writeStringNoTag(String value) throws IOException {
+            int iPosition = this.buffer.position();
+            try {
+                int iComputeUInt32SizeNoTag = computeUInt32SizeNoTag(value.length() * 3);
+                int iComputeUInt32SizeNoTag2 = computeUInt32SizeNoTag(value.length());
+                if (iComputeUInt32SizeNoTag2 == iComputeUInt32SizeNoTag) {
+                    int iPosition2 = this.buffer.position() + iComputeUInt32SizeNoTag2;
+                    Java8Compatibility.position(this.buffer, iPosition2);
+                    encode(value);
+                    int iPosition3 = this.buffer.position();
+                    Java8Compatibility.position(this.buffer, iPosition);
+                    writeUInt32NoTag(iPosition3 - iPosition2);
+                    Java8Compatibility.position(this.buffer, iPosition3);
+                } else {
+                    writeUInt32NoTag(Utf8.encodedLength(value));
+                    encode(value);
+                }
+            } catch (Utf8.UnpairedSurrogateException e2) {
+                Java8Compatibility.position(this.buffer, iPosition);
+                inefficientWriteStringNoTag(value, e2);
+            } catch (IllegalArgumentException e3) {
+                throw new OutOfSpaceException(e3);
+            }
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream
+        public void writeTag(final int fieldNumber, final int wireType) throws IOException {
+            writeUInt32NoTag(WireFormat.makeTag(fieldNumber, wireType));
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream
+        public void writeUInt32(final int fieldNumber, final int value) throws IOException {
+            writeTag(fieldNumber, 0);
+            writeUInt32NoTag(value);
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream
+        public void writeUInt32NoTag(int value) throws IOException {
+            while (((-128) & value) != 0) {
+                try {
+                    this.buffer.put((byte) (128 | value));
+                    value >>>= 7;
+                } catch (BufferOverflowException e2) {
+                    throw new OutOfSpaceException(e2);
+                }
+            }
+            this.buffer.put((byte) value);
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream
+        public void writeUInt64(final int fieldNumber, final long value) throws IOException {
+            writeTag(fieldNumber, 0);
+            writeUInt64NoTag(value);
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream
+        public void writeUInt64NoTag(long value) throws IOException {
+            while (((-128) + value) - ((-128) | value) != 0) {
+                try {
+                    int i2 = (int) value;
+                    this.buffer.put((byte) ((i2 + 128) - (i2 & 128)));
+                    value >>>= 7;
+                } catch (BufferOverflowException e2) {
+                    throw new OutOfSpaceException(e2);
+                }
+            }
+            this.buffer.put((byte) value);
+        }
+    }
+
+    private static final class UnsafeDirectNioEncoder extends CodedOutputStream {
+        private final long address;
+        private final ByteBuffer buffer;
+        private final long initialPosition;
+        private final long limit;
+        private final long oneVarintLimit;
+        private final ByteBuffer originalBuffer;
+        private long position;
+
+        UnsafeDirectNioEncoder(ByteBuffer buffer) {
+            super();
+            this.originalBuffer = buffer;
+            this.buffer = buffer.duplicate().order(ByteOrder.LITTLE_ENDIAN);
+            long jAddressOffset = UnsafeUtil.addressOffset(buffer);
+            this.address = jAddressOffset;
+            long jPosition = ((long) buffer.position()) + jAddressOffset;
+            this.initialPosition = jPosition;
+            long jLimit = jAddressOffset + ((long) buffer.limit());
+            this.limit = jLimit;
+            this.oneVarintLimit = jLimit - 10;
+            this.position = jPosition;
+        }
+
+        private int bufferPos(long pos) {
+            return (int) (pos - this.address);
+        }
+
+        static boolean isSupported() {
+            return UnsafeUtil.hasUnsafeByteBufferOperations();
+        }
+
+        private void repositionBuffer(long pos) {
+            Java8Compatibility.position(this.buffer, bufferPos(pos));
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream
+        public void flush() {
+            Java8Compatibility.position(this.originalBuffer, bufferPos(this.position));
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream
+        public int getTotalBytesWritten() {
+            return (int) (this.position - this.initialPosition);
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream
+        public int spaceLeft() {
+            return (int) (this.limit - this.position);
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream, com.google.protobuf.ByteOutput
+        public void write(byte value) throws IOException {
+            long j2 = this.position;
+            if (j2 >= this.limit) {
+                throw new OutOfSpaceException(this.position, this.limit, 1);
+            }
+            this.position = 1 + j2;
+            UnsafeUtil.putByte(j2, value);
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream, com.google.protobuf.ByteOutput
+        public void write(ByteBuffer value) throws IOException {
+            try {
+                int iRemaining = value.remaining();
+                repositionBuffer(this.position);
+                this.buffer.put(value);
+                this.position += (long) iRemaining;
+            } catch (BufferOverflowException e2) {
+                throw new OutOfSpaceException(e2);
+            }
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream, com.google.protobuf.ByteOutput
+        public void write(byte[] value, int offset, int length) throws IOException {
+            if (value != null && offset >= 0 && length >= 0 && value.length - length >= offset) {
+                long j2 = length;
+                long j3 = this.limit - j2;
+                long j4 = this.position;
+                if (j3 >= j4) {
+                    UnsafeUtil.copyMemory(value, offset, j4, j2);
+                    this.position += j2;
+                    return;
+                }
+            }
+            if (value != null) {
+                throw new OutOfSpaceException(this.position, this.limit, length);
+            }
+            throw new NullPointerException("value");
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream
+        public void writeBool(int i2, boolean z2) throws IOException {
+            writeTag(i2, 0);
+            write(z2 ? (byte) 1 : (byte) 0);
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream
+        public void writeByteArray(int fieldNumber, byte[] value) throws IOException {
+            writeByteArray(fieldNumber, value, 0, value.length);
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream
+        public void writeByteArray(int fieldNumber, byte[] value, int offset, int length) throws IOException {
+            writeTag(fieldNumber, 2);
+            writeByteArrayNoTag(value, offset, length);
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream
+        public void writeByteArrayNoTag(byte[] value, int offset, int length) throws IOException {
+            writeUInt32NoTag(length);
+            write(value, offset, length);
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream
+        public void writeByteBuffer(int fieldNumber, ByteBuffer value) throws IOException {
+            writeTag(fieldNumber, 2);
+            writeUInt32NoTag(value.capacity());
+            writeRawBytes(value);
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream
+        public void writeBytes(int fieldNumber, ByteString value) throws IOException {
+            writeTag(fieldNumber, 2);
+            writeBytesNoTag(value);
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream
+        public void writeBytesNoTag(ByteString value) throws IOException {
+            writeUInt32NoTag(value.size());
+            value.writeTo(this);
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream
+        public void writeFixed32(int fieldNumber, int value) throws IOException {
+            writeTag(fieldNumber, 5);
+            writeFixed32NoTag(value);
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream
+        public void writeFixed32NoTag(int value) throws IOException {
+            try {
+                this.buffer.putInt(bufferPos(this.position), value);
+                this.position += 4;
+            } catch (IndexOutOfBoundsException e2) {
+                throw new OutOfSpaceException(this.position, this.limit, 4, e2);
+            }
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream
+        public void writeFixed64(int fieldNumber, long value) throws IOException {
+            writeTag(fieldNumber, 1);
+            writeFixed64NoTag(value);
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream
+        public void writeFixed64NoTag(long value) throws IOException {
+            try {
+                this.buffer.putLong(bufferPos(this.position), value);
+                this.position += 8;
+            } catch (IndexOutOfBoundsException e2) {
+                throw new OutOfSpaceException(this.position, this.limit, 8, e2);
+            }
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream
+        public void writeInt32(int fieldNumber, int value) throws IOException {
+            writeTag(fieldNumber, 0);
+            writeInt32NoTag(value);
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream
+        public void writeInt32NoTag(int value) throws IOException {
+            if (value >= 0) {
+                writeUInt32NoTag(value);
+            } else {
+                writeUInt64NoTag(value);
+            }
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream, com.google.protobuf.ByteOutput
+        public void writeLazy(ByteBuffer value) throws IOException {
+            write(value);
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream, com.google.protobuf.ByteOutput
+        public void writeLazy(byte[] value, int offset, int length) throws IOException {
+            write(value, offset, length);
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream
+        public void writeMessage(int fieldNumber, MessageLite value) throws IOException {
+            writeTag(fieldNumber, 2);
+            writeMessageNoTag(value);
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream
+        void writeMessage(int fieldNumber, MessageLite value, Schema schema) throws IOException {
+            writeTag(fieldNumber, 2);
+            writeMessageNoTag(value, schema);
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream
+        public void writeMessageNoTag(MessageLite value) throws IOException {
+            writeUInt32NoTag(value.getSerializedSize());
+            value.writeTo(this);
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream
+        void writeMessageNoTag(MessageLite value, Schema schema) throws IOException {
+            writeUInt32NoTag(((AbstractMessageLite) value).getSerializedSize(schema));
+            schema.writeTo(value, this.wrapper);
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream
+        public void writeMessageSetExtension(int fieldNumber, MessageLite value) throws IOException {
+            writeTag(1, 3);
+            writeUInt32(2, fieldNumber);
+            writeMessage(3, value);
+            writeTag(1, 4);
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream
+        public void writeRawBytes(ByteBuffer value) throws IOException {
+            if (value.hasArray()) {
+                write(value.array(), value.arrayOffset(), value.capacity());
+                return;
+            }
+            ByteBuffer byteBufferDuplicate = value.duplicate();
+            Java8Compatibility.clear(byteBufferDuplicate);
+            write(byteBufferDuplicate);
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream
+        public void writeRawMessageSetExtension(int fieldNumber, ByteString value) throws IOException {
+            writeTag(1, 3);
+            writeUInt32(2, fieldNumber);
+            writeBytes(3, value);
+            writeTag(1, 4);
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream
+        public void writeString(int fieldNumber, String value) throws IOException {
+            writeTag(fieldNumber, 2);
+            writeStringNoTag(value);
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream
+        public void writeStringNoTag(String value) throws IOException {
+            long j2 = this.position;
+            try {
+                int iComputeUInt32SizeNoTag = computeUInt32SizeNoTag(value.length() * 3);
+                int iComputeUInt32SizeNoTag2 = computeUInt32SizeNoTag(value.length());
+                if (iComputeUInt32SizeNoTag2 == iComputeUInt32SizeNoTag) {
+                    int iBufferPos = bufferPos(this.position) + iComputeUInt32SizeNoTag2;
+                    Java8Compatibility.position(this.buffer, iBufferPos);
+                    Utf8.encodeUtf8(value, this.buffer);
+                    int iPosition = this.buffer.position() - iBufferPos;
+                    writeUInt32NoTag(iPosition);
+                    this.position += (long) iPosition;
+                } else {
+                    int iEncodedLength = Utf8.encodedLength(value);
+                    writeUInt32NoTag(iEncodedLength);
+                    repositionBuffer(this.position);
+                    Utf8.encodeUtf8(value, this.buffer);
+                    this.position += (long) iEncodedLength;
+                }
+            } catch (Utf8.UnpairedSurrogateException e2) {
+                this.position = j2;
+                repositionBuffer(j2);
+                inefficientWriteStringNoTag(value, e2);
+            } catch (IllegalArgumentException e3) {
+                throw new OutOfSpaceException(e3);
+            } catch (IndexOutOfBoundsException e4) {
+                throw new OutOfSpaceException(e4);
+            }
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream
+        public void writeTag(int fieldNumber, int wireType) throws IOException {
+            writeUInt32NoTag(WireFormat.makeTag(fieldNumber, wireType));
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream
+        public void writeUInt32(int fieldNumber, int value) throws IOException {
+            writeTag(fieldNumber, 0);
+            writeUInt32NoTag(value);
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream
+        public void writeUInt32NoTag(int value) throws IOException {
+            long j2;
+            long j3 = this.position;
+            if (j3 > this.oneVarintLimit) {
+                while (j3 < this.limit) {
+                    if ((-1) - (((-1) - value) | ((-1) - (-128))) == 0) {
+                        j2 = 1 + j3;
+                        UnsafeUtil.putByte(j3, (byte) value);
+                    } else {
+                        UnsafeUtil.putByte(j3, (byte) (128 | value));
+                        value >>>= 7;
+                        j3++;
+                    }
+                }
+                throw new OutOfSpaceException(String.format("Pos: %d, limit: %d, len: %d", Long.valueOf(j3), Long.valueOf(this.limit), 1));
+            }
+            while (((-128) & value) != 0) {
+                UnsafeUtil.putByte(j3, (byte) ((value + 128) - (128 & value)));
+                value >>>= 7;
+                j3++;
+            }
+            j2 = 1 + j3;
+            UnsafeUtil.putByte(j3, (byte) value);
+            this.position = j2;
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream
+        public void writeUInt64(int fieldNumber, long value) throws IOException {
+            writeTag(fieldNumber, 0);
+            writeUInt64NoTag(value);
+        }
+
+        @Override // com.google.protobuf.CodedOutputStream
+        public void writeUInt64NoTag(long value) throws IOException {
+            long j2;
+            long j3 = value;
+            long j4 = this.position;
+            if (j4 > this.oneVarintLimit) {
+                while (j4 < this.limit) {
+                    if ((j3 & (-128)) == 0) {
+                        j2 = 1 + j4;
+                        UnsafeUtil.putByte(j4, (byte) j3);
+                    } else {
+                        UnsafeUtil.putByte(j4, (byte) ((-1) - (((-1) - ((int) j3)) & ((-1) - 128))));
+                        j3 >>>= 7;
+                        j4++;
+                    }
+                }
+                throw new OutOfSpaceException(j4, this.limit, 1);
+            }
+            while ((j3 - 128) - (j3 | (-128)) != 0) {
+                int i2 = (int) j3;
+                UnsafeUtil.putByte(j4, (byte) ((i2 + 128) - (i2 & 128)));
+                j3 >>>= 7;
+                j4++;
+            }
+            j2 = 1 + j4;
+            UnsafeUtil.putByte(j4, (byte) j3);
+            this.position = j2;
+        }
+    }
+
+    private CodedOutputStream() {
+    }
+
+    /* synthetic */ CodedOutputStream(AnonymousClass1 anonymousClass1) {
+        this();
+    }
+
+    public static int computeBoolSize(final int fieldNumber, final boolean value) {
+        return computeTagSize(fieldNumber) + computeBoolSizeNoTag(value);
+    }
+
+    public static int computeBoolSizeNoTag(final boolean unused) {
+        return 1;
+    }
+
+    public static int computeByteArraySize(final int fieldNumber, final byte[] value) {
+        return computeTagSize(fieldNumber) + computeByteArraySizeNoTag(value);
+    }
+
+    public static int computeByteArraySizeNoTag(final byte[] value) {
+        return computeLengthDelimitedFieldSize(value.length);
+    }
+
+    public static int computeByteBufferSize(final int fieldNumber, final ByteBuffer value) {
+        return computeTagSize(fieldNumber) + computeByteBufferSizeNoTag(value);
+    }
+
+    public static int computeByteBufferSizeNoTag(final ByteBuffer value) {
+        return computeLengthDelimitedFieldSize(value.capacity());
+    }
+
+    public static int computeBytesSize(final int fieldNumber, final ByteString value) {
+        return computeTagSize(fieldNumber) + computeBytesSizeNoTag(value);
+    }
+
+    public static int computeBytesSizeNoTag(final ByteString value) {
+        return computeLengthDelimitedFieldSize(value.size());
+    }
+
+    public static int computeDoubleSize(final int fieldNumber, final double value) {
+        return computeTagSize(fieldNumber) + computeDoubleSizeNoTag(value);
+    }
+
+    public static int computeDoubleSizeNoTag(final double unused) {
+        return 8;
+    }
+
+    public static int computeEnumSize(final int fieldNumber, final int value) {
+        return computeTagSize(fieldNumber) + computeEnumSizeNoTag(value);
+    }
+
+    public static int computeEnumSizeNoTag(final int value) {
+        return computeInt32SizeNoTag(value);
+    }
+
+    public static int computeFixed32Size(final int fieldNumber, final int value) {
+        return computeTagSize(fieldNumber) + computeFixed32SizeNoTag(value);
+    }
+
+    public static int computeFixed32SizeNoTag(final int unused) {
+        return 4;
+    }
+
+    public static int computeFixed64Size(final int fieldNumber, final long value) {
+        return computeTagSize(fieldNumber) + computeFixed64SizeNoTag(value);
+    }
+
+    public static int computeFixed64SizeNoTag(final long unused) {
+        return 8;
+    }
+
+    public static int computeFloatSize(final int fieldNumber, final float value) {
+        return computeTagSize(fieldNumber) + computeFloatSizeNoTag(value);
+    }
+
+    public static int computeFloatSizeNoTag(final float unused) {
+        return 4;
+    }
+
+    @Deprecated
+    public static int computeGroupSize(final int fieldNumber, final MessageLite value) {
+        return (computeTagSize(fieldNumber) * 2) + value.getSerializedSize();
+    }
+
+    @Deprecated
+    static int computeGroupSize(final int fieldNumber, final MessageLite value, Schema schema) {
+        return (computeTagSize(fieldNumber) * 2) + computeGroupSizeNoTag(value, schema);
+    }
+
+    @Deprecated
+    public static int computeGroupSizeNoTag(final MessageLite value) {
+        return value.getSerializedSize();
+    }
+
+    @Deprecated
+    static int computeGroupSizeNoTag(final MessageLite value, Schema schema) {
+        return ((AbstractMessageLite) value).getSerializedSize(schema);
+    }
+
+    public static int computeInt32Size(final int fieldNumber, final int value) {
+        return computeTagSize(fieldNumber) + computeInt32SizeNoTag(value);
+    }
+
+    public static int computeInt32SizeNoTag(final int value) {
+        return computeUInt64SizeNoTag(value);
+    }
+
+    public static int computeInt64Size(final int fieldNumber, final long value) {
+        return computeTagSize(fieldNumber) + computeInt64SizeNoTag(value);
+    }
+
+    public static int computeInt64SizeNoTag(final long value) {
+        return computeUInt64SizeNoTag(value);
+    }
+
+    public static int computeLazyFieldMessageSetExtensionSize(final int fieldNumber, final LazyFieldLite value) {
+        return (computeTagSize(1) * 2) + computeUInt32Size(2, fieldNumber) + computeLazyFieldSize(3, value);
+    }
+
+    public static int computeLazyFieldSize(final int fieldNumber, final LazyFieldLite value) {
+        return computeTagSize(fieldNumber) + computeLazyFieldSizeNoTag(value);
+    }
+
+    public static int computeLazyFieldSizeNoTag(final LazyFieldLite value) {
+        return computeLengthDelimitedFieldSize(value.getSerializedSize());
+    }
+
+    static int computeLengthDelimitedFieldSize(int fieldLength) {
+        return computeUInt32SizeNoTag(fieldLength) + fieldLength;
+    }
+
+    public static int computeMessageSetExtensionSize(final int fieldNumber, final MessageLite value) {
+        return (computeTagSize(1) * 2) + computeUInt32Size(2, fieldNumber) + computeMessageSize(3, value);
+    }
+
+    public static int computeMessageSize(final int fieldNumber, final MessageLite value) {
+        return computeTagSize(fieldNumber) + computeMessageSizeNoTag(value);
+    }
+
+    static int computeMessageSize(final int fieldNumber, final MessageLite value, final Schema schema) {
+        return computeTagSize(fieldNumber) + computeMessageSizeNoTag(value, schema);
+    }
+
+    public static int computeMessageSizeNoTag(final MessageLite value) {
+        return computeLengthDelimitedFieldSize(value.getSerializedSize());
+    }
+
+    static int computeMessageSizeNoTag(final MessageLite value, final Schema schema) {
+        return computeLengthDelimitedFieldSize(((AbstractMessageLite) value).getSerializedSize(schema));
+    }
+
+    static int computePreferredBufferSize(int dataLength) {
+        if (dataLength > 4096) {
+            return 4096;
+        }
+        return dataLength;
+    }
+
+    public static int computeRawMessageSetExtensionSize(final int fieldNumber, final ByteString value) {
+        return (computeTagSize(1) * 2) + computeUInt32Size(2, fieldNumber) + computeBytesSize(3, value);
+    }
+
+    @Deprecated
+    public static int computeRawVarint32Size(final int value) {
+        return computeUInt32SizeNoTag(value);
+    }
+
+    @Deprecated
+    public static int computeRawVarint64Size(long value) {
+        return computeUInt64SizeNoTag(value);
+    }
+
+    public static int computeSFixed32Size(final int fieldNumber, final int value) {
+        return computeTagSize(fieldNumber) + computeSFixed32SizeNoTag(value);
+    }
+
+    public static int computeSFixed32SizeNoTag(final int unused) {
+        return 4;
+    }
+
+    public static int computeSFixed64Size(final int fieldNumber, final long value) {
+        return computeTagSize(fieldNumber) + computeSFixed64SizeNoTag(value);
+    }
+
+    public static int computeSFixed64SizeNoTag(final long unused) {
+        return 8;
+    }
+
+    public static int computeSInt32Size(final int fieldNumber, final int value) {
+        return computeTagSize(fieldNumber) + computeSInt32SizeNoTag(value);
+    }
+
+    public static int computeSInt32SizeNoTag(final int value) {
+        return computeUInt32SizeNoTag(encodeZigZag32(value));
+    }
+
+    public static int computeSInt64Size(final int fieldNumber, final long value) {
+        return computeTagSize(fieldNumber) + computeSInt64SizeNoTag(value);
+    }
+
+    public static int computeSInt64SizeNoTag(final long value) {
+        return computeUInt64SizeNoTag(encodeZigZag64(value));
+    }
+
+    public static int computeStringSize(final int fieldNumber, final String value) {
+        return computeTagSize(fieldNumber) + computeStringSizeNoTag(value);
+    }
+
+    public static int computeStringSizeNoTag(final String value) {
+        int length;
+        try {
+            length = Utf8.encodedLength(value);
+        } catch (Utf8.UnpairedSurrogateException unused) {
+            length = value.getBytes(Internal.UTF_8).length;
+        }
+        return computeLengthDelimitedFieldSize(length);
+    }
+
+    public static int computeTagSize(final int fieldNumber) {
+        return computeUInt32SizeNoTag(WireFormat.makeTag(fieldNumber, 0));
+    }
+
+    public static int computeUInt32Size(final int fieldNumber, final int value) {
+        return computeTagSize(fieldNumber) + computeUInt32SizeNoTag(value);
+    }
+
+    public static int computeUInt32SizeNoTag(final int value) {
+        return (352 - (Integer.numberOfLeadingZeros(value) * 9)) >>> 6;
+    }
+
+    public static int computeUInt64Size(final int fieldNumber, final long value) {
+        return computeTagSize(fieldNumber) + computeUInt64SizeNoTag(value);
+    }
+
+    public static int computeUInt64SizeNoTag(long value) {
+        return (640 - (Long.numberOfLeadingZeros(value) * 9)) >>> 6;
+    }
+
+    public static int encodeZigZag32(final int n2) {
+        return (n2 >> 31) ^ (n2 << 1);
+    }
+
+    public static long encodeZigZag64(final long n2) {
+        return (n2 >> 63) ^ (n2 << 1);
+    }
+
+    static CodedOutputStream newInstance(ByteOutput byteOutput, int bufferSize) {
+        if (bufferSize >= 0) {
+            return new ByteOutputEncoder(byteOutput, bufferSize);
+        }
+        throw new IllegalArgumentException("bufferSize must be positive");
+    }
+
+    public static CodedOutputStream newInstance(final OutputStream output) {
+        return newInstance(output, 4096);
+    }
+
+    public static CodedOutputStream newInstance(final OutputStream output, final int bufferSize) {
+        return new OutputStreamEncoder(output, bufferSize);
+    }
+
+    public static CodedOutputStream newInstance(ByteBuffer buffer) {
+        if (buffer.hasArray()) {
+            return new HeapNioEncoder(buffer);
+        }
+        if (!buffer.isDirect() || buffer.isReadOnly()) {
+            throw new IllegalArgumentException("ByteBuffer is read-only");
+        }
+        return UnsafeDirectNioEncoder.isSupported() ? newUnsafeInstance(buffer) : newSafeInstance(buffer);
+    }
+
+    @Deprecated
+    public static CodedOutputStream newInstance(ByteBuffer byteBuffer, int unused) {
+        return newInstance(byteBuffer);
+    }
+
+    public static CodedOutputStream newInstance(final byte[] flatArray) {
+        return newInstance(flatArray, 0, flatArray.length);
+    }
+
+    public static CodedOutputStream newInstance(final byte[] flatArray, final int offset, final int length) {
+        return new ArrayEncoder(flatArray, offset, length);
+    }
+
+    static CodedOutputStream newSafeInstance(ByteBuffer buffer) {
+        return new SafeDirectNioEncoder(buffer);
+    }
+
+    static CodedOutputStream newUnsafeInstance(ByteBuffer buffer) {
+        return new UnsafeDirectNioEncoder(buffer);
+    }
+
+    public final void checkNoSpaceLeft() {
+        if (spaceLeft() != 0) {
+            throw new IllegalStateException("Did not write as much data as expected.");
+        }
+    }
+
+    public abstract void flush() throws IOException;
+
+    public abstract int getTotalBytesWritten();
+
+    final void inefficientWriteStringNoTag(String value, Utf8.UnpairedSurrogateException cause) throws IOException {
+        logger.log(Level.WARNING, "Converting ill-formed UTF-16. Your Protocol Buffer will not round trip correctly!", (Throwable) cause);
+        byte[] bytes = value.getBytes(Internal.UTF_8);
+        try {
+            writeUInt32NoTag(bytes.length);
+            writeLazy(bytes, 0, bytes.length);
+        } catch (IndexOutOfBoundsException e2) {
+            throw new OutOfSpaceException(e2);
+        }
+    }
+
+    boolean isSerializationDeterministic() {
+        return this.serializationDeterministic;
+    }
+
+    public abstract int spaceLeft();
+
+    public void useDeterministicSerialization() {
+        this.serializationDeterministic = true;
+    }
+
+    @Override // com.google.protobuf.ByteOutput
+    public abstract void write(byte value) throws IOException;
+
+    @Override // com.google.protobuf.ByteOutput
+    public abstract void write(ByteBuffer value) throws IOException;
+
+    @Override // com.google.protobuf.ByteOutput
+    public abstract void write(byte[] value, int offset, int length) throws IOException;
+
+    public abstract void writeBool(int fieldNumber, boolean value) throws IOException;
+
+    public final void writeBoolNoTag(boolean z2) throws IOException {
+        write(z2 ? (byte) 1 : (byte) 0);
+    }
+
+    public abstract void writeByteArray(int fieldNumber, byte[] value) throws IOException;
+
+    public abstract void writeByteArray(int fieldNumber, byte[] value, int offset, int length) throws IOException;
+
+    public final void writeByteArrayNoTag(final byte[] value) throws IOException {
+        writeByteArrayNoTag(value, 0, value.length);
+    }
+
+    abstract void writeByteArrayNoTag(final byte[] value, final int offset, final int length) throws IOException;
+
+    public abstract void writeByteBuffer(int fieldNumber, ByteBuffer value) throws IOException;
+
+    public abstract void writeBytes(int fieldNumber, ByteString value) throws IOException;
+
+    public abstract void writeBytesNoTag(final ByteString value) throws IOException;
+
+    public final void writeDouble(final int fieldNumber, final double value) throws IOException {
+        writeFixed64(fieldNumber, Double.doubleToRawLongBits(value));
+    }
+
+    public final void writeDoubleNoTag(final double value) throws IOException {
+        writeFixed64NoTag(Double.doubleToRawLongBits(value));
+    }
+
+    public final void writeEnum(final int fieldNumber, final int value) throws IOException {
+        writeInt32(fieldNumber, value);
+    }
+
+    public final void writeEnumNoTag(final int value) throws IOException {
+        writeInt32NoTag(value);
+    }
+
+    public abstract void writeFixed32(int fieldNumber, int value) throws IOException;
+
+    public abstract void writeFixed32NoTag(int value) throws IOException;
+
+    public abstract void writeFixed64(int fieldNumber, long value) throws IOException;
+
+    public abstract void writeFixed64NoTag(long value) throws IOException;
+
+    public final void writeFloat(final int fieldNumber, final float value) throws IOException {
+        writeFixed32(fieldNumber, Float.floatToRawIntBits(value));
+    }
+
+    public final void writeFloatNoTag(final float value) throws IOException {
+        writeFixed32NoTag(Float.floatToRawIntBits(value));
+    }
+
+    @Deprecated
+    public final void writeGroup(final int fieldNumber, final MessageLite value) throws IOException {
+        writeTag(fieldNumber, 3);
+        writeGroupNoTag(value);
+        writeTag(fieldNumber, 4);
+    }
+
+    @Deprecated
+    final void writeGroup(final int fieldNumber, final MessageLite value, Schema schema) throws IOException {
+        writeTag(fieldNumber, 3);
+        writeGroupNoTag(value, schema);
+        writeTag(fieldNumber, 4);
+    }
+
+    @Deprecated
+    public final void writeGroupNoTag(final MessageLite value) throws IOException {
+        value.writeTo(this);
+    }
+
+    @Deprecated
+    final void writeGroupNoTag(final MessageLite value, Schema schema) throws IOException {
+        schema.writeTo(value, this.wrapper);
+    }
+
+    public abstract void writeInt32(int fieldNumber, int value) throws IOException;
+
+    public abstract void writeInt32NoTag(final int value) throws IOException;
+
+    public final void writeInt64(final int fieldNumber, final long value) throws IOException {
+        writeUInt64(fieldNumber, value);
+    }
+
+    public final void writeInt64NoTag(final long value) throws IOException {
+        writeUInt64NoTag(value);
+    }
+
+    @Override // com.google.protobuf.ByteOutput
+    public abstract void writeLazy(ByteBuffer value) throws IOException;
+
+    @Override // com.google.protobuf.ByteOutput
+    public abstract void writeLazy(byte[] value, int offset, int length) throws IOException;
+
+    public abstract void writeMessage(final int fieldNumber, final MessageLite value) throws IOException;
+
+    abstract void writeMessage(final int fieldNumber, final MessageLite value, Schema schema) throws IOException;
+
+    public abstract void writeMessageNoTag(final MessageLite value) throws IOException;
+
+    abstract void writeMessageNoTag(final MessageLite value, Schema schema) throws IOException;
+
+    public abstract void writeMessageSetExtension(final int fieldNumber, final MessageLite value) throws IOException;
+
+    public final void writeRawByte(final byte value) throws IOException {
+        write(value);
+    }
+
+    public final void writeRawByte(final int value) throws IOException {
+        write((byte) value);
+    }
+
+    public final void writeRawBytes(final ByteString value) throws IOException {
+        value.writeTo(this);
+    }
+
+    public abstract void writeRawBytes(final ByteBuffer value) throws IOException;
+
+    public final void writeRawBytes(final byte[] value) throws IOException {
+        write(value, 0, value.length);
+    }
+
+    public final void writeRawBytes(final byte[] value, int offset, int length) throws IOException {
+        write(value, offset, length);
+    }
+
+    @Deprecated
+    public final void writeRawLittleEndian32(final int value) throws IOException {
+        writeFixed32NoTag(value);
+    }
+
+    @Deprecated
+    public final void writeRawLittleEndian64(final long value) throws IOException {
+        writeFixed64NoTag(value);
+    }
+
+    public abstract void writeRawMessageSetExtension(final int fieldNumber, final ByteString value) throws IOException;
+
+    @Deprecated
+    public final void writeRawVarint32(int value) throws IOException {
+        writeUInt32NoTag(value);
+    }
+
+    @Deprecated
+    public final void writeRawVarint64(long value) throws IOException {
+        writeUInt64NoTag(value);
+    }
+
+    public final void writeSFixed32(final int fieldNumber, final int value) throws IOException {
+        writeFixed32(fieldNumber, value);
+    }
+
+    public final void writeSFixed32NoTag(final int value) throws IOException {
+        writeFixed32NoTag(value);
+    }
+
+    public final void writeSFixed64(final int fieldNumber, final long value) throws IOException {
+        writeFixed64(fieldNumber, value);
+    }
+
+    public final void writeSFixed64NoTag(final long value) throws IOException {
+        writeFixed64NoTag(value);
+    }
+
+    public final void writeSInt32(final int fieldNumber, final int value) throws IOException {
+        writeUInt32(fieldNumber, encodeZigZag32(value));
+    }
+
+    public final void writeSInt32NoTag(final int value) throws IOException {
+        writeUInt32NoTag(encodeZigZag32(value));
+    }
+
+    public final void writeSInt64(final int fieldNumber, final long value) throws IOException {
+        writeUInt64(fieldNumber, encodeZigZag64(value));
+    }
+
+    public final void writeSInt64NoTag(final long value) throws IOException {
+        writeUInt64NoTag(encodeZigZag64(value));
+    }
+
+    public abstract void writeString(int fieldNumber, String value) throws IOException;
+
+    public abstract void writeStringNoTag(String value) throws IOException;
+
+    public abstract void writeTag(int fieldNumber, int wireType) throws IOException;
+
+    public abstract void writeUInt32(int fieldNumber, int value) throws IOException;
+
+    public abstract void writeUInt32NoTag(int value) throws IOException;
+
+    public abstract void writeUInt64(int fieldNumber, long value) throws IOException;
+
+    public abstract void writeUInt64NoTag(long value) throws IOException;
+}

@@ -1,0 +1,82 @@
+package androidx.compose.ui.text.android;
+
+import android.text.Layout;
+import kotlin.Metadata;
+import kotlin.jvm.internal.Intrinsics;
+import yg.InterfaceC1492Gx;
+
+/*  JADX ERROR: Error in decompile pass: KotlinMetadataDecompile
+    kotlin.metadata.InconsistentKotlinMetadataException: Exception occurred when reading Kotlin metadata
+    	at kotlin.metadata.jvm.internal.JvmReadUtils.readMetadataImpl$kotlin_metadata_jvm(JvmReadUtils.kt:108)
+    	at kotlin.metadata.jvm.KotlinClassMetadata$Companion.readLenient(KotlinClassMetadata.kt:418)
+    	at jadx.plugins.kotlin.metadata.utils.KotlinMetadataExtKt.getKotlinClassMetadata(KotlinMetadataExt.kt:71)
+    	at jadx.plugins.kotlin.metadata.utils.KmClassWrapper$Companion.getWrapper(KmClassWrapper.kt:37)
+    	at jadx.plugins.kotlin.metadata.pass.KotlinMetadataDecompilePass.visit(KotlinMetadataDecompilePass.kt:35)
+    Caused by: kotlin.metadata.internal.protobuf.InvalidProtocolBufferException: Protocol message tag had invalid wire type.
+    	at kotlin.metadata.internal.protobuf.InvalidProtocolBufferException.invalidWireType(InvalidProtocolBufferException.java:99)
+    	at kotlin.metadata.internal.protobuf.CodedInputStream.skipField(CodedInputStream.java:268)
+    	at kotlin.metadata.internal.protobuf.GeneratedMessageLite.parseUnknownField(GeneratedMessageLite.java:73)
+    	at kotlin.metadata.internal.metadata.jvm.JvmProtoBuf$StringTableTypes.<init>(JvmProtoBuf.java:110)
+    	at kotlin.metadata.internal.metadata.jvm.JvmProtoBuf$StringTableTypes.<init>(JvmProtoBuf.java:69)
+    	at kotlin.metadata.internal.metadata.jvm.JvmProtoBuf$StringTableTypes$1.parsePartialFrom(JvmProtoBuf.java:175)
+    	at kotlin.metadata.internal.metadata.jvm.JvmProtoBuf$StringTableTypes$1.parsePartialFrom(JvmProtoBuf.java:170)
+    	at kotlin.metadata.internal.protobuf.AbstractParser.parsePartialFrom(AbstractParser.java:192)
+    	at kotlin.metadata.internal.protobuf.AbstractParser.parsePartialDelimitedFrom(AbstractParser.java:233)
+    	at kotlin.metadata.internal.protobuf.AbstractParser.parseDelimitedFrom(AbstractParser.java:245)
+    	at kotlin.metadata.internal.protobuf.AbstractParser.parseDelimitedFrom(AbstractParser.java:49)
+    	at kotlin.metadata.internal.metadata.jvm.JvmProtoBuf$StringTableTypes.parseDelimitedFrom(JvmProtoBuf.java:1736)
+    	at kotlin.metadata.internal.metadata.jvm.deserialization.JvmProtoBufUtil.readNameResolver(JvmProtoBufUtil.kt:57)
+    	at kotlin.metadata.internal.metadata.jvm.deserialization.JvmProtoBufUtil.readClassDataFrom(JvmProtoBufUtil.kt:37)
+    	at kotlin.metadata.internal.metadata.jvm.deserialization.JvmProtoBufUtil.readClassDataFrom(JvmProtoBufUtil.kt:32)
+    	at kotlin.metadata.jvm.internal.JvmReadUtils.readKmClass$kotlin_metadata_jvm(JvmReadUtils.kt:27)
+    	at kotlin.metadata.jvm.KotlinClassMetadata$Class.<init>(KotlinClassMetadata.kt:95)
+    	at kotlin.metadata.jvm.internal.JvmReadUtils.readMetadataImpl$kotlin_metadata_jvm(JvmReadUtils.kt:50)
+    	... 4 more
+    */
+/* JADX INFO: compiled from: TextLayout.android.kt */
+/* JADX INFO: loaded from: classes4.dex */
+@InterfaceC1492Gx
+@Metadata(bv = {}, d1 = {"Я\u001c\u001d<K!&i\u000eӵLcz\u0004I\u0006F\u000b6B\u0005#4\u0012\u0006\rnʑ?ԅD{߉^R\u0002)Op\u00024ż_$\u007fC\u0004a(\u0002:\t}P\u0018k|Or\u000bq\u0015V\"\u0007kDI\u0004z4܋\u0011̓FoG\u074c\u001e{K<xtd\u0007v݈$أ}\u0005\tɝݻL\u0017"}, d2 = {"\u001a`]1e6BR,Hxh4\b\u0013=eI8\u007f\n\u0010\u0017*V9\nEu2?]|i&m)=)J?m=&\u0015qp\u0015\u0006_7]v4\u001d", "", "u(E", "\u000fK8\u0014A&%3ymt?\u0019Xp\u000fWi\u0015a", "\u001a`]1e6BRb\u000ezq;Fo+y\n8\u000b~\\\u001e\u001bIx\u0016<\u007f4\u000b", "\u000fK8\u0014A&+7zaiX\rid\u0017Eq\u0012h&", "5dc", "D`[BX", "", "Ch\u001cAX?MM&~\u0002^(\u000b\t"}, k = 1, mv = {1, 8, 0}, pn = "", xi = 48, xs = "")
+public final class TextAlignmentAdapter {
+    public static final int $stable = 0;
+    private static final Layout.Alignment ALIGN_LEFT_FRAMEWORK;
+    private static final Layout.Alignment ALIGN_RIGHT_FRAMEWORK;
+    public static final TextAlignmentAdapter INSTANCE = new TextAlignmentAdapter();
+
+    private TextAlignmentAdapter() {
+    }
+
+    static {
+        Layout.Alignment[] alignmentArrValues = Layout.Alignment.values();
+        Layout.Alignment alignment = Layout.Alignment.ALIGN_NORMAL;
+        Layout.Alignment alignment2 = Layout.Alignment.ALIGN_NORMAL;
+        for (Layout.Alignment alignment3 : alignmentArrValues) {
+            if (Intrinsics.areEqual(alignment3.name(), "ALIGN_LEFT")) {
+                alignment = alignment3;
+            } else if (Intrinsics.areEqual(alignment3.name(), "ALIGN_RIGHT")) {
+                alignment2 = alignment3;
+            }
+        }
+        ALIGN_LEFT_FRAMEWORK = alignment;
+        ALIGN_RIGHT_FRAMEWORK = alignment2;
+    }
+
+    public final Layout.Alignment get(int i2) {
+        if (i2 == 0) {
+            return Layout.Alignment.ALIGN_NORMAL;
+        }
+        if (i2 == 1) {
+            return Layout.Alignment.ALIGN_OPPOSITE;
+        }
+        if (i2 == 2) {
+            return Layout.Alignment.ALIGN_CENTER;
+        }
+        if (i2 == 3) {
+            return ALIGN_LEFT_FRAMEWORK;
+        }
+        if (i2 == 4) {
+            return ALIGN_RIGHT_FRAMEWORK;
+        }
+        return Layout.Alignment.ALIGN_NORMAL;
+    }
+}

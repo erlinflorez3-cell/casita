@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:background="@color/onboard_sdk_BackgroundDark"
+    android:padding="32dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <com.incode.welcome_sdk.views.IncodeTextView
+        android:textColor="@color/onboard_sdk_TextColorInverted"
+        android:id="@+id/txtSpoofConfidence"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        app:onboard_sdk_textColor="@color/onboard_sdk_TextColorInverted"
+        style="@style/onboard_sdk_Headline3"/>
+    <com.incode.welcome_sdk.views.IncodeTextView
+        android:textColor="@color/onboard_sdk_TextColorInverted"
+        android:id="@+id/txtBlurriness"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        app:onboard_sdk_textColor="@color/onboard_sdk_TextColorInverted"
+        style="@style/onboard_sdk_Headline3"/>
+    <com.incode.welcome_sdk.views.IncodeTextView
+        android:textColor="@color/onboard_sdk_TextColorInverted"
+        android:id="@+id/txtBrightness"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        app:onboard_sdk_textColor="@color/onboard_sdk_TextColorInverted"
+        style="@style/onboard_sdk_Headline3"/>
+    <com.incode.welcome_sdk.views.IncodeButton
+        android:id="@+id/btnOk"
+        android:layout_marginTop="15dp"
+        android:text="@string/onboard_sdk_ok"
+        style="@style/onboard_sdk_ButtonSecondarySmall"/>
+</LinearLayout>

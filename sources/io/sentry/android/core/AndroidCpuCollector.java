@@ -1,0 +1,85 @@
+package io.sentry.android.core;
+
+import android.os.SystemClock;
+import android.system.Os;
+import android.system.OsConstants;
+import com.squareup.wire.internal.MathMethodsKt;
+import io.sentry.CpuCollectionData;
+import io.sentry.ILogger;
+import io.sentry.IPerformanceSnapshotCollector;
+import io.sentry.PerformanceCollectionData;
+import io.sentry.SentryLevel;
+import io.sentry.util.FileUtils;
+import io.sentry.util.Objects;
+import java.io.File;
+import java.io.IOException;
+import java.util.regex.Pattern;
+
+/* JADX INFO: loaded from: classes6.dex */
+public final class AndroidCpuCollector implements IPerformanceSnapshotCollector {
+    private final BuildInfoProvider buildInfoProvider;
+    private final ILogger logger;
+    private long lastRealtimeNanos = 0;
+    private long lastCpuNanos = 0;
+    private long clockSpeedHz = 1;
+    private long numCores = 1;
+    private final long NANOSECOND_PER_SECOND = MathMethodsKt.NANOS_PER_SECOND;
+    private double nanosecondsPerClockTick = 1.0E9d / 1;
+    private final File selfStat = new File("/proc/self/stat");
+    private boolean isEnabled = false;
+    private final Pattern newLinePattern = Pattern.compile("[\n\t\r ]");
+
+    public AndroidCpuCollector(ILogger iLogger, BuildInfoProvider buildInfoProvider) {
+        this.logger = (ILogger) Objects.requireNonNull(iLogger, "Logger is required.");
+        this.buildInfoProvider = (BuildInfoProvider) Objects.requireNonNull(buildInfoProvider, "BuildInfoProvider is required.");
+    }
+
+    private long readTotalCpuNanos() {
+        String text;
+        try {
+            text = FileUtils.readText(this.selfStat);
+        } catch (IOException e2) {
+            this.isEnabled = false;
+            this.logger.log(SentryLevel.WARNING, "Unable to read /proc/self/stat file. Disabling cpu collection.", e2);
+            text = null;
+        }
+        if (text != null) {
+            String[] strArrSplit = this.newLinePattern.split(text.trim());
+            try {
+                long j2 = Long.parseLong(strArrSplit[13]);
+                long j3 = Long.parseLong(strArrSplit[14]);
+                return (long) ((j2 + j3 + Long.parseLong(strArrSplit[15]) + Long.parseLong(strArrSplit[16])) * this.nanosecondsPerClockTick);
+            } catch (ArrayIndexOutOfBoundsException | NumberFormatException e3) {
+                this.logger.log(SentryLevel.ERROR, "Error parsing /proc/self/stat file.", e3);
+            }
+        }
+        return 0L;
+    }
+
+    @Override // io.sentry.IPerformanceSnapshotCollector
+    public void collect(PerformanceCollectionData performanceCollectionData) {
+        if (this.buildInfoProvider.getSdkInfoVersion() < 21 || !this.isEnabled) {
+            return;
+        }
+        long jElapsedRealtimeNanos = SystemClock.elapsedRealtimeNanos();
+        long j2 = jElapsedRealtimeNanos - this.lastRealtimeNanos;
+        this.lastRealtimeNanos = jElapsedRealtimeNanos;
+        long totalCpuNanos = readTotalCpuNanos();
+        long j3 = totalCpuNanos - this.lastCpuNanos;
+        this.lastCpuNanos = totalCpuNanos;
+        performanceCollectionData.addCpuData(new CpuCollectionData(System.currentTimeMillis(), ((j3 / j2) / this.numCores) * 100.0d));
+    }
+
+    @Override // io.sentry.IPerformanceSnapshotCollector
+    public void setup() {
+        if (this.buildInfoProvider.getSdkInfoVersion() < 21) {
+            this.isEnabled = false;
+            return;
+        }
+        this.isEnabled = true;
+        this.clockSpeedHz = Os.sysconf(OsConstants._SC_CLK_TCK);
+        this.numCores = Os.sysconf(OsConstants._SC_NPROCESSORS_CONF);
+        this.nanosecondsPerClockTick = 1.0E9d / this.clockSpeedHz;
+        this.lastCpuNanos = readTotalCpuNanos();
+    }
+}

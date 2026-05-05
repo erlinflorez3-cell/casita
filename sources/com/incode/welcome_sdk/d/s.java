@@ -1,0 +1,71 @@
+package com.incode.welcome_sdk.d;
+
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewbinding.ViewBinding;
+import androidx.viewbinding.ViewBindings;
+import com.incode.welcome_sdk.R;
+import com.incode.welcome_sdk.commons.ui.DataProtectedView;
+import com.incode.welcome_sdk.views.IncodeButton;
+import com.incode.welcome_sdk.views.IncodeTextView;
+
+/* JADX INFO: loaded from: classes5.dex */
+public final class s implements ViewBinding {
+
+    /* JADX INFO: renamed from: a, reason: collision with root package name */
+    public final IncodeButton f7328a;
+
+    /* JADX INFO: renamed from: b, reason: collision with root package name */
+    private final ConstraintLayout f7329b;
+
+    /* JADX INFO: renamed from: c, reason: collision with root package name */
+    private DataProtectedView f7330c;
+
+    /* JADX INFO: renamed from: d, reason: collision with root package name */
+    private IncodeTextView f7331d;
+
+    /* JADX INFO: renamed from: e, reason: collision with root package name */
+    public final RecyclerView f7332e;
+
+    private s(ConstraintLayout constraintLayout, IncodeButton incodeButton, DataProtectedView dataProtectedView, RecyclerView recyclerView, IncodeTextView incodeTextView) {
+        this.f7329b = constraintLayout;
+        this.f7328a = incodeButton;
+        this.f7330c = dataProtectedView;
+        this.f7332e = recyclerView;
+        this.f7331d = incodeTextView;
+    }
+
+    public final ConstraintLayout e() {
+        return this.f7329b;
+    }
+
+    public static s b(LayoutInflater layoutInflater) {
+        View viewInflate = layoutInflater.inflate(R.layout.onboard_sdk_activity_intro, (ViewGroup) null, false);
+        int i2 = R.id.btnContinue;
+        IncodeButton incodeButton = (IncodeButton) ViewBindings.findChildViewById(viewInflate, i2);
+        if (incodeButton != null) {
+            i2 = R.id.dataProtectedView;
+            DataProtectedView dataProtectedView = (DataProtectedView) ViewBindings.findChildViewById(viewInflate, i2);
+            if (dataProtectedView != null) {
+                i2 = R.id.rvIntroModulesItems;
+                RecyclerView recyclerView = (RecyclerView) ViewBindings.findChildViewById(viewInflate, i2);
+                if (recyclerView != null) {
+                    i2 = R.id.tvTitle;
+                    IncodeTextView incodeTextView = (IncodeTextView) ViewBindings.findChildViewById(viewInflate, i2);
+                    if (incodeTextView != null) {
+                        return new s((ConstraintLayout) viewInflate, incodeButton, dataProtectedView, recyclerView, incodeTextView);
+                    }
+                }
+            }
+        }
+        throw new NullPointerException("Missing required view with ID: ".concat(viewInflate.getResources().getResourceName(i2)));
+    }
+
+    @Override // androidx.viewbinding.ViewBinding
+    public final /* bridge */ /* synthetic */ View getRoot() {
+        return this.f7329b;
+    }
+}

@@ -1,0 +1,61 @@
+package com.google.android.material.motion;
+
+import android.animation.TimeInterpolator;
+import android.content.Context;
+import android.view.View;
+import androidx.activity.BackEventCompat;
+import androidx.core.view.animation.PathInterpolatorCompat;
+import com.google.android.material.R;
+
+/* JADX INFO: loaded from: classes9.dex */
+public abstract class MaterialBackAnimationHelper<V extends View> {
+    private static final int CANCEL_DURATION_DEFAULT = 100;
+    private static final int HIDE_DURATION_MAX_DEFAULT = 300;
+    private static final int HIDE_DURATION_MIN_DEFAULT = 150;
+    private static final String TAG = "MaterialBackHelper";
+    private BackEventCompat backEvent;
+    protected final int cancelDuration;
+    protected final int hideDurationMax;
+    protected final int hideDurationMin;
+    private final TimeInterpolator progressInterpolator;
+    protected final V view;
+
+    public MaterialBackAnimationHelper(V v2) {
+        this.view = v2;
+        Context context = v2.getContext();
+        this.progressInterpolator = MotionUtils.resolveThemeInterpolator(context, R.attr.motionEasingStandardDecelerateInterpolator, PathInterpolatorCompat.create(0.0f, 0.0f, 0.0f, 1.0f));
+        this.hideDurationMax = MotionUtils.resolveThemeDuration(context, R.attr.motionDurationMedium2, 300);
+        this.hideDurationMin = MotionUtils.resolveThemeDuration(context, R.attr.motionDurationShort3, 150);
+        this.cancelDuration = MotionUtils.resolveThemeDuration(context, R.attr.motionDurationShort2, 100);
+    }
+
+    public float interpolateProgress(float f2) {
+        return this.progressInterpolator.getInterpolation(f2);
+    }
+
+    protected BackEventCompat onCancelBackProgress() {
+        if (this.backEvent == null) {
+        }
+        BackEventCompat backEventCompat = this.backEvent;
+        this.backEvent = null;
+        return backEventCompat;
+    }
+
+    public BackEventCompat onHandleBackInvoked() {
+        BackEventCompat backEventCompat = this.backEvent;
+        this.backEvent = null;
+        return backEventCompat;
+    }
+
+    protected void onStartBackProgress(BackEventCompat backEventCompat) {
+        this.backEvent = backEventCompat;
+    }
+
+    protected BackEventCompat onUpdateBackProgress(BackEventCompat backEventCompat) {
+        if (this.backEvent == null) {
+        }
+        BackEventCompat backEventCompat2 = this.backEvent;
+        this.backEvent = backEventCompat;
+        return backEventCompat2;
+    }
+}

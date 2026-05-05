@@ -1,0 +1,26 @@
+package com.google.android.gms.internal.mlkit_vision_internal_vkp;
+
+import java.io.IOException;
+
+/* JADX INFO: loaded from: classes8.dex */
+interface zzbgm<T> {
+    int zza(Object obj);
+
+    int zzb(Object obj);
+
+    Object zze();
+
+    void zzf(Object obj);
+
+    void zzg(Object obj, Object obj2);
+
+    void zzh(Object obj, zzbge zzbgeVar, zzbdv zzbdvVar) throws IOException;
+
+    void zzi(Object obj, byte[] bArr, int i2, int i3, zzbcr zzbcrVar) throws IOException;
+
+    void zzj(Object obj, zzbhs zzbhsVar) throws IOException;
+
+    boolean zzk(Object obj, Object obj2);
+
+    boolean zzl(Object obj);
+}

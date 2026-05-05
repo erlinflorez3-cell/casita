@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <LinearLayout
+        android:gravity="center"
+        android:orientation="vertical"
+        android:background="@drawable/bg_svprogresshuddefault"
+        android:padding="@dimen/padding_svprogresshuddefault"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:minWidth="@dimen/size_minwidth_svprogresshuddefault">
+        <ImageView
+            android:id="@+id/ivBigLoading"
+            android:visibility="gone"
+            android:layout_width="@dimen/size_image_bigloading"
+            android:layout_height="@dimen/size_image_bigloading"
+            android:scaleType="fitCenter"/>
+        <ImageView
+            android:id="@+id/ivSmallLoading"
+            android:visibility="gone"
+            android:layout_width="@dimen/size_image_smallloading"
+            android:layout_height="@dimen/size_image_smallloading"
+            android:scaleType="centerInside"/>
+        <com.ticnow.sdk.idnowonboarding.view.progressDialog.SVCircleProgressBar
+            android:id="@+id/circleProgressBar"
+            android:visibility="gone"
+            android:layout_width="@dimen/size_image_smallloading"
+            android:layout_height="@dimen/size_image_smallloading"
+            app:svprogress_roundColor="@color/roundColor_svprogresshuddefault"
+            app:svprogress_roundProgressColor="@color/roundProgressColor_svprogresshuddefault"
+            app:svprogress_roundWidth="2dp"/>
+        <TextView
+            android:textSize="@dimen/textSize_svprogresshuddefault_msg"
+            android:textColor="@color/textColor_svprogresshuddefault_msg"
+            android:gravity="center"
+            android:id="@+id/tvMsg"
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margintop_svprogresshuddefault_msg"/>
+    </LinearLayout>
+</LinearLayout>

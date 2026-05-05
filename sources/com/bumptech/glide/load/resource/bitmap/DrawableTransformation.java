@@ -1,0 +1,94 @@
+package com.bumptech.glide.load.resource.bitmap;
+
+import android.content.Context;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.Transformation;
+import com.bumptech.glide.load.engine.Resource;
+import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.security.MessageDigest;
+import yg.C1499aX;
+import yg.C1561oA;
+import yg.C1580rY;
+import yg.QB;
+import yg.Xu;
+
+/* JADX INFO: loaded from: classes3.dex */
+public class DrawableTransformation implements Transformation<Drawable> {
+    private final boolean isRequired;
+    private final Transformation<Bitmap> wrapped;
+
+    public DrawableTransformation(Transformation<Bitmap> transformation, boolean z2) {
+        this.wrapped = transformation;
+        this.isRequired = z2;
+    }
+
+    private Resource<Drawable> newDrawableResource(Context context, Resource<Bitmap> resource) throws Throwable {
+        Class<?> cls = Class.forName(C1561oA.ud("\u007f\f\u0001\u000e\n\u0003|Ey\u0005\u0003\bw\u007f\u0005=Q|z\u007fo\u0002|", (short) (C1580rY.Xd() ^ (-25631))));
+        Class<?>[] clsArr = new Class[0];
+        Object[] objArr = new Object[0];
+        short sXd = (short) (C1499aX.Xd() ^ (-13866));
+        int[] iArr = new int["EDP/GVOVH:9H".length()];
+        QB qb = new QB("EDP/GVOVH:9H");
+        int i2 = 0;
+        while (qb.YK()) {
+            int iKK = qb.KK();
+            Xu xuXd = Xu.Xd(iKK);
+            iArr[i2] = xuXd.fK(xuXd.CK(iKK) - (sXd ^ i2));
+            i2++;
+        }
+        Method method = cls.getMethod(new String(iArr, 0, i2), clsArr);
+        try {
+            method.setAccessible(true);
+            return LazyBitmapDrawableResource.obtain((Resources) method.invoke(context, objArr), resource);
+        } catch (InvocationTargetException e2) {
+            throw e2.getCause();
+        }
+    }
+
+    public Transformation<BitmapDrawable> asBitmapDrawable() {
+        return this;
+    }
+
+    @Override // com.bumptech.glide.load.Key
+    public boolean equals(Object obj) {
+        if (obj instanceof DrawableTransformation) {
+            return this.wrapped.equals(((DrawableTransformation) obj).wrapped);
+        }
+        return false;
+    }
+
+    @Override // com.bumptech.glide.load.Key
+    public int hashCode() {
+        return this.wrapped.hashCode();
+    }
+
+    @Override // com.bumptech.glide.load.Transformation
+    public Resource<Drawable> transform(Context context, Resource<Drawable> resource, int i2, int i3) {
+        BitmapPool bitmapPool = Glide.get(context).getBitmapPool();
+        Drawable drawable = resource.get();
+        Resource<Bitmap> resourceConvert = DrawableToBitmapConverter.convert(bitmapPool, drawable, i2, i3);
+        if (resourceConvert == null) {
+            if (this.isRequired) {
+                throw new IllegalArgumentException("Unable to convert " + drawable + " to a Bitmap");
+            }
+            return resource;
+        }
+        Resource<Bitmap> resourceTransform = this.wrapped.transform(context, resourceConvert, i2, i3);
+        if (!resourceTransform.equals(resourceConvert)) {
+            return newDrawableResource(context, resourceTransform);
+        }
+        resourceTransform.recycle();
+        return resource;
+    }
+
+    @Override // com.bumptech.glide.load.Key
+    public void updateDiskCacheKey(MessageDigest messageDigest) {
+        this.wrapped.updateDiskCacheKey(messageDigest);
+    }
+}

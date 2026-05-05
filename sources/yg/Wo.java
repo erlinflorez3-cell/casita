@@ -1,0 +1,7 @@
+package yg;
+
+/* JADX INFO: loaded from: classes.dex */
+public class Wo {
+    public static void Xd() {
+    }
+}

@@ -1,0 +1,32 @@
+package com.google.android.gms.internal.gtm;
+
+import com.google.android.gms.common.internal.Preconditions;
+import java.util.ArrayList;
+import java.util.List;
+
+/* JADX INFO: loaded from: classes8.dex */
+public final class zzkg extends zzjy {
+    @Override // com.google.android.gms.internal.gtm.zzjy
+    protected final zzqz zza(zzie zzieVar, zzqz... zzqzVarArr) {
+        zzqz zzqzVarZzd;
+        Preconditions.checkNotNull(zzqzVarArr);
+        Preconditions.checkArgument(zzqzVarArr.length == 2);
+        Preconditions.checkArgument(zzqzVarArr[0] instanceof zzrg);
+        Preconditions.checkArgument(zzqzVarArr[1] instanceof zzrc);
+        zzrg zzrgVar = (zzrg) zzqzVarArr[0];
+        zzrc zzrcVar = (zzrc) zzqzVarArr[1];
+        List listZzk = zzrgVar.zzk();
+        int size = listZzk.size();
+        ArrayList arrayList = new ArrayList();
+        for (int i2 = 0; i2 < size && i2 < zzrgVar.zzk().size(); i2++) {
+            if (zzrgVar.zzn(i2)) {
+                zzqzVarZzd = zzrcVar.zzi().zzd(zzieVar, (zzqz) listZzk.get(i2), new zzrb(Double.valueOf(i2)), zzrgVar);
+                Preconditions.checkState(!zzrl.zzi(zzqzVarZzd));
+            } else {
+                zzqzVarZzd = null;
+            }
+            arrayList.add(zzqzVarZzd);
+        }
+        return new zzrg(arrayList);
+    }
+}

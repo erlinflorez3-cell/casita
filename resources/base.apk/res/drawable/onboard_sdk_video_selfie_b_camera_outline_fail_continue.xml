@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="oval">
+    <stroke
+        android:width="@dimen/onboard_sdk_video_selfie_circle_camera_outline_stroke_width"
+        android:color="@color/onboard_sdk_state_warn"/>
+</shape>

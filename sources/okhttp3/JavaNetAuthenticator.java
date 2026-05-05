@@ -1,0 +1,45 @@
+package okhttp3;
+
+import java.io.IOException;
+import kotlin.Metadata;
+import kotlin.jvm.internal.Intrinsics;
+import yg.InterfaceC1492Gx;
+
+/*  JADX ERROR: Error in decompile pass: KotlinMetadataDecompile
+    kotlin.metadata.InconsistentKotlinMetadataException: Exception occurred when reading Kotlin metadata
+    	at kotlin.metadata.jvm.internal.JvmReadUtils.readMetadataImpl$kotlin_metadata_jvm(JvmReadUtils.kt:108)
+    	at kotlin.metadata.jvm.KotlinClassMetadata$Companion.readLenient(KotlinClassMetadata.kt:418)
+    	at jadx.plugins.kotlin.metadata.utils.KotlinMetadataExtKt.getKotlinClassMetadata(KotlinMetadataExt.kt:71)
+    	at jadx.plugins.kotlin.metadata.utils.KmClassWrapper$Companion.getWrapper(KmClassWrapper.kt:37)
+    	at jadx.plugins.kotlin.metadata.pass.KotlinMetadataDecompilePass.visit(KotlinMetadataDecompilePass.kt:35)
+    Caused by: kotlin.metadata.internal.protobuf.InvalidProtocolBufferException: Protocol message tag had invalid wire type.
+    	at kotlin.metadata.internal.protobuf.InvalidProtocolBufferException.invalidWireType(InvalidProtocolBufferException.java:99)
+    	at kotlin.metadata.internal.protobuf.CodedInputStream.skipField(CodedInputStream.java:268)
+    	at kotlin.metadata.internal.protobuf.GeneratedMessageLite.parseUnknownField(GeneratedMessageLite.java:73)
+    	at kotlin.metadata.internal.metadata.jvm.JvmProtoBuf$StringTableTypes.<init>(JvmProtoBuf.java:110)
+    	at kotlin.metadata.internal.metadata.jvm.JvmProtoBuf$StringTableTypes.<init>(JvmProtoBuf.java:69)
+    	at kotlin.metadata.internal.metadata.jvm.JvmProtoBuf$StringTableTypes$1.parsePartialFrom(JvmProtoBuf.java:175)
+    	at kotlin.metadata.internal.metadata.jvm.JvmProtoBuf$StringTableTypes$1.parsePartialFrom(JvmProtoBuf.java:170)
+    	at kotlin.metadata.internal.protobuf.AbstractParser.parsePartialFrom(AbstractParser.java:192)
+    	at kotlin.metadata.internal.protobuf.AbstractParser.parsePartialDelimitedFrom(AbstractParser.java:233)
+    	at kotlin.metadata.internal.protobuf.AbstractParser.parseDelimitedFrom(AbstractParser.java:245)
+    	at kotlin.metadata.internal.protobuf.AbstractParser.parseDelimitedFrom(AbstractParser.java:49)
+    	at kotlin.metadata.internal.metadata.jvm.JvmProtoBuf$StringTableTypes.parseDelimitedFrom(JvmProtoBuf.java:1736)
+    	at kotlin.metadata.internal.metadata.jvm.deserialization.JvmProtoBufUtil.readNameResolver(JvmProtoBufUtil.kt:57)
+    	at kotlin.metadata.internal.metadata.jvm.deserialization.JvmProtoBufUtil.readClassDataFrom(JvmProtoBufUtil.kt:37)
+    	at kotlin.metadata.internal.metadata.jvm.deserialization.JvmProtoBufUtil.readClassDataFrom(JvmProtoBufUtil.kt:32)
+    	at kotlin.metadata.jvm.internal.JvmReadUtils.readKmClass$kotlin_metadata_jvm(JvmReadUtils.kt:27)
+    	at kotlin.metadata.jvm.KotlinClassMetadata$Class.<init>(KotlinClassMetadata.kt:95)
+    	at kotlin.metadata.jvm.internal.JvmReadUtils.readMetadataImpl$kotlin_metadata_jvm(JvmReadUtils.kt:50)
+    	... 4 more
+    */
+/* JADX INFO: loaded from: classes6.dex */
+@InterfaceC1492Gx
+@Metadata(bv = {}, d1 = {"Я \u001d<K!&i\u0016DLcz\u0004I\u0006F\u000b6Ȑ\u0007\"B\u0012\u007fјnjO0L͜^\u008c\u0003SX\u000e,~Č([2q\fUc\u001b\u0016$\u001fN|i\u0018tX]#E%\u0005D|\u001b0WZ\u0011]@\u0015xVŌC:"}, d2 = {"\u001anZ5g;I!bcvo(e\t>A\u00107~@\n&\u001bEk\u001dF\u0004z", "\u001anZ5g;I!bZ\u000bm/|\u0012>i}$\u000bJ\u000el", "u(E", "/tc5X5MW\u0017z\n^", "\u001anZ5g;I!bkzj<|\u0017>;", "@ndAX", "\u001anZ5g;I!bk\u0005n;|^", "@db=b5LS", "\u001anZ5g;I!bkzl7\u0007\u0012=eU", "=jWAg7\u0006c&\u0006xh5\u0006\t-t\u00042\u0005"}, k = 1, mv = {1, 8, 0}, pn = "", xi = 48, xs = "")
+public final class JavaNetAuthenticator implements Authenticator {
+    @Override // okhttp3.Authenticator
+    public Request authenticate(Route route, Response response) throws IOException {
+        Intrinsics.checkNotNullParameter(response, "response");
+        return Authenticator.JAVA_NET_AUTHENTICATOR.authenticate(route, response);
+    }
+}

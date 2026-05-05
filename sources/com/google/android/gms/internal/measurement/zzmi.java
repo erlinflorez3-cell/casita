@@ -1,0 +1,8 @@
+package com.google.android.gms.internal.measurement;
+
+/* JADX INFO: loaded from: classes8.dex */
+interface zzmi {
+    byte zza(int i2);
+
+    int zza();
+}

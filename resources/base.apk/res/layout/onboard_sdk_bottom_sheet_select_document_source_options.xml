@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:paddingBottom="8dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <com.incode.welcome_sdk.views.IncodeTextView
+        android:id="@+id/btnPhotoLibrary"
+        android:text="@string/onboard_sdk_select_document_source_photo_library"
+        android:drawableStart="@drawable/onboard_sdk_ic_photo_library"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        style="@style/onboard_sdk_BottomSheetItem"/>
+    <com.incode.welcome_sdk.views.IncodeTextView
+        android:id="@+id/btnTakePhoto"
+        android:text="@string/onboard_sdk_select_document_source_take_photo"
+        android:drawableStart="@drawable/onboard_sdk_ic_take_photo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnPhotoLibrary"
+        style="@style/onboard_sdk_BottomSheetItem"/>
+    <com.incode.welcome_sdk.views.IncodeTextView
+        android:id="@+id/btnBrowse"
+        android:visibility="gone"
+        android:text="@string/onboard_sdk_select_document_source_browse"
+        android:drawableStart="@drawable/onboard_sdk_ic_browse_file"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnTakePhoto"
+        style="@style/onboard_sdk_BottomSheetItem"/>
+</androidx.constraintlayout.widget.ConstraintLayout>

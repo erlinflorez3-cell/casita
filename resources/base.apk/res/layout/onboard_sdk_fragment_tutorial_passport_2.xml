@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <com.incode.welcome_sdk.views.IncodeTextView
+        android:id="@+id/tvTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="@string/onboard_sdk_tutorial_passport_2_title"
+        android:layout_marginStart="@dimen/onboard_sdk_standard_margins"
+        android:layout_marginEnd="@dimen/onboard_sdk_standard_margins"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed"
+        style="@style/onboard_sdk_Headline2"/>
+    <ImageView
+        android:id="@+id/image"
+        android:paddingTop="40dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="32dp"
+        android:adjustViewBounds="true"
+        android:layout_marginStart="@dimen/onboard_sdk_standard_margins"
+        android:layout_marginEnd="@dimen/onboard_sdk_standard_margins"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvTitle"
+        app:srcCompat="@drawable/onboard_sdk_tutorial_passport_2"/>
+</androidx.constraintlayout.widget.ConstraintLayout>

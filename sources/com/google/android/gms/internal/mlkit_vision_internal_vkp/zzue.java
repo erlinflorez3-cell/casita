@@ -1,0 +1,603 @@
+package com.google.android.gms.internal.mlkit_vision_internal_vkp;
+
+import androidx.constraintlayout.core.motion.utils.TypedValues;
+import androidx.core.app.FrameMetricsAggregator;
+import com.drew.metadata.exif.ExifDirectoryBase;
+import com.drew.metadata.exif.makernotes.OlympusMakernoteDirectory;
+import com.drew.metadata.exif.makernotes.OlympusRawInfoMakernoteDirectory;
+import com.drew.metadata.exif.makernotes.PanasonicMakernoteDirectory;
+import com.drew.metadata.exif.makernotes.SanyoMakernoteDirectory;
+import com.drew.metadata.iptc.IptcDirectory;
+import com.drew.metadata.mp4.media.Mp4VideoDirectory;
+import com.facebook.imageutils.JfifUtil;
+import cz.msebera.android.httpclient.HttpStatus;
+
+/* JADX INFO: loaded from: classes8.dex */
+public final class zzue {
+    public static int zza(int i2) {
+        switch (i2) {
+            case 0:
+                return 1;
+            case 1:
+                return 2;
+            case 2:
+                return 3;
+            case 3:
+                return 4;
+            case 4:
+                return 5;
+            case 11:
+                return 12;
+            case 12:
+                return 13;
+            case 13:
+                return 14;
+            case 14:
+                return 15;
+            case 21:
+                return 22;
+            case 22:
+                return 23;
+            case 23:
+                return 24;
+            case 24:
+                return 25;
+            case 31:
+                return 32;
+            case 32:
+                return 33;
+            case 33:
+                return 34;
+            case 41:
+                return 42;
+            case 42:
+                return 43;
+            case 43:
+                return 44;
+            case 51:
+                return 52;
+            case 52:
+                return 53;
+            case 53:
+                return 54;
+            case 61:
+                return 62;
+            case 62:
+                return 63;
+            case 63:
+                return 64;
+            case 71:
+                return 72;
+            case 72:
+                return 73;
+            case 73:
+                return 74;
+            case 81:
+                return 82;
+            case 82:
+                return 83;
+            case 83:
+                return 84;
+            case 91:
+                return 92;
+            case 92:
+                return 93;
+            case 93:
+                return 94;
+            case 100:
+                return 101;
+            case 101:
+                return 102;
+            case 102:
+                return 103;
+            case 103:
+                return 104;
+            case 104:
+                return 105;
+            case 105:
+                return 106;
+            case 111:
+                return PanasonicMakernoteDirectory.TAG_INTELLIGENT_RESOLUTION;
+            case PanasonicMakernoteDirectory.TAG_INTELLIGENT_RESOLUTION /* 112 */:
+                return 113;
+            case 113:
+                return 114;
+            case 121:
+                return 122;
+            case 122:
+                return 123;
+            case 123:
+                return 124;
+            case 131:
+                return 132;
+            case 132:
+                return 133;
+            case 133:
+                return 134;
+            case 141:
+                return 142;
+            case 142:
+                return 143;
+            case 143:
+                return 144;
+            case 144:
+                return 145;
+            case 151:
+                return 152;
+            case 152:
+                return 153;
+            case 153:
+                return 154;
+            case 154:
+                return 155;
+            case 155:
+                return 156;
+            case 161:
+                return 162;
+            case 162:
+                return 163;
+            case 163:
+                return 164;
+            case 164:
+                return 165;
+            case 171:
+                return 172;
+            case 172:
+                return 173;
+            case 173:
+                return 174;
+            case 174:
+                return 175;
+            case 175:
+                return 176;
+            case 181:
+                return 182;
+            case 182:
+                return 183;
+            case 183:
+                return 184;
+            case 184:
+                return 185;
+            case 191:
+                return 192;
+            case 192:
+                return 193;
+            case 193:
+                return 194;
+            case 194:
+                return 195;
+            case 200:
+                return 201;
+            case 201:
+                return 202;
+            case 202:
+                return 203;
+            case 203:
+                return 204;
+            case 204:
+                return 205;
+            case 205:
+                return 206;
+            case 206:
+                return 207;
+            case 207:
+                return 208;
+            case 208:
+                return Mp4VideoDirectory.TAG_DEPTH;
+            case Mp4VideoDirectory.TAG_DEPTH /* 209 */:
+                return Mp4VideoDirectory.TAG_COMPRESSION_TYPE;
+            case Mp4VideoDirectory.TAG_COMPRESSION_TYPE /* 210 */:
+                return 211;
+            case 211:
+                return Mp4VideoDirectory.TAG_OPCOLOR;
+            case Mp4VideoDirectory.TAG_OPCOLOR /* 212 */:
+                return Mp4VideoDirectory.TAG_COLOR_TABLE;
+            case Mp4VideoDirectory.TAG_COLOR_TABLE /* 213 */:
+                return Mp4VideoDirectory.TAG_FRAME_RATE;
+            case Mp4VideoDirectory.TAG_FRAME_RATE /* 214 */:
+                return JfifUtil.MARKER_RST7;
+            case JfifUtil.MARKER_RST7 /* 215 */:
+                return JfifUtil.MARKER_SOI;
+            case JfifUtil.MARKER_SOI /* 216 */:
+                return 217;
+            case 217:
+                return JfifUtil.MARKER_SOS;
+            case JfifUtil.MARKER_SOS /* 218 */:
+                return 219;
+            case 219:
+                return 220;
+            case 220:
+                return 221;
+            case 241:
+                return 242;
+            case 242:
+                return 243;
+            case 243:
+                return 244;
+            case 244:
+                return 245;
+            case 245:
+                return 246;
+            case 251:
+                return 252;
+            case 252:
+                return 253;
+            case 260:
+                return 261;
+            case 261:
+                return 262;
+            case 271:
+                return 272;
+            case 272:
+                return 273;
+            case 273:
+                return 274;
+            case 281:
+                return 282;
+            case 291:
+                return OlympusRawInfoMakernoteDirectory.TagWbRbLevelsEveningSunlight;
+            case OlympusRawInfoMakernoteDirectory.TagWbRbLevelsEveningSunlight /* 292 */:
+                return 293;
+            case 293:
+                return 294;
+            case 301:
+                return 302;
+            case 302:
+                return 303;
+            case 311:
+                return 312;
+            case 312:
+                return 313;
+            case 313:
+                return 314;
+            case 314:
+                return 315;
+            case 315:
+                return 316;
+            case 321:
+                return ExifDirectoryBase.TAG_TILE_WIDTH;
+            case ExifDirectoryBase.TAG_TILE_WIDTH /* 322 */:
+                return ExifDirectoryBase.TAG_TILE_LENGTH;
+            case ExifDirectoryBase.TAG_TILE_LENGTH /* 323 */:
+                return ExifDirectoryBase.TAG_TILE_OFFSETS;
+            case ExifDirectoryBase.TAG_TILE_OFFSETS /* 324 */:
+                return ExifDirectoryBase.TAG_TILE_BYTE_COUNTS;
+            case ExifDirectoryBase.TAG_TILE_BYTE_COUNTS /* 325 */:
+                return IptcDirectory.TAG_DATE_SENT;
+            case 331:
+                return 332;
+            case 332:
+                return 333;
+            case 333:
+                return 334;
+            case 334:
+                return 335;
+            case 341:
+                return ExifDirectoryBase.TAG_TRANSFER_RANGE;
+            case ExifDirectoryBase.TAG_TRANSFER_RANGE /* 342 */:
+                return 343;
+            case 343:
+                return 344;
+            case 344:
+                return 345;
+            case 351:
+                return 352;
+            case 352:
+                return 353;
+            case 353:
+                return 354;
+            case 354:
+                return 355;
+            case 361:
+                return 362;
+            case 371:
+                return 372;
+            case 381:
+                return 382;
+            case 391:
+                return 392;
+            case 401:
+                return 402;
+            case 402:
+                return 403;
+            case 403:
+                return HttpStatus.SC_NOT_FOUND;
+            case HttpStatus.SC_NOT_FOUND /* 404 */:
+                return HttpStatus.SC_METHOD_NOT_ALLOWED;
+            case HttpStatus.SC_METHOD_NOT_ALLOWED /* 405 */:
+                return HttpStatus.SC_NOT_ACCEPTABLE;
+            case HttpStatus.SC_LENGTH_REQUIRED /* 411 */:
+                return HttpStatus.SC_PRECONDITION_FAILED;
+            case HttpStatus.SC_PRECONDITION_FAILED /* 412 */:
+                return HttpStatus.SC_REQUEST_TOO_LONG;
+            case HttpStatus.SC_REQUEST_TOO_LONG /* 413 */:
+                return HttpStatus.SC_REQUEST_URI_TOO_LONG;
+            case HttpStatus.SC_REQUEST_URI_TOO_LONG /* 414 */:
+                return HttpStatus.SC_UNSUPPORTED_MEDIA_TYPE;
+            case HttpStatus.SC_UNSUPPORTED_MEDIA_TYPE /* 415 */:
+                return 416;
+            case 421:
+                return 422;
+            case 422:
+                return 423;
+            case 423:
+                return 424;
+            case 424:
+                return TypedValues.CycleType.TYPE_WAVE_PHASE;
+            case 431:
+                return 432;
+            case 432:
+                return 433;
+            case 441:
+                return 442;
+            case 442:
+                return 443;
+            case 443:
+                return 444;
+            case 451:
+                return 452;
+            case 452:
+                return 453;
+            case 453:
+                return 454;
+            case 454:
+                return 455;
+            case 461:
+                return 462;
+            case 462:
+                return 463;
+            case 463:
+                return 464;
+            case 464:
+                return 465;
+            case 471:
+                return 472;
+            case 472:
+                return 473;
+            case 473:
+                return 474;
+            case 474:
+                return 475;
+            case 475:
+                return 476;
+            case 481:
+                return 482;
+            case 482:
+                return 483;
+            case 483:
+                return 484;
+            case 484:
+                return 485;
+            case 491:
+                return 492;
+            case 492:
+                return 493;
+            case 501:
+                return 502;
+            case 502:
+                return 503;
+            case 503:
+                return 504;
+            case 504:
+                return 505;
+            case FrameMetricsAggregator.EVERY_DURATION /* 511 */:
+                return 512;
+            case 512:
+                return 513;
+            case 513:
+                return 514;
+            case 514:
+                return 515;
+            case 521:
+                return 522;
+            case 522:
+                return 523;
+            case 523:
+                return 524;
+            case 524:
+                return OlympusMakernoteDirectory.TAG_ORIGINAL_MANUFACTURER_MODEL;
+            case 531:
+                return 532;
+            case 532:
+                return 533;
+            case 533:
+                return 534;
+            case 534:
+                return SanyoMakernoteDirectory.TAG_RECORD_SHUTTER_RELEASE;
+            case SanyoMakernoteDirectory.TAG_LIGHT_SOURCE_SPECIAL /* 541 */:
+                return 542;
+            case 542:
+                return SanyoMakernoteDirectory.TAG_SCENE_SELECT;
+            case SanyoMakernoteDirectory.TAG_SCENE_SELECT /* 543 */:
+                return 544;
+            case 544:
+                return 545;
+            case 551:
+                return IptcDirectory.TAG_SPECIAL_INSTRUCTIONS;
+            case IptcDirectory.TAG_SPECIAL_INSTRUCTIONS /* 552 */:
+                return 553;
+            case 553:
+                return IptcDirectory.TAG_ACTION_ADVISED;
+            case IptcDirectory.TAG_ACTION_ADVISED /* 554 */:
+                return 555;
+            case 561:
+                return IptcDirectory.TAG_REFERENCE_NUMBER;
+            case IptcDirectory.TAG_REFERENCE_NUMBER /* 562 */:
+                return 563;
+            case 563:
+                return 564;
+            case 564:
+                return 565;
+            case 571:
+                return IptcDirectory.TAG_TIME_CREATED;
+            case IptcDirectory.TAG_TIME_CREATED /* 572 */:
+                return 573;
+            case 573:
+                return IptcDirectory.TAG_DIGITAL_DATE_CREATED;
+            case IptcDirectory.TAG_DIGITAL_DATE_CREATED /* 574 */:
+                return IptcDirectory.TAG_DIGITAL_TIME_CREATED;
+            case 581:
+                return IptcDirectory.TAG_PROGRAM_VERSION;
+            case IptcDirectory.TAG_PROGRAM_VERSION /* 582 */:
+                return 583;
+            case 583:
+                return 584;
+            case 584:
+                return 585;
+            case 591:
+                return IptcDirectory.TAG_BY_LINE;
+            case IptcDirectory.TAG_BY_LINE /* 592 */:
+                return 593;
+            case 593:
+                return 594;
+            case 594:
+                return 595;
+            case 601:
+                return 602;
+            case 602:
+                return TypedValues.MotionType.TYPE_EASING;
+            case TypedValues.MotionType.TYPE_EASING /* 603 */:
+                return 604;
+            case 604:
+                return TypedValues.MotionType.TYPE_ANIMATE_RELATIVE_TO;
+            case TypedValues.MotionType.TYPE_ANIMATE_RELATIVE_TO /* 605 */:
+                return TypedValues.MotionType.TYPE_ANIMATE_CIRCLEANGLE_TO;
+            case TypedValues.MotionType.TYPE_QUANTIZE_INTERPOLATOR_TYPE /* 611 */:
+                return 612;
+            case 612:
+                return IptcDirectory.TAG_COUNTRY_OR_PRIMARY_LOCATION_NAME;
+            case IptcDirectory.TAG_COUNTRY_OR_PRIMARY_LOCATION_NAME /* 613 */:
+                return 614;
+            case 614:
+                return IptcDirectory.TAG_ORIGINAL_TRANSMISSION_REFERENCE;
+            case 621:
+                return IptcDirectory.TAG_CREDIT;
+            case IptcDirectory.TAG_CREDIT /* 622 */:
+                return 623;
+            case 623:
+                return 624;
+            case 624:
+                return 625;
+            case 631:
+                return IptcDirectory.TAG_CAPTION;
+            case IptcDirectory.TAG_CAPTION /* 632 */:
+                return IptcDirectory.TAG_LOCAL_CAPTION;
+            case IptcDirectory.TAG_LOCAL_CAPTION /* 633 */:
+                return IptcDirectory.TAG_CAPTION_WRITER;
+            case IptcDirectory.TAG_CAPTION_WRITER /* 634 */:
+                return 635;
+            case 641:
+                return IptcDirectory.TAG_IMAGE_TYPE;
+            case IptcDirectory.TAG_IMAGE_TYPE /* 642 */:
+                return IptcDirectory.TAG_IMAGE_ORIENTATION;
+            case IptcDirectory.TAG_IMAGE_ORIENTATION /* 643 */:
+                return 644;
+            case 644:
+                return 645;
+            case 651:
+                return 652;
+            case 652:
+                return 653;
+            case 653:
+                return 654;
+            case 654:
+                return 655;
+            case 655:
+                return 656;
+            case 656:
+                return 657;
+            case 657:
+                return 658;
+            case 658:
+                return 659;
+            case 659:
+                return 660;
+            case 671:
+                return 672;
+            case 672:
+                return 673;
+            case 673:
+                return 674;
+            case 681:
+                return 682;
+            case 682:
+                return 683;
+            case 683:
+                return 684;
+            case 684:
+                return 685;
+            case 691:
+                return 692;
+            case 692:
+                return 693;
+            case 693:
+                return 694;
+            case 694:
+                return 695;
+            case TypedValues.TransitionType.TYPE_FROM /* 701 */:
+                return TypedValues.TransitionType.TYPE_TO;
+            case TypedValues.TransitionType.TYPE_TO /* 702 */:
+                return 703;
+            case 703:
+                return TypedValues.TransitionType.TYPE_AUTO_TRANSITION;
+            case TypedValues.TransitionType.TYPE_AUTO_TRANSITION /* 704 */:
+                return TypedValues.TransitionType.TYPE_INTERPOLATOR;
+            case 711:
+                return IptcDirectory.TAG_OBJECT_PREVIEW_FILE_FORMAT;
+            case IptcDirectory.TAG_OBJECT_PREVIEW_FILE_FORMAT /* 712 */:
+                return IptcDirectory.TAG_OBJECT_PREVIEW_FILE_FORMAT_VERSION;
+            case IptcDirectory.TAG_OBJECT_PREVIEW_FILE_FORMAT_VERSION /* 713 */:
+                return IptcDirectory.TAG_OBJECT_PREVIEW_DATA;
+            case IptcDirectory.TAG_OBJECT_PREVIEW_DATA /* 714 */:
+                return 715;
+            case 721:
+                return 722;
+            case 722:
+                return 723;
+            case 723:
+                return 724;
+            case 724:
+                return 725;
+            case 725:
+                return 726;
+            case 731:
+                return 732;
+            case 732:
+                return 733;
+            case 733:
+                return 734;
+            case 734:
+                return 735;
+            case 735:
+                return 736;
+            case 741:
+                return 742;
+            case 742:
+                return 743;
+            case 743:
+                return 744;
+            case 744:
+                return 745;
+            case 745:
+                return 746;
+            case 751:
+                return 752;
+            case 752:
+                return 753;
+            case 753:
+                return 754;
+            case 754:
+                return 755;
+            case 761:
+                return 762;
+            case 762:
+                return 763;
+            case 763:
+                return 764;
+            case 764:
+                return 765;
+            default:
+                return 0;
+        }
+    }
+}

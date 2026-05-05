@@ -1,0 +1,50 @@
+package com.google.gson;
+
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Field;
+import java.lang.reflect.Type;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Objects;
+import yg.Kl;
+
+/* JADX INFO: loaded from: classes7.dex */
+public final class FieldAttributes {
+    private final Field field;
+
+    public FieldAttributes(Field field) {
+        this.field = (Field) Objects.requireNonNull(field);
+    }
+
+    public <T extends Annotation> T getAnnotation(Class<T> cls) {
+        return (T) Kl.qd(this.field, cls);
+    }
+
+    public Collection<Annotation> getAnnotations() {
+        return Arrays.asList(Kl.GX(this.field));
+    }
+
+    public Class<?> getDeclaredClass() {
+        return this.field.getType();
+    }
+
+    public Type getDeclaredType() {
+        return this.field.getGenericType();
+    }
+
+    public Class<?> getDeclaringClass() {
+        return this.field.getDeclaringClass();
+    }
+
+    public String getName() {
+        return this.field.getName();
+    }
+
+    public boolean hasModifier(int i2) {
+        return (i2 & this.field.getModifiers()) != 0;
+    }
+
+    public String toString() {
+        return this.field.toString();
+    }
+}

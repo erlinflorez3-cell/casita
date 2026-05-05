@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="38dp">
+        <com.incode.welcome_sdk.views.IncodeTextView
+            android:id="@+id/tvIndex"
+            android:layout_width="20sp"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:layout_marginEnd="8dp"
+            style="@style/onboard_sdk_BodyBig"/>
+        <com.incode.welcome_sdk.views.IncodeTextView
+            android:id="@+id/tvName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:layout_weight="1"
+            android:paddingEnd="8dp"
+            style="@style/onboard_sdk_BodyBig"/>
+        <ImageView
+            android:id="@+id/ivStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+</merge>
