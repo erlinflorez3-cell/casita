@@ -1,0 +1,908 @@
+﻿=== RSA KEYS / STAMPER / PUBLIC KEY — BÚSQUEDA EN 4 ARCHIVOS ===
+
+========================================
+=== main.txt LÍNEA 664 — RSA PUB KEY (MIIBIj) ===
+========================================
+    659:         API_URL: "https://api.bancodebogota.co/proxy-validator/",
+    660:         AUTH_URL: "https://api.bancodebogota.co/pb-authorizer/",
+    661:         API_ADL_URL: "https://pb-api-bogota.avaldigitallabs.com/",
+    662:         START_PAGE: "NewLoginPage",
+    663:         BAL_YEK_CILBUP_1: "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAw0KiPRFMIHDkR40luaDjVXXxZD7Q9zf6Iw+PnyjNKdKidiBTh9D2KZj/zFkYkYhEgq4jnBpzp/hCGz3T9XOqZ30/sYNCKrysBg+DD4HTjMR0qZEjz7jHZLNj7joVggXSDfrIwzjuS6k9J0Kze9/KGrdWkBo8uMTTQTjTloUUQ07z77q+hksWrQBS5HMM3GopHWN9Y6Z1PDVtAdCty8rZb63CibOydwTsrwBS8gBQ6+bHYFzWNfDJI3nC9Gs7eR0xb1xdnsCvC034oK+G+XMiQ9NbKN62JVYto3yre858RdH0ZdGCZOBghY9Ctb2LcN4V7CAxs7UHqadKYGmhVJRG2wIDAQAB",
+>>> 664:         VERIFY_CAPTCHA: "lmnGRFD58V6IJFed4RF9PIqgOk1AAACxRY8",
+    665:         DOMAIN_URL: "https://virtual.bancodebogota.co/",
+    666:         API_AUTH_ENDPOINT_URL: "https://api.bancodebogota.co/auth/",
+    667:         PB_REDIRECT: "https://localhost:7011/Banking/pb/psj",
+    668:         STAGE_NAME: "pr",
+    669:         VALIDATE_TOKEN: !0,
+    670:         FUNNEL_URL: "https://api.bancodebogota.co/event/",
+    671:         VALID_USER_ALLOWED: !0,
+    672:         ENDPOINT_HEALTHY: "https://api.bancodebogota.co/health/",
+    673:         CYPHER_JS_KEY: "FRONTEND_CIPHER_BDB_PR",
+    674:         CYPHER_JS_KEY_FBOG: "FRONTEND_CIPHER_BDB_PR",
+
+========================================
+=== main.txt LÍNEA 699 — RSA PUB KEY (MIIBIj) ===
+========================================
+    694:         ADN_CHANNEL: "PB",
+    695:         API_FIDUCIA_URL: "https://fic-pro-fidubogota-api.avaldigitallabs.com/",
+    696:         API_FIDUCIARY_URL: "https://pb-api-bogota.avaldigitallabs.com/api-gateway/fiduciary/",
+    697:         FIDUCIARY_API_ASSETS: "https://fic-pro-fidubogota.avaldigitallabs.com/",
+    698:         FBOG_BAL_YEK_CILBUP_1: "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAlxjaHwZAhdFEj0nHo37tTJiGmq6HnwMN5l2uop1RJQ8ov2ksDL5I89fQRWtd8jW5FAgX38qQC/WY/n9yft+ArspR4nLMA2A61dbnCAeCykglVLeEa64CjE5K11Lc4rS51pzqzH0vFjQN3uMnUmPvTMhuTFLg5QFmycduMrfJnqOfbnRW9YWQ5547XBnXpogDhT8IM6LdU7wjTqX37tzc8gqmsiZw4z3Q55NZpf7x4JVJ7D/97GRUP6b9lFPKqnUrkuULhzNIuCQqkd3P6AzTI2EulFkDbqLNc/+gxd//Er83B4Y8ZfVZw8zArTnbg+8HQ6eezGgULiKo/3QaST8kUQIDAQAB",
+>>> 699:         USER_ALLOW_CACHE: !0,
+    700:         API_BDB_WS: "wss://rfj6gs7msk.execute-api.us-east-1.amazonaws.com/prod",
+    701:         IS_REDIRECT_TEMP: !0,
+    702:         API_GATEWAY_ADL_URL: "https://pb-api-bogota.avaldigitallabs.com/api-gateway/",
+    703:         INJECTABLE_SCRIPTS_KEYS: {
+    704:             TEALIUM_SRC_ENV: "prod",
+    705:             CYXTERA_SCRIPT_CI: "7eaf56de-6b76-42b6-8a2e-71f6534a1614",
+    706:             CYXTERA_SCRIPT_WI: "1573",
+    707:             GTM_ID: "GTM-PSCQRNP"
+    708:         },
+    709:         CDT_GET_URL: "https://digital.bancodebogota.com.co/cdt/?utm_source=banca_virtual&utm_medium=referral&utm_campaign=post_login_banca_virtual&utm_content=dashboard_cross_sell",
+
+========================================
+=== main.txt LÍNEA 38479 — RSA PUB KEY (MIIBIj) ===
+========================================
+    38474:         API_URL: "https://api.bancodebogota.co/proxy-validator/",
+    38475:         AUTH_URL: "https://api.bancodebogota.co/pb-authorizer/",
+    38476:         API_ADL_URL: "https://pb-api-bogota.avaldigitallabs.com/",
+    38477:         START_PAGE: "NewLoginPage",
+    38478:         BAL_YEK_CILBUP_1: "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAw0KiPRFMIHDkR40luaDjVXXxZD7Q9zf6Iw+PnyjNKdKidiBTh9D2KZj/zFkYkYhEgq4jnBpzp/hCGz3T9XOqZ30/sYNCKrysBg+DD4HTjMR0qZEjz7jHZLNj7joVggXSDfrIwzjuS6k9J0Kze9/KGrdWkBo8uMTTQTjTloUUQ07z77q+hksWrQBS5HMM3GopHWN9Y6Z1PDVtAdCty8rZb63CibOydwTsrwBS8gBQ6+bHYFzWNfDJI3nC9Gs7eR0xb1xdnsCvC034oK+G+XMiQ9NbKN62JVYto3yre858RdH0ZdGCZOBghY9Ctb2LcN4V7CAxs7UHqadKYGmhVJRG2wIDAQAB",
+>>> 38479:         VERIFY_CAPTCHA: "lmnGRFD58V6IJFed4RF9PIqgOk1AAACxRY8",
+    38480:         DOMAIN_URL: "https://virtual.bancodebogota.co/",
+    38481:         API_AUTH_ENDPOINT_URL: "https://api.bancodebogota.co/auth/",
+    38482:         PB_REDIRECT: "https://localhost:7011/Banking/pb/psj",
+    38483:         STAGE_NAME: "pr",
+    38484:         VALIDATE_TOKEN: !0,
+    38485:         FUNNEL_URL: "https://api.bancodebogota.co/event/",
+    38486:         VALID_USER_ALLOWED: !0,
+    38487:         ENDPOINT_HEALTHY: "https://api.bancodebogota.co/health/",
+    38488:         CYPHER_JS_KEY: "FRONTEND_CIPHER_BDB_PR",
+    38489:         CYPHER_JS_KEY_FBOG: "FRONTEND_CIPHER_BDB_PR",
+
+========================================
+=== main.txt LÍNEA 38514 — RSA PUB KEY (MIIBIj) ===
+========================================
+    38509:         ADN_CHANNEL: "PB",
+    38510:         API_FIDUCIA_URL: "https://fic-pro-fidubogota-api.avaldigitallabs.com/",
+    38511:         API_FIDUCIARY_URL: "https://pb-api-bogota.avaldigitallabs.com/api-gateway/fiduciary/",
+    38512:         FIDUCIARY_API_ASSETS: "https://fic-pro-fidubogota.avaldigitallabs.com/",
+    38513:         FBOG_BAL_YEK_CILBUP_1: "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAlxjaHwZAhdFEj0nHo37tTJiGmq6HnwMN5l2uop1RJQ8ov2ksDL5I89fQRWtd8jW5FAgX38qQC/WY/n9yft+ArspR4nLMA2A61dbnCAeCykglVLeEa64CjE5K11Lc4rS51pzqzH0vFjQN3uMnUmPvTMhuTFLg5QFmycduMrfJnqOfbnRW9YWQ5547XBnXpogDhT8IM6LdU7wjTqX37tzc8gqmsiZw4z3Q55NZpf7x4JVJ7D/97GRUP6b9lFPKqnUrkuULhzNIuCQqkd3P6AzTI2EulFkDbqLNc/+gxd//Er83B4Y8ZfVZw8zArTnbg+8HQ6eezGgULiKo/3QaST8kUQIDAQAB",
+>>> 38514:         USER_ALLOW_CACHE: !0,
+    38515:         API_BDB_WS: "wss://rfj6gs7msk.execute-api.us-east-1.amazonaws.com/prod",
+    38516:         IS_REDIRECT_TEMP: !0,
+    38517:         API_GATEWAY_ADL_URL: "https://pb-api-bogota.avaldigitallabs.com/api-gateway/",
+    38518:         INJECTABLE_SCRIPTS_KEYS: {
+    38519:             TEALIUM_SRC_ENV: "prod",
+    38520:             CYXTERA_SCRIPT_CI: "7eaf56de-6b76-42b6-8a2e-71f6534a1614",
+    38521:             CYXTERA_SCRIPT_WI: "1573",
+    38522:             GTM_ID: "GTM-PSCQRNP"
+    38523:         },
+    38524:         CDT_GET_URL: "https://digital.bancodebogota.com.co/cdt/?utm_source=banca_virtual&utm_medium=referral&utm_campaign=post_login_banca_virtual&utm_content=dashboard_cross_sell",
+=== NO ENCONTRADO en 3188.js ===
+=== NO ENCONTRADO en 989.js ===
+=== NO ENCONTRADO en vendor.js ===
+=== NO ENCONTRADO en main.txt ===
+=== NO ENCONTRADO en main.txt ===
+
+========================================
+=== 3188.js LÍNEA 4636 — stamper ===
+========================================
+    4631:                                                 tokenCookie: (null == n ? void 0 : n.tokenCookie) || null,
+    4632:                                                 mobileToken: (null == n ? void 0 : n.mobileToken) || null,
+    4633:                                                 numberCard: r.numberCard || null,
+    4634:                                                 appVersion: t.appVersion,
+    4635:                                                 stamper: r.stamper || null,
+>>> 4636:                                                 otp: (null == n ? void 0 : n.otp) || null,
+    4637:                                                 authenticationExtraInfo: u ? {
+    4638:                                                     fingerPrint: u
+    4639:                                                 } : null
+    4640:                                             },
+    4641:                                             f = L().create({
+    4642:                                                 baseURL: t.host
+    4643:                                             }),
+    4644:                                             e.next = 17,
+    4645:                                             fe(t.encryptBody, f, r.env);
+    4646:                                         case 17:
+
+========================================
+=== 3188.js LÍNEA 4636 — STAMPER (mayus) ===
+========================================
+    4631:                                                 tokenCookie: (null == n ? void 0 : n.tokenCookie) || null,
+    4632:                                                 mobileToken: (null == n ? void 0 : n.mobileToken) || null,
+    4633:                                                 numberCard: r.numberCard || null,
+    4634:                                                 appVersion: t.appVersion,
+    4635:                                                 stamper: r.stamper || null,
+>>> 4636:                                                 otp: (null == n ? void 0 : n.otp) || null,
+    4637:                                                 authenticationExtraInfo: u ? {
+    4638:                                                     fingerPrint: u
+    4639:                                                 } : null
+    4640:                                             },
+    4641:                                             f = L().create({
+    4642:                                                 baseURL: t.host
+    4643:                                             }),
+    4644:                                             e.next = 17,
+    4645:                                             fe(t.encryptBody, f, r.env);
+    4646:                                         case 17:
+=== NO ENCONTRADO en 989.js ===
+=== NO ENCONTRADO en 989.js ===
+=== NO ENCONTRADO en vendor.js ===
+=== NO ENCONTRADO en vendor.js ===
+
+=== main.txt — publicKey ===
+1271:         }
+1272:         ,
+1273:         t.prototype.getPublicKey = function() {
+1274:             this.store.dispatch(new a.c)
+1275:         }
+1276:         ,
+1277:         t.prototype.getBasicData = function() {
+1278:             this.store.dispatch(new a.a)
+1279:         }
+---
+1746:                   , o = atob("LS0tLS1CRUdJTiBQVUJMSUMgS0VZLS0tLS0=")
+1747:                   , a = atob("LS0tLS1FTkQgUFVCTElDIEtFWS0tLS0t");
+1748:                 n.setPublicKey(e ? o + e + a : o + i.a.BAL_YEK_CILBUP_1 + a);
+1749:                 return n.encrypt(t.toString())
+1750:             }
+1751:             return t
+1752:         }
+1753:         ,
+1754:         t = a([Object(o.Injectable)(), c("design:paramtypes", [])], t)
+---
+13415:             this.httpClientWrapperProvider = t
+13416:         }
+13417:         return t.prototype.getPublicKey = function() {
+13418:             return this.httpClientWrapperProvider.postOptions("setup/start", null, a.a.API_GATEWAY_ADL_URL, {
+13419:                 responseType: "text",
+13420:                 observe: "response"
+13421:             }).pipe(Object(i.map)(function(t) {
+13422:                 return {
+13423:                     publicKey: t.body,
+---
+13421:             }).pipe(Object(i.map)(function(t) {
+13422:                 return {
+13423:                     publicKey: t.body,
+13424:                     diffTime: Number(t.headers.get("Last-Modified")) - (new Date).getTime()
+13425:                 }
+13426:             }))
+13427:         }
+13428:         ,
+13429:         t = c([Object(o.Injectable)(), s("design:paramtypes", [r.b])], t)
+---
+27615:                     stepLogin: f.c.TOKEN_MFA,
+27616:                     loginData: o
+27617:                 })) : (u.userFacade.getPublicKey(),
+27618:                 e = Object(c.of)({
+27619:                     type: p.o
+27620:                 })),
+27621:                 u.bdbInMemory.clearItem(l.a.TuPlusData),
+27622:                 u.bdbInMemory.setItemByKey(l.a.IsLoginFromFrame, null),
+27623:                 e
+---
+36086:         case i.q:
+36087:             return c({}, t, {
+36088:                 publicKey: null,
+36089:                 diffTime: null
+36090:             });
+36091:         case i.s:
+36092:             return c({}, t, {
+36093:                 publicKey: e.publicKey,
+36094:                 diffTime: e.diffTime
+---
+36091:         case i.s:
+36092:             return c({}, t, {
+36093:                 publicKey: e.publicKey,
+36094:                 diffTime: e.diffTime
+36095:             });
+36096:         case i.i:
+36097:             return c({}, t, {
+36098:                 basicData: e.basicData
+36099:             });
+---
+36215:             lastLoginTime: (new Date).toLocaleString()
+36216:         },
+36217:         publicKey: null,
+36218:         diffTime: null,
+36219:         basicData: null,
+36220:         userFeaturesData: {
+36221:             userFeatures: null,
+36222:             working: !1,
+36223:             completed: !1,
+---
+36598:     var o = {
+36599:         authenticatorRs: null,
+36600:         publicKey: null,
+36601:         completed: !1,
+36602:         error: null,
+36603:         stepLogin: n(9).c.SIGN_IN,
+36604:         tokenCookie: null,
+36605:         isTokenError: !1,
+36606:         loginData: null
+---
+37486:                     return Object(l.of)({
+37487:                         type: o.s,
+37488:                         publicKey: r,
+37489:                         diffTime: i
+37490:                     })
+37491:                 }
+37492:                 return b.securityApiService.getPublicKey().pipe(Object(u.map)(function(t) {
+37493:                     return {
+37494:                         type: o.s,
+---
+37490:                     })
+37491:                 }
+37492:                 return b.securityApiService.getPublicKey().pipe(Object(u.map)(function(t) {
+37493:                     return {
+37494:                         type: o.s,
+37495:                         publicKey: t.publicKey,
+37496:                         diffTime: t.diffTime
+37497:                     }
+37498:                 }), Object(u.catchError)(function(t) {
+---
+37493:                     return {
+37494:                         type: o.s,
+37495:                         publicKey: t.publicKey,
+37496:                         diffTime: t.diffTime
+37497:                     }
+37498:                 }), Object(u.catchError)(function(t) {
+37499:                     return Object(l.of)({
+37500:                         type: o.r
+37501:                     })
+---
+39086:         }
+39087:         ,
+39088:         t.prototype.getPublicKey = function() {
+39089:             this.store.dispatch(new a.c)
+39090:         }
+39091:         ,
+39092:         t.prototype.getBasicData = function() {
+39093:             this.store.dispatch(new a.a)
+39094:         }
+---
+39561:                   , o = atob("LS0tLS1CRUdJTiBQVUJMSUMgS0VZLS0tLS0=")
+39562:                   , a = atob("LS0tLS1FTkQgUFVCTElDIEtFWS0tLS0t");
+39563:                 n.setPublicKey(e ? o + e + a : o + i.a.BAL_YEK_CILBUP_1 + a);
+39564:                 return n.encrypt(t.toString())
+39565:             }
+39566:             return t
+39567:         }
+39568:         ,
+39569:         t = a([Object(o.Injectable)(), c("design:paramtypes", [])], t)
+---
+51230:             this.httpClientWrapperProvider = t
+51231:         }
+51232:         return t.prototype.getPublicKey = function() {
+51233:             return this.httpClientWrapperProvider.postOptions("setup/start", null, a.a.API_GATEWAY_ADL_URL, {
+51234:                 responseType: "text",
+51235:                 observe: "response"
+51236:             }).pipe(Object(i.map)(function(t) {
+51237:                 return {
+51238:                     publicKey: t.body,
+---
+51236:             }).pipe(Object(i.map)(function(t) {
+51237:                 return {
+51238:                     publicKey: t.body,
+51239:                     diffTime: Number(t.headers.get("Last-Modified")) - (new Date).getTime()
+51240:                 }
+51241:             }))
+51242:         }
+51243:         ,
+51244:         t = c([Object(o.Injectable)(), s("design:paramtypes", [r.b])], t)
+---
+65430:                     stepLogin: f.c.TOKEN_MFA,
+65431:                     loginData: o
+65432:                 })) : (u.userFacade.getPublicKey(),
+65433:                 e = Object(c.of)({
+65434:                     type: p.o
+65435:                 })),
+65436:                 u.bdbInMemory.clearItem(l.a.TuPlusData),
+65437:                 u.bdbInMemory.setItemByKey(l.a.IsLoginFromFrame, null),
+65438:                 e
+---
+73901:         case i.q:
+73902:             return c({}, t, {
+73903:                 publicKey: null,
+73904:                 diffTime: null
+73905:             });
+73906:         case i.s:
+73907:             return c({}, t, {
+73908:                 publicKey: e.publicKey,
+73909:                 diffTime: e.diffTime
+---
+73906:         case i.s:
+73907:             return c({}, t, {
+73908:                 publicKey: e.publicKey,
+73909:                 diffTime: e.diffTime
+73910:             });
+73911:         case i.i:
+73912:             return c({}, t, {
+73913:                 basicData: e.basicData
+73914:             });
+---
+74030:             lastLoginTime: (new Date).toLocaleString()
+74031:         },
+74032:         publicKey: null,
+74033:         diffTime: null,
+74034:         basicData: null,
+74035:         userFeaturesData: {
+74036:             userFeatures: null,
+74037:             working: !1,
+74038:             completed: !1,
+---
+
+=== 3188.js — publicKey ===
+1530:                                 var t = e.headers;
+1531:                                 return {
+1532:                                     publicKey: e.data,
+1533:                                     diffTime: t["last-modified"] - (new Date).getTime()
+1534:                                 }
+1535:                             })
+1536:                         }
+1537:                           , le = function() {
+1538:                             var e = c()(a().mark(function e(t) {
+---
+11458:                             }(r, i),
+11459:                             {
+11460:                                 publicKey: r,
+11461:                                 privateKey: i
+11462:                             }
+11463:                         }
+11464:                         ,
+11465:                         l.privateKeyFromAsn1 = function(e) {
+11466:                             var t = {}
+---
+16863:                                 e.keys = {
+16864:                                     privateKey: u.rsa.setPrivateKey(e.n, e.e, l, e.p, e.q, l.mod(e.p1), l.mod(e.q1), e.q.modInverse(e.p)),
+16865:                                     publicKey: u.rsa.setPublicKey(e.n, e.e)
+16866:                                 },
+16867:                                 r(null, e.keys)
+16868:                             }
+16869:                             "prng"in t && (a.prng = t.prng),
+16870:                             o()
+16871:                         }
+---
+16991:                                     e.keys = {
+16992:                                         privateKey: u.rsa.setPrivateKey(e.n, e.e, p, e.p, e.q, p.mod(e.p1), p.mod(e.q1), e.q.modInverse(e.p)),
+16993:                                         publicKey: u.rsa.setPublicKey(e.n, e.e)
+16994:                                     }
+16995:                                 }
+16996:                                 l += (n = +new Date) - s,
+16997:                                 s = n
+16998:                             }
+16999:                             return null !== e.keys
+---
+17034:                                             i(null, {
+17035:                                                 privateKey: u.privateKeyFromPem(r),
+17036:                                                 publicKey: u.publicKeyFromPem(t)
+17037:                                             })
+17038:                                         });
+17039:                                     if (w("generateKey") && w("exportKey"))
+17040:                                         return s.globalScope.crypto.subtle.generateKey({
+17041:                                             name: "RSASSA-PKCS1-v1_5",
+17042:                                             modulusLength: e,
+---
+17054:                                                 i(null, {
+17055:                                                     privateKey: t,
+17056:                                                     publicKey: u.setRsaPublicKey(t.n, t.e)
+17057:                                                 })
+17058:                                             }
+17059:                                         });
+17060:                                     if (_("generateKey") && _("exportKey")) {
+17061:                                         var c = s.globalScope.msCrypto.subtle.generateKey({
+17062:                                             name: "RSASSA-PKCS1-v1_5",
+---
+17075:                                                 i(null, {
+17076:                                                     privateKey: r,
+17077:                                                     publicKey: u.setRsaPublicKey(r.n, r.e)
+17078:                                                 })
+17079:                                             }
+17080:                                             ,
+17081:                                             r.onerror = function(e) {
+17082:                                                 i(e)
+17083:                                             }
+---
+17104:                                     return {
+17105:                                         privateKey: u.privateKeyFromPem(l.privateKey),
+17106:                                         publicKey: u.publicKeyFromPem(l.publicKey)
+17107:                                     }
+17108:                                 }
+17109:                             var f = u.rsa.createKeyPairGenerationState(e, t, r);
+17110:                             if (!i)
+17111:                                 return u.rsa.stepKeyPairGenerationState(f, 0),
+17112:                                 f.keys;
+---
+17114:                         }
+17115:                         ,
+17116:                         u.setRsaPublicKey = u.rsa.setPublicKey = function(e, t) {
+17117:                             var r = {
+17118:                                 n: e,
+17119:                                 e: t,
+17120:                                 encrypt: function(e, t, i) {
+17121:                                     if ("string" == typeof t ? t = t.toUpperCase() : void 0 === t && (t = "RSAES-PKCS1-V1_5"),
+17122:                                     "RSAES-PKCS1-V1_5" === t)
+---
+17276:                             var c = n.util.createBuffer(t.publicKeyModulus).toHex()
+17277:                               , l = n.util.createBuffer(t.publicKeyExponent).toHex();
+17278:                             return u.setRsaPublicKey(new i(c,16), new i(l,16))
+17279:                         }
+17280:                         ,
+17281:                         u.publicKeyToAsn1 = u.publicKeyToSubjectPublicKeyInfo = function(e) {
+17282:                             return o.create(o.Class.UNIVERSAL, o.Type.SEQUENCE, !0, [o.create(o.Class.UNIVERSAL, o.Type.SEQUENCE, !0, [o.create(o.Class.UNIVERSAL, o.Type.OID, !1, o.oidToDer(u.oids.rsaEncryption).getBytes()), o.create(o.Class.UNIVERSAL, o.Type.NULL, !1, "")]), o.create(o.Class.UNIVERSAL, o.Type.BITSTRING, !1, [u.publicKeyToRSAPublicKey(e)])])
+17283:                         }
+17284:                         ,
+---
+17280:                         ,
+17281:                         u.publicKeyToAsn1 = u.publicKeyToSubjectPublicKeyInfo = function(e) {
+17282:                             return o.create(o.Class.UNIVERSAL, o.Type.SEQUENCE, !0, [o.create(o.Class.UNIVERSAL, o.Type.SEQUENCE, !0, [o.create(o.Class.UNIVERSAL, o.Type.OID, !1, o.oidToDer(u.oids.rsaEncryption).getBytes()), o.create(o.Class.UNIVERSAL, o.Type.NULL, !1, "")]), o.create(o.Class.UNIVERSAL, o.Type.BITSTRING, !1, [u.publicKeyToRSAPublicKey(e)])])
+17283:                         }
+17284:                         ,
+17285:                         u.publicKeyToRSAPublicKey = function(e) {
+17286:                             return o.create(o.Class.UNIVERSAL, o.Type.SEQUENCE, !0, [o.create(o.Class.UNIVERSAL, o.Type.INTEGER, !1, E(e.n)), o.create(o.Class.UNIVERSAL, o.Type.INTEGER, !1, E(e.e))])
+17287:                         }
+17288:                     }
+---
+17283:                         }
+17284:                         ,
+17285:                         u.publicKeyToRSAPublicKey = function(e) {
+17286:                             return o.create(o.Class.UNIVERSAL, o.Type.SEQUENCE, !0, [o.create(o.Class.UNIVERSAL, o.Type.INTEGER, !1, E(e.n)), o.create(o.Class.UNIVERSAL, o.Type.INTEGER, !1, E(e.e))])
+17287:                         }
+17288:                     }
+17289:                     ,
+17290:                     341: (e, t, r) => {
+17291:                         var n = r(3610);
+---
+21349:                             var r = {
+21350:                                 type: "RSA PUBLIC KEY",
+21351:                                 body: i.toDer(a.publicKeyToRSAPublicKey(e)).getBytes()
+21352:                             };
+21353:                             return n.pem.encode(r, {
+21354:                                 maxline: t
+21355:                             })
+21356:                         }
+21357:                         ,
+---
+21360:                             switch (t.type || "RSAPublicKey") {
+21361:                             case "RSAPublicKey":
+21362:                                 r = i.toDer(a.publicKeyToRSAPublicKey(e)).getBytes();
+21363:                                 break;
+21364:                             case "SubjectPublicKeyInfo":
+21365:                                 r = i.toDer(a.publicKeyToAsn1(e)).getBytes();
+21366:                                 break;
+21367:                             default:
+21368:                                 throw new Error('Unknown fingerprint type "' + t.type + '".')
+---
+21442:                             e.subject.hash = null,
+21443:                             e.extensions = [],
+21444:                             e.publicKey = null,
+21445:                             e.md = null,
+21446:                             e.setSubject = function(t, r) {
+21447:                                 m(t),
+21448:                                 e.subject.attributes = t,
+21449:                                 delete e.subject.uniqueId,
+21450:                                 r && (e.subject.uniqueId = r),
+---
+21632:                             u.subject.hash = b.digest().toHex(),
+21633:                             r.certExtensions ? u.extensions = a.certificateExtensionsFromAsn1(r.certExtensions) : u.extensions = [],
+21634:                             u.publicKey = a.publicKeyFromAsn1(r.subjectPublicKeyInfo),
+21635:                             u
+21636:                         }
+21637:                         ,
+21638:                         a.certificateExtensionsFromAsn1 = function(e) {
+21639:                             for (var t = [], r = 0; r < e.value.length; ++r)
+21640:                                 for (var n = e.value[r], i = 0; i < n.value.length; ++i)
+---
+21752:                             u.subject.attributes = a.RDNAttributesAsArray(r.certificationRequestInfoSubject, l),
+21753:                             u.subject.hash = l.digest().toHex(),
+21754:                             u.publicKey = a.publicKeyFromAsn1(r.subjectPublicKeyInfo),
+21755:                             u.getAttribute = function(e) {
+21756:                                 return p(u, e)
+21757:                             }
+21758:                             ,
+21759:                             u.addAttribute = function(e) {
+21760:                                 m([e]),
+---
+21786:                             e.subject.attributes = [],
+21787:                             e.subject.hash = null,
+21788:                             e.publicKey = null,
+21789:                             e.attributes = [],
+21790:                             e.getAttribute = function(t) {
+21791:                                 return p(e, t)
+21792:                             }
+21793:                             ,
+21794:                             e.addAttribute = function(t) {
+---
+
+=== 989.js — publicKey ===
+11627:                 e.keys = {
+11628:                     privateKey: pki$4.rsa.setPrivateKey(e.n, e.e, n, e.p, e.q, n.mod(e.p1), n.mod(e.q1), e.q.modInverse(e.p)),
+11629:                     publicKey: pki$4.rsa.setPublicKey(e.n, e.e)
+11630:                 },
+11631:                 t(null, e.keys)
+11632:             }
+11633:             "prng"in M && (i.prng = M.prng),
+11634:             o()
+11635:         }
+---
+11755:                     e.keys = {
+11756:                         privateKey: pki$4.rsa.setPrivateKey(e.n, e.e, g, e.p, e.q, g.mod(e.p1), g.mod(e.q1), e.q.modInverse(e.p)),
+11757:                         publicKey: pki$4.rsa.setPublicKey(e.n, e.e)
+11758:                     }
+11759:                 }
+11760:                 N += (i = +new Date) - r,
+11761:                 r = i
+11762:             }
+11763:             return null !== e.keys
+---
+11798:                             i(null, {
+11799:                                 privateKey: pki$4.privateKeyFromPem(t),
+11800:                                 publicKey: pki$4.publicKeyFromPem(M)
+11801:                             })
+11802:                         });
+11803:                     if (_detectSubtleCrypto("generateKey") && _detectSubtleCrypto("exportKey"))
+11804:                         return util$1.globalScope.crypto.subtle.generateKey({
+11805:                             name: "RSASSA-PKCS1-v1_5",
+11806:                             modulusLength: e,
+---
+11818:                                 i(null, {
+11819:                                     privateKey: M,
+11820:                                     publicKey: pki$4.setRsaPublicKey(M.n, M.e)
+11821:                                 })
+11822:                             }
+11823:                         });
+11824:                     if (_detectSubtleMsCrypto("generateKey") && _detectSubtleMsCrypto("exportKey")) {
+11825:                         var o = util$1.globalScope.msCrypto.subtle.generateKey({
+11826:                             name: "RSASSA-PKCS1-v1_5",
+---
+11839:                                 i(null, {
+11840:                                     privateKey: t,
+11841:                                     publicKey: pki$4.setRsaPublicKey(t.n, t.e)
+11842:                                 })
+11843:                             }
+11844:                             ,
+11845:                             t.onerror = function(e) {
+11846:                                 i(e)
+11847:                             }
+---
+11868:                     return {
+11869:                         privateKey: pki$4.privateKeyFromPem(a.privateKey),
+11870:                         publicKey: pki$4.publicKeyFromPem(a.publicKey)
+11871:                     }
+11872:                 }
+11873:             var r = pki$4.rsa.createKeyPairGenerationState(e, M, t);
+11874:             if (!i)
+11875:                 return pki$4.rsa.stepKeyPairGenerationState(r, 0),
+11876:                 r.keys;
+---
+11878:         }
+11879:         ,
+11880:         pki$4.setRsaPublicKey = pki$4.rsa.setPublicKey = function(e, M) {
+11881:             var t = {
+11882:                 n: e,
+11883:                 e: M,
+11884:                 encrypt: function(e, M, i) {
+11885:                     if ("string" == typeof M ? M = M.toUpperCase() : void 0 === M && (M = "RSAES-PKCS1-V1_5"),
+11886:                     "RSAES-PKCS1-V1_5" === M)
+---
+12042:             var a = forge$h.util.createBuffer(M.publicKeyModulus).toHex()
+12043:               , r = forge$h.util.createBuffer(M.publicKeyExponent).toHex();
+12044:             return pki$4.setRsaPublicKey(new BigInteger$3(a,16), new BigInteger$3(r,16))
+12045:         }
+12046:         ,
+12047:         pki$4.publicKeyToAsn1 = pki$4.publicKeyToSubjectPublicKeyInfo = function(e) {
+12048:             return asn1$7.create(asn1$7.Class.UNIVERSAL, asn1$7.Type.SEQUENCE, !0, [asn1$7.create(asn1$7.Class.UNIVERSAL, asn1$7.Type.SEQUENCE, !0, [asn1$7.create(asn1$7.Class.UNIVERSAL, asn1$7.Type.OID, !1, asn1$7.oidToDer(pki$4.oids.rsaEncryption).getBytes()), asn1$7.create(asn1$7.Class.UNIVERSAL, asn1$7.Type.NULL, !1, "")]), asn1$7.create(asn1$7.Class.UNIVERSAL, asn1$7.Type.BITSTRING, !1, [pki$4.publicKeyToRSAPublicKey(e)])])
+12049:         }
+12050:         ,
+---
+12046:         ,
+12047:         pki$4.publicKeyToAsn1 = pki$4.publicKeyToSubjectPublicKeyInfo = function(e) {
+12048:             return asn1$7.create(asn1$7.Class.UNIVERSAL, asn1$7.Type.SEQUENCE, !0, [asn1$7.create(asn1$7.Class.UNIVERSAL, asn1$7.Type.SEQUENCE, !0, [asn1$7.create(asn1$7.Class.UNIVERSAL, asn1$7.Type.OID, !1, asn1$7.oidToDer(pki$4.oids.rsaEncryption).getBytes()), asn1$7.create(asn1$7.Class.UNIVERSAL, asn1$7.Type.NULL, !1, "")]), asn1$7.create(asn1$7.Class.UNIVERSAL, asn1$7.Type.BITSTRING, !1, [pki$4.publicKeyToRSAPublicKey(e)])])
+12049:         }
+12050:         ,
+12051:         pki$4.publicKeyToRSAPublicKey = function(e) {
+12052:             return asn1$7.create(asn1$7.Class.UNIVERSAL, asn1$7.Type.SEQUENCE, !0, [asn1$7.create(asn1$7.Class.UNIVERSAL, asn1$7.Type.INTEGER, !1, _bnToBytes(e.n)), asn1$7.create(asn1$7.Class.UNIVERSAL, asn1$7.Type.INTEGER, !1, _bnToBytes(e.e))])
+12053:         }
+12054:         ;
+---
+12049:         }
+12050:         ,
+12051:         pki$4.publicKeyToRSAPublicKey = function(e) {
+12052:             return asn1$7.create(asn1$7.Class.UNIVERSAL, asn1$7.Type.SEQUENCE, !0, [asn1$7.create(asn1$7.Class.UNIVERSAL, asn1$7.Type.INTEGER, !1, _bnToBytes(e.n)), asn1$7.create(asn1$7.Class.UNIVERSAL, asn1$7.Type.INTEGER, !1, _bnToBytes(e.e))])
+12053:         }
+12054:         ;
+12055:         var forge$g = forge$C;
+12056:         if (void 0 === BigInteger$2)
+12057:             var BigInteger$2 = forge$g.jsbn.BigInteger;
+---
+13678:             var t = {
+13679:                 type: "RSA PUBLIC KEY",
+13680:                 body: asn1$4.toDer(pki$2.publicKeyToRSAPublicKey(e)).getBytes()
+13681:             };
+13682:             return forge$b.pem.encode(t, {
+13683:                 maxline: M
+13684:             })
+13685:         }
+13686:         ,
+---
+13689:             switch (M.type || "RSAPublicKey") {
+13690:             case "RSAPublicKey":
+13691:                 t = asn1$4.toDer(pki$2.publicKeyToRSAPublicKey(e)).getBytes();
+13692:                 break;
+13693:             case "SubjectPublicKeyInfo":
+13694:                 t = asn1$4.toDer(pki$2.publicKeyToAsn1(e)).getBytes();
+13695:                 break;
+13696:             default:
+13697:                 throw new Error('Unknown fingerprint type "' + M.type + '".')
+---
+13771:             e.subject.hash = null,
+13772:             e.extensions = [],
+13773:             e.publicKey = null,
+13774:             e.md = null,
+13775:             e.setSubject = function(M, t) {
+13776:                 _fillMissingFields(M),
+13777:                 e.subject.attributes = M,
+13778:                 delete e.subject.uniqueId,
+13779:                 t && (e.subject.uniqueId = t),
+---
+13961:             a.subject.hash = D.digest().toHex(),
+13962:             t.certExtensions ? a.extensions = pki$2.certificateExtensionsFromAsn1(t.certExtensions) : a.extensions = [],
+13963:             a.publicKey = pki$2.publicKeyFromAsn1(t.subjectPublicKeyInfo),
+13964:             a
+13965:         }
+13966:         ,
+13967:         pki$2.certificateExtensionsFromAsn1 = function(e) {
+13968:             for (var M = [], t = 0; t < e.value.length; ++t)
+13969:                 for (var i = e.value[t], o = 0; o < i.value.length; ++o)
+---
+14081:             a.subject.attributes = pki$2.RDNAttributesAsArray(t.certificationRequestInfoSubject, N),
+14082:             a.subject.hash = N.digest().toHex(),
+14083:             a.publicKey = pki$2.publicKeyFromAsn1(t.subjectPublicKeyInfo),
+14084:             a.getAttribute = function(e) {
+14085:                 return _getAttribute(a, e)
+14086:             }
+14087:             ,
+14088:             a.addAttribute = function(e) {
+14089:                 _fillMissingFields([e]),
+---
+14115:             e.subject.attributes = [],
+14116:             e.subject.hash = null,
+14117:             e.publicKey = null,
+14118:             e.attributes = [],
+14119:             e.getAttribute = function(M) {
+14120:                 return _getAttribute(e, M)
+14121:             }
+14122:             ,
+14123:             e.addAttribute = function(M) {
+---
+16975:             return crypto_sign_keypair(t, i),
+16976:             {
+16977:                 publicKey: t,
+16978:                 privateKey: i
+16979:             }
+16980:         }
+16981:         ,
+16982:         ed25519.privateKeyFromAsn1 = function(e) {
+16983:             var M = {}
+---
+18663:         ;
+18664:         adl_encryption.restInterceptor = restInterceptor;
+18665:         var publicKey = {};
+18666:         !function(e) {
+18667:             Object.defineProperty(e, "__esModule", {
+18668:                 value: !0
+18669:             }),
+18670:             e.getPublicKeyConfig = e.publicKeyApi = void 0;
+18671:             const M = encryption_utility
+---
+18672:               , t = "PublicKeyState";
+18673:             e.publicKeyApi = e => e.post("setup/start").then( ({headers: e, data: M}) => ({
+18674:                 publicKey: M,
+18675:                 diffTime: e["last-modified"] - (new Date).getTime()
+18676:             })),
+18677:             e.getPublicKeyConfig = async (i, o) => {
+18678:                 const a = sessionStorage.getItem(btoa(t));
+18679:                 let r;
+18680:                 return a && (r = M.decryptSessionStore(a, o),
+---
+
+=== vendor.js — publicKey ===
+34076:                 t.keys = {
+34077:                     privateKey: y.rsa.setPrivateKey(t.n, t.e, l, t.p, t.q, l.mod(t.p1), l.mod(t.q1), t.q.modInverse(t.p)),
+34078:                     publicKey: y.rsa.setPublicKey(t.n, t.e)
+34079:                 }
+34080:             }
+34081:             a += (r = +new Date) - s,
+34082:             s = r
+34083:         }
+34084:         return null !== t.keys
+---
+34119:                         r(null, {
+34120:                             privateKey: y.privateKeyFromPem(n),
+34121:                             publicKey: y.publicKeyFromPem(e)
+34122:                         })
+34123:                     });
+34124:                 if (a("generateKey") && a("exportKey"))
+34125:                     return d.globalScope.crypto.subtle.generateKey({
+34126:                         name: "RSASSA-PKCS1-v1_5",
+34127:                         modulusLength: t,
+---
+34139:                             r(null, {
+34140:                                 privateKey: e,
+34141:                                 publicKey: y.setRsaPublicKey(e.n, e.e)
+34142:                             })
+34143:                         }
+34144:                     });
+34145:                 if (c("generateKey") && c("exportKey")) {
+34146:                     var i = d.globalScope.msCrypto.subtle.generateKey({
+34147:                         name: "RSASSA-PKCS1-v1_5",
+---
+34158:                             r(null, {
+34159:                                 privateKey: e,
+34160:                                 publicKey: y.setRsaPublicKey(e.n, e.e)
+34161:                             })
+34162:                         }
+34163:                         ,
+34164:                         e.onerror = function(t) {
+34165:                             r(t)
+34166:                         }
+---
+34187:                 return {
+34188:                     privateKey: y.privateKeyFromPem(o.privateKey),
+34189:                     publicKey: y.publicKeyFromPem(o.publicKey)
+34190:                 }
+34191:             }
+34192:         var m = y.rsa.createKeyPairGenerationState(t, e, n);
+34193:         if (!r)
+34194:             return y.rsa.stepKeyPairGenerationState(m, 0),
+34195:             m.keys;
+---
+34232:                 t.keys = {
+34233:                     privateKey: y.rsa.setPrivateKey(t.n, t.e, c, t.p, t.q, c.mod(t.p1), c.mod(t.q1), t.q.modInverse(t.p)),
+34234:                     publicKey: y.rsa.setPublicKey(t.n, t.e)
+34235:                 },
+34236:                 n(null, t.keys)
+34237:             }
+34238:             "function" == typeof e && (n = e,
+34239:             e = {});
+34240:             var s = {
+---
+34253:     }
+34254:     ,
+34255:     y.setRsaPublicKey = y.rsa.setPublicKey = function(t, e) {
+34256:         var n = {
+34257:             n: t,
+34258:             e: e
+34259:         };
+34260:         return n.encrypt = function(t, e, i) {
+34261:             if ("string" == typeof e ? e = e.toUpperCase() : void 0 === e && (e = "RSAES-PKCS1-V1_5"),
+---
+34409:         var o = l.util.createBuffer(e.publicKeyModulus).toHex()
+34410:           , s = l.util.createBuffer(e.publicKeyExponent).toHex();
+34411:         return y.setRsaPublicKey(new p(o,16), new p(s,16))
+34412:     }
+34413:     ,
+34414:     y.publicKeyToAsn1 = y.publicKeyToSubjectPublicKeyInfo = function(t) {
+34415:         return h.create(h.Class.UNIVERSAL, h.Type.SEQUENCE, !0, [h.create(h.Class.UNIVERSAL, h.Type.SEQUENCE, !0, [h.create(h.Class.UNIVERSAL, h.Type.OID, !1, h.oidToDer(y.oids.rsaEncryption).getBytes()), h.create(h.Class.UNIVERSAL, h.Type.NULL, !1, "")]), h.create(h.Class.UNIVERSAL, h.Type.BITSTRING, !1, [y.publicKeyToRSAPublicKey(t)])])
+34416:     }
+34417:     ,
+---
+34413:     ,
+34414:     y.publicKeyToAsn1 = y.publicKeyToSubjectPublicKeyInfo = function(t) {
+34415:         return h.create(h.Class.UNIVERSAL, h.Type.SEQUENCE, !0, [h.create(h.Class.UNIVERSAL, h.Type.SEQUENCE, !0, [h.create(h.Class.UNIVERSAL, h.Type.OID, !1, h.oidToDer(y.oids.rsaEncryption).getBytes()), h.create(h.Class.UNIVERSAL, h.Type.NULL, !1, "")]), h.create(h.Class.UNIVERSAL, h.Type.BITSTRING, !1, [y.publicKeyToRSAPublicKey(t)])])
+34416:     }
+34417:     ,
+34418:     y.publicKeyToRSAPublicKey = function(t) {
+34419:         return h.create(h.Class.UNIVERSAL, h.Type.SEQUENCE, !0, [h.create(h.Class.UNIVERSAL, h.Type.INTEGER, !1, o(t.n)), h.create(h.Class.UNIVERSAL, h.Type.INTEGER, !1, o(t.e))])
+34420:     }
+34421: }
+---
+34416:     }
+34417:     ,
+34418:     y.publicKeyToRSAPublicKey = function(t) {
+34419:         return h.create(h.Class.UNIVERSAL, h.Type.SEQUENCE, !0, [h.create(h.Class.UNIVERSAL, h.Type.INTEGER, !1, o(t.n)), h.create(h.Class.UNIVERSAL, h.Type.INTEGER, !1, o(t.e))])
+34420:     }
+34421: }
+34422: , function(t, e, n) {
+34423:     function r(t, e, n) {
+34424:         this.data = [],
+---
+42606:         var n = {
+42607:             type: "RSA PUBLIC KEY",
+42608:             body: l.toDer(p.publicKeyToRSAPublicKey(t)).getBytes()
+42609:         };
+42610:         return u.pem.encode(n, {
+42611:             maxline: e
+42612:         })
+42613:     }
+42614:     ,
+---
+42617:         switch (e.type || "RSAPublicKey") {
+42618:         case "RSAPublicKey":
+42619:             n = l.toDer(p.publicKeyToRSAPublicKey(t)).getBytes();
+42620:             break;
+42621:         case "SubjectPublicKeyInfo":
+42622:             n = l.toDer(p.publicKeyToAsn1(t)).getBytes();
+42623:             break;
+42624:         default:
+42625:             throw new Error('Unknown fingerprint type "' + e.type + '".')
+---
+42698:         t.subject.hash = null,
+42699:         t.extensions = [],
+42700:         t.publicKey = null,
+42701:         t.md = null,
+42702:         t.setSubject = function(e, n) {
+42703:             o(e),
+42704:             t.subject.attributes = e,
+42705:             delete t.subject.uniqueId,
+42706:             n && (t.subject.uniqueId = n),
+---
+42948:         s.subject.hash = v.digest().toHex(),
+42949:         s.extensions = n.certExtensions ? p.certificateExtensionsFromAsn1(n.certExtensions) : [],
+42950:         s.publicKey = p.publicKeyFromAsn1(n.subjectPublicKeyInfo),
+42951:         s
+42952:     }
+42953:     ,
+42954:     p.certificateExtensionsFromAsn1 = function(t) {
+42955:         for (var e = [], n = 0; n < t.value.length; ++n)
+42956:             for (var r = t.value[n], i = 0; i < r.value.length; ++i)
+---
+43092:         s.subject.attributes = p.RDNAttributesAsArray(n.certificationRequestInfoSubject, h),
+43093:         s.subject.hash = h.digest().toHex(),
+43094:         s.publicKey = p.publicKeyFromAsn1(n.subjectPublicKeyInfo),
+43095:         s.getAttribute = function(t) {
+43096:             return r(s, t)
+43097:         }
+43098:         ,
+43099:         s.addAttribute = function(t) {
+43100:             o([t]),
+---
+43125:         t.subject.attributes = [],
+43126:         t.subject.hash = null,
+43127:         t.publicKey = null,
+43128:         t.attributes = [],
+43129:         t.getAttribute = function(e) {
+43130:             return r(t, e)
+43131:         }
+43132:         ,
+43133:         t.addAttribute = function(e) {
+---
+68534:         }
+68535:         ,
+68536:         O.prototype.getPublicKey = function() {
+68537:             var t = "-----BEGIN PUBLIC KEY-----\n";
+68538:             return t += this.wordwrap(this.getPublicBaseKeyB64()) + "\n",
+68539:             t += "-----END PUBLIC KEY-----"
+68540:         }
+68541:         ,
+68542:         O.prototype.hasPublicKeyProperty = function(t) {
+---
+68580:         }
+68581:         ,
+68582:         X.prototype.setPublicKey = function(t) {
+68583:             this.setKey(t)
+68584:         }
+68585:         ,
+68586:         X.prototype.decrypt = function(t) {
+68587:             try {
+68588:                 return this.getKey().decrypt(A(t))
+---
+68618:         }
+68619:         ,
+68620:         X.prototype.getPublicKey = function() {
+68621:             return this.getKey().getPublicKey()
+68622:         }
+68623:         ,
+68624:         X.prototype.getPublicKeyB64 = function() {
+68625:             return this.getKey().getPublicBaseKeyB64()
+68626:         }
+---
+68619:         ,
+68620:         X.prototype.getPublicKey = function() {
+68621:             return this.getKey().getPublicKey()
+68622:         }
+68623:         ,
+68624:         X.prototype.getPublicKeyB64 = function() {
+68625:             return this.getKey().getPublicBaseKeyB64()
+68626:         }
+68627:         ,
+---

@@ -1,0 +1,150 @@
+﻿=== stat_ref / statRef — BÚSQUEDA EN 4 ARCHIVOS ===
+
+========================================
+=== main.txt LÍNEA 27309 — stat_ref (exacto) ===
+========================================
+    27294:             var n = this;
+    27295:             return i.a.STAGE_NAME.match(/dev|qa/) || this.validateNotCypherURL(t.url) ? e.handle(t) : this.userFacade.user$.pipe(Object(a.take)(1), Object(a.switchMap)(function(o) {
+    27296:                 return n.handleRequest(t, e, o.publicKey, o.diffTime)
+    27297:             }))
+    27298:         }
+    27299:         ,
+    27300:         t.prototype.handleRequest = function(t, e, n, o) {
+    27301:             var i = this
+    27302:               , s = this.bdbSecurityRestProvider.generateFrontPrivateKey(32)
+    27303:               , l = this.bdbSecurityRestProvider.generateFrontPrivateKey(16)
+    27304:               , d = this.bdbSecurityRestProvider.encryptBody(JSON.stringify(t.body), s, l)
+    27305:               , p = this.bdbSecurityRestProvider.generateCypheringStrategy(s, d, l, o)
+    27306:               , f = this.bdbSecurityRestProvider.generateCypherFrontPrivateKey(JSON.stringify(p), n);
+    27307:             return t = t.clone({
+    27308:                 headers: t.headers.set("stat_ref", "" + f)
+>>> 27309:             }),
+    27310:             t = t.clone({
+    27311:                 body: d
+    27312:             }),
+    27313:             t = t.clone({
+    27314:                 responseType: "text"
+    27315:             }),
+    27316:             e.handle(t).pipe(Object(a.map)(function(e) {
+    27317:                 try {
+    27318:                     if (e instanceof r.h) {
+    27319:                         var n = void 0;
+    27320:                         n = i.bdbSecurityRestProvider.decryptBody(e.body.body ? e.body.body : e.body, s, l),
+    27321:                         e = e.clone({
+    27322:                             body: n
+    27323:                         })
+    27324:                     }
+
+========================================
+=== main.txt LÍNEA 65124 — stat_ref (exacto) ===
+========================================
+    65109:             var n = this;
+    65110:             return i.a.STAGE_NAME.match(/dev|qa/) || this.validateNotCypherURL(t.url) ? e.handle(t) : this.userFacade.user$.pipe(Object(a.take)(1), Object(a.switchMap)(function(o) {
+    65111:                 return n.handleRequest(t, e, o.publicKey, o.diffTime)
+    65112:             }))
+    65113:         }
+    65114:         ,
+    65115:         t.prototype.handleRequest = function(t, e, n, o) {
+    65116:             var i = this
+    65117:               , s = this.bdbSecurityRestProvider.generateFrontPrivateKey(32)
+    65118:               , l = this.bdbSecurityRestProvider.generateFrontPrivateKey(16)
+    65119:               , d = this.bdbSecurityRestProvider.encryptBody(JSON.stringify(t.body), s, l)
+    65120:               , p = this.bdbSecurityRestProvider.generateCypheringStrategy(s, d, l, o)
+    65121:               , f = this.bdbSecurityRestProvider.generateCypherFrontPrivateKey(JSON.stringify(p), n);
+    65122:             return t = t.clone({
+    65123:                 headers: t.headers.set("stat_ref", "" + f)
+>>> 65124:             }),
+    65125:             t = t.clone({
+    65126:                 body: d
+    65127:             }),
+    65128:             t = t.clone({
+    65129:                 responseType: "text"
+    65130:             }),
+    65131:             e.handle(t).pipe(Object(a.map)(function(e) {
+    65132:                 try {
+    65133:                     if (e instanceof r.h) {
+    65134:                         var n = void 0;
+    65135:                         n = i.bdbSecurityRestProvider.decryptBody(e.body.body ? e.body.body : e.body, s, l),
+    65136:                         e = e.clone({
+    65137:                             body: n
+    65138:                         })
+    65139:                     }
+=== NO ENCONTRADO en main.txt ===
+=== NO ENCONTRADO en main.txt ===
+
+========================================
+=== 3188.js LÍNEA 1322 — stat_ref (exacto) ===
+========================================
+    1307:                                 i.timestamp = (new Date).getTime() + n;
+    1308:                                 var a = q.md.md5.create();
+    1309:                                 return a.update(t),
+    1310:                                 i.hash = a.digest().toHex(),
+    1311:                                 i.aesInitialVector = q.util.encode64(r),
+    1312:                                 i.cypherVersion = 4,
+    1313:                                 i
+    1314:                             }(n, o, i, r.diffTime)
+    1315:                               , u = function(e, t) {
+    1316:                                 var r = q.pki.publicKeyFromPem("-----BEGIN RSA PUBLIC KEY-----" + t + "-----END RSA PUBLIC KEY-----");
+    1317:                                 return q.util.encode64(r.encrypt(e))
+    1318:                             }(JSON.stringify(s), r.publicKey);
+    1319:                             return {
+    1320:                                 headers: W(W({}, null != t && t.headers ? t.headers : {}), {}, {
+    1321:                                     stat_ref: "".concat(u)
+>>> 1322:                                 }),
+    1323:                                 body: o,
+    1324:                                 decryptBody: function(e) {
+    1325:                                     return function(e, t, r) {
+    1326:                                         e = q.util.decode64(e);
+    1327:                                         var n = q.cipher.createDecipher("AES-CBC", t);
+    1328:                                         n.start({
+    1329:                                             iv: r
+    1330:                                         }),
+    1331:                                         n.update(q.util.createBuffer(e)),
+    1332:                                         n.finish();
+    1333:                                         var i = n.output.data
+    1334:                                           , a = q.util.decodeUtf8(i.toString());
+    1335:                                         try {
+    1336:                                             return a ? JSON.parse(a) : ""
+    1337:                                         } catch (e) {
+=== NO ENCONTRADO en 3188.js ===
+=== NO ENCONTRADO en 3188.js ===
+
+========================================
+=== 989.js LÍNEA 18658 — stat_ref (exacto) ===
+========================================
+    18643:               , a = encryption_utility_1$2.generateCypheringStrategy(t, o, i, M.diffTime);
+    18644:             return {
+    18645:                 iv: i,
+    18646:                 frontPrivateKey: t,
+    18647:                 cipherBody: o,
+    18648:                 cipherFrontPrivateKey: encryption_utility_1$2.generateCypherFrontPrivateKey(JSON.stringify(a), M.publicKey)
+    18649:             }
+    18650:         }
+    18651:           , restInterceptor = ({request: e, encryptionData: M}) => {
+    18652:             var t;
+    18653:             const i = encryptBody((null == e ? void 0 : e.body) || {}, M);
+    18654:             return {
+    18655:                 headers: {
+    18656:                     ...null !== (t = null == e ? void 0 : e.headers) && void 0 !== t ? t : {},
+    18657:                     stat_ref: `${i.cipherFrontPrivateKey}`
+>>> 18658:                 },
+    18659:                 body: i.cipherBody,
+    18660:                 decryptBody: e => encryption_utility_1$2.decrypt(e, i.frontPrivateKey, i.iv)
+    18661:             }
+    18662:         }
+    18663:         ;
+    18664:         adl_encryption.restInterceptor = restInterceptor;
+    18665:         var publicKey = {};
+    18666:         !function(e) {
+    18667:             Object.defineProperty(e, "__esModule", {
+    18668:                 value: !0
+    18669:             }),
+    18670:             e.getPublicKeyConfig = e.publicKeyApi = void 0;
+    18671:             const M = encryption_utility
+    18672:               , t = "PublicKeyState";
+    18673:             e.publicKeyApi = e => e.post("setup/start").then( ({headers: e, data: M}) => ({
+=== NO ENCONTRADO en 989.js ===
+=== NO ENCONTRADO en 989.js ===
+=== NO ENCONTRADO en vendor.js ===
+=== NO ENCONTRADO en vendor.js ===
+=== NO ENCONTRADO en vendor.js ===

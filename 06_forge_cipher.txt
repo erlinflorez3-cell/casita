@@ -1,0 +1,2753 @@
+﻿=== forge.cipher / createCipher / createDecipher — BÚSQUEDA EN 4 ARCHIVOS ===
+
+========================================
+=== main.txt LÍNEA 4362 — createCipher ===
+========================================
+    4352:                 i.options.usePureJavaScript = !0;
+    4353:                 var t = i.md.sha1.create();
+    4354:                 t.update(this.hashBaseDevice),
+    4355:                 this.sha1HashKey = t.digest().getBytes(16)
+    4356:             }
+    4357:             return this.sha1HashKey
+    4358:         }
+    4359:         ,
+    4360:         t.prototype.encrypt = function(t) {
+    4361:             var e = i.cipher.createCipher("AES-ECB", this.getHashDevice());
+>>> 4362:             return e.start(),
+    4363:             e.update(i.util.createBuffer(JSON.stringify(t))),
+    4364:             e.finish(),
+    4365:             e.output.data
+    4366:         }
+    4367:         ,
+    4368:         t.prototype.decrypt = function(t) {
+    4369:             try {
+    4370:                 var e = i.cipher.createDecipher("AES-ECB", this.getHashDevice());
+    4371:                 return e.start(),
+    4372:                 e.update(i.util.createBuffer(t)),
+    4373:                 e.finish(),
+    4374:                 this.parseItem(e.output.data)
+    4375:             } catch (t) {
+    4376:                 return null
+    4377:             }
+    4378:         }
+    4379:         ,
+    4380:         t.prototype.parseItem = function(t) {
+    4381:             return null === t || void 0 === t || "" === t ? null : JSON.parse(t)
+    4382:         }
+
+========================================
+=== main.txt LÍNEA 4386 — createCipher ===
+========================================
+    4376:                 return null
+    4377:             }
+    4378:         }
+    4379:         ,
+    4380:         t.prototype.parseItem = function(t) {
+    4381:             return null === t || void 0 === t || "" === t ? null : JSON.parse(t)
+    4382:         }
+    4383:         ,
+    4384:         t.prototype.encryptId = function(t) {
+    4385:             var e = i.cipher.createCipher("AES-ECB", this.getHashDevice());
+>>> 4386:             return e.start(),
+    4387:             e.update(i.util.createBuffer(t)),
+    4388:             e.finish(),
+    4389:             e.output.data
+    4390:         }
+    4391:         ,
+    4392:         t = a([Object(o.Injectable)(), c("design:paramtypes", [r.a])], t)
+    4393:     }()
+    4394: }
+    4395: , , , , , , , , , , , , , , , , , , , , function(t, e, n) {
+    4396:     "use strict";
+    4397:     n.d(e, "a", function() {
+    4398:         return Mt
+    4399:     });
+    4400:     var o = n(0)
+    4401:       , r = n(749)
+    4402:       , i = n(1639)
+    4403:       , a = n(1640)
+    4404:       , c = n(1641)
+    4405:       , s = n(1229)
+    4406:       , l = (n.n(s),
+
+========================================
+=== main.txt LÍNEA 6310 — createCipher ===
+========================================
+    6300:       , a = function() {
+    6301:         function t() {}
+    6302:         return t.prototype.toSha256 = function(t) {
+    6303:             var e = r.md.sha256.create();
+    6304:             return e.update(t),
+    6305:             e.digest().toHex()
+    6306:         }
+    6307:         ,
+    6308:         t.prototype.bdbEncrypt = function(t) {
+    6309:             var e = r.cipher.createCipher("AES-ECB", this.getHashDevice());
+>>> 6310:             return e.start(),
+    6311:             e.update(r.util.createBuffer(t)),
+    6312:             e.finish(),
+    6313:             e.output.data
+    6314:         }
+    6315:         ,
+    6316:         t.prototype.bdbDecrypt = function(t) {
+    6317:             try {
+    6318:                 var e = r.cipher.createDecipher("AES-ECB", this.getHashDevice());
+    6319:                 return e.start(),
+    6320:                 e.update(r.util.createBuffer(t)),
+    6321:                 e.finish(),
+    6322:                 this.parseItem(e.output.data)
+    6323:             } catch (t) {
+    6324:                 return null
+    6325:             }
+    6326:         }
+    6327:         ,
+    6328:         t.prototype.parseItem = function(t) {
+    6329:             return null === t || void 0 === t || "" === t ? null : JSON.parse(t)
+    6330:         }
+
+========================================
+=== main.txt LÍNEA 13263 — createCipher ===
+========================================
+    13253:         }
+    13254:         ,
+    13255:         t.prototype.generateCypherFrontPrivateKey = function(t, e) {
+    13256:             r.options.usePureJavaScript = !0;
+    13257:             var n = r.pki.publicKeyFromPem("-----BEGIN RSA PUBLIC KEY-----" + e + "-----END RSA PUBLIC KEY-----");
+    13258:             return r.util.encode64(n.encrypt(t))
+    13259:         }
+    13260:         ,
+    13261:         t.prototype.encryptBody = function(t, e, n) {
+    13262:             var o = r.cipher.createCipher("AES-CBC", e);
+>>> 13263:             o.start({
+    13264:                 iv: n
+    13265:             }),
+    13266:             o.update(r.util.createBuffer(t, "utf8")),
+    13267:             o.finish();
+    13268:             var i = o.output;
+    13269:             return i = r.util.encode64(i.data)
+    13270:         }
+    13271:         ,
+    13272:         t.prototype.decryptBody = function(t, e, n) {
+    13273:             t = r.util.decode64(t);
+    13274:             var o = r.cipher.createDecipher("AES-CBC", e);
+    13275:             o.start({
+    13276:                 iv: n
+    13277:             }),
+    13278:             o.update(r.util.createBuffer(t)),
+    13279:             o.finish();
+    13280:             var i = r.util.decodeUtf8(o.output.data.toString());
+    13281:             try {
+    13282:                 return JSON.parse(i)
+    13283:             } catch (t) {
+
+========================================
+=== main.txt LÍNEA 15344 — createCipher ===
+========================================
+    15334:         }
+    15335:         ,
+    15336:         t.prototype.generateCypherFrontPrivateKey = function(t) {
+    15337:             r.options.usePureJavaScript = !0;
+    15338:             var e = r.pki.publicKeyFromPem("-----BEGIN RSA PUBLIC KEY-----" + this.bdbInMemory.getItemByKey(i.a.PublicKeyBack) + "-----END RSA PUBLIC KEY-----");
+    15339:             return r.util.encode64(e.encrypt(t))
+    15340:         }
+    15341:         ,
+    15342:         t.prototype.encrypt = function(t, e, n) {
+    15343:             var o = r.cipher.createCipher("AES-CBC", e);
+>>> 15344:             o.start({
+    15345:                 iv: n
+    15346:             }),
+    15347:             o.update(r.util.createBuffer(t, "utf8")),
+    15348:             o.finish();
+    15349:             var i = o.output;
+    15350:             return i = r.util.encode64(i.data)
+    15351:         }
+    15352:         ,
+    15353:         t.prototype.desencrypt = function(t, e, n) {
+    15354:             t = r.util.decode64(t);
+    15355:             var o = r.cipher.createDecipher("AES-CBC", e);
+    15356:             o.start({
+    15357:                 iv: n
+    15358:             }),
+    15359:             o.update(r.util.createBuffer(t)),
+    15360:             o.finish();
+    15361:             var i = r.util.decodeUtf8(o.output.data.toString());
+    15362:             try {
+    15363:                 return JSON.parse(i)
+    15364:             } catch (t) {
+
+========================================
+=== main.txt LÍNEA 42177 — createCipher ===
+========================================
+    42167:                 i.options.usePureJavaScript = !0;
+    42168:                 var t = i.md.sha1.create();
+    42169:                 t.update(this.hashBaseDevice),
+    42170:                 this.sha1HashKey = t.digest().getBytes(16)
+    42171:             }
+    42172:             return this.sha1HashKey
+    42173:         }
+    42174:         ,
+    42175:         t.prototype.encrypt = function(t) {
+    42176:             var e = i.cipher.createCipher("AES-ECB", this.getHashDevice());
+>>> 42177:             return e.start(),
+    42178:             e.update(i.util.createBuffer(JSON.stringify(t))),
+    42179:             e.finish(),
+    42180:             e.output.data
+    42181:         }
+    42182:         ,
+    42183:         t.prototype.decrypt = function(t) {
+    42184:             try {
+    42185:                 var e = i.cipher.createDecipher("AES-ECB", this.getHashDevice());
+    42186:                 return e.start(),
+    42187:                 e.update(i.util.createBuffer(t)),
+    42188:                 e.finish(),
+    42189:                 this.parseItem(e.output.data)
+    42190:             } catch (t) {
+    42191:                 return null
+    42192:             }
+    42193:         }
+    42194:         ,
+    42195:         t.prototype.parseItem = function(t) {
+    42196:             return null === t || void 0 === t || "" === t ? null : JSON.parse(t)
+    42197:         }
+
+========================================
+=== main.txt LÍNEA 42201 — createCipher ===
+========================================
+    42191:                 return null
+    42192:             }
+    42193:         }
+    42194:         ,
+    42195:         t.prototype.parseItem = function(t) {
+    42196:             return null === t || void 0 === t || "" === t ? null : JSON.parse(t)
+    42197:         }
+    42198:         ,
+    42199:         t.prototype.encryptId = function(t) {
+    42200:             var e = i.cipher.createCipher("AES-ECB", this.getHashDevice());
+>>> 42201:             return e.start(),
+    42202:             e.update(i.util.createBuffer(t)),
+    42203:             e.finish(),
+    42204:             e.output.data
+    42205:         }
+    42206:         ,
+    42207:         t = a([Object(o.Injectable)(), c("design:paramtypes", [r.a])], t)
+    42208:     }()
+    42209: }
+    42210: , , , , , , , , , , , , , , , , , , , , function(t, e, n) {
+    42211:     "use strict";
+    42212:     n.d(e, "a", function() {
+    42213:         return Mt
+    42214:     });
+    42215:     var o = n(0)
+    42216:       , r = n(749)
+    42217:       , i = n(1639)
+    42218:       , a = n(1640)
+    42219:       , c = n(1641)
+    42220:       , s = n(1229)
+    42221:       , l = (n.n(s),
+
+========================================
+=== main.txt LÍNEA 44125 — createCipher ===
+========================================
+    44115:       , a = function() {
+    44116:         function t() {}
+    44117:         return t.prototype.toSha256 = function(t) {
+    44118:             var e = r.md.sha256.create();
+    44119:             return e.update(t),
+    44120:             e.digest().toHex()
+    44121:         }
+    44122:         ,
+    44123:         t.prototype.bdbEncrypt = function(t) {
+    44124:             var e = r.cipher.createCipher("AES-ECB", this.getHashDevice());
+>>> 44125:             return e.start(),
+    44126:             e.update(r.util.createBuffer(t)),
+    44127:             e.finish(),
+    44128:             e.output.data
+    44129:         }
+    44130:         ,
+    44131:         t.prototype.bdbDecrypt = function(t) {
+    44132:             try {
+    44133:                 var e = r.cipher.createDecipher("AES-ECB", this.getHashDevice());
+    44134:                 return e.start(),
+    44135:                 e.update(r.util.createBuffer(t)),
+    44136:                 e.finish(),
+    44137:                 this.parseItem(e.output.data)
+    44138:             } catch (t) {
+    44139:                 return null
+    44140:             }
+    44141:         }
+    44142:         ,
+    44143:         t.prototype.parseItem = function(t) {
+    44144:             return null === t || void 0 === t || "" === t ? null : JSON.parse(t)
+    44145:         }
+
+========================================
+=== main.txt LÍNEA 51078 — createCipher ===
+========================================
+    51068:         }
+    51069:         ,
+    51070:         t.prototype.generateCypherFrontPrivateKey = function(t, e) {
+    51071:             r.options.usePureJavaScript = !0;
+    51072:             var n = r.pki.publicKeyFromPem("-----BEGIN RSA PUBLIC KEY-----" + e + "-----END RSA PUBLIC KEY-----");
+    51073:             return r.util.encode64(n.encrypt(t))
+    51074:         }
+    51075:         ,
+    51076:         t.prototype.encryptBody = function(t, e, n) {
+    51077:             var o = r.cipher.createCipher("AES-CBC", e);
+>>> 51078:             o.start({
+    51079:                 iv: n
+    51080:             }),
+    51081:             o.update(r.util.createBuffer(t, "utf8")),
+    51082:             o.finish();
+    51083:             var i = o.output;
+    51084:             return i = r.util.encode64(i.data)
+    51085:         }
+    51086:         ,
+    51087:         t.prototype.decryptBody = function(t, e, n) {
+    51088:             t = r.util.decode64(t);
+    51089:             var o = r.cipher.createDecipher("AES-CBC", e);
+    51090:             o.start({
+    51091:                 iv: n
+    51092:             }),
+    51093:             o.update(r.util.createBuffer(t)),
+    51094:             o.finish();
+    51095:             var i = r.util.decodeUtf8(o.output.data.toString());
+    51096:             try {
+    51097:                 return JSON.parse(i)
+    51098:             } catch (t) {
+
+========================================
+=== main.txt LÍNEA 53159 — createCipher ===
+========================================
+    53149:         }
+    53150:         ,
+    53151:         t.prototype.generateCypherFrontPrivateKey = function(t) {
+    53152:             r.options.usePureJavaScript = !0;
+    53153:             var e = r.pki.publicKeyFromPem("-----BEGIN RSA PUBLIC KEY-----" + this.bdbInMemory.getItemByKey(i.a.PublicKeyBack) + "-----END RSA PUBLIC KEY-----");
+    53154:             return r.util.encode64(e.encrypt(t))
+    53155:         }
+    53156:         ,
+    53157:         t.prototype.encrypt = function(t, e, n) {
+    53158:             var o = r.cipher.createCipher("AES-CBC", e);
+>>> 53159:             o.start({
+    53160:                 iv: n
+    53161:             }),
+    53162:             o.update(r.util.createBuffer(t, "utf8")),
+    53163:             o.finish();
+    53164:             var i = o.output;
+    53165:             return i = r.util.encode64(i.data)
+    53166:         }
+    53167:         ,
+    53168:         t.prototype.desencrypt = function(t, e, n) {
+    53169:             t = r.util.decode64(t);
+    53170:             var o = r.cipher.createDecipher("AES-CBC", e);
+    53171:             o.start({
+    53172:                 iv: n
+    53173:             }),
+    53174:             o.update(r.util.createBuffer(t)),
+    53175:             o.finish();
+    53176:             var i = r.util.decodeUtf8(o.output.data.toString());
+    53177:             try {
+    53178:                 return JSON.parse(i)
+    53179:             } catch (t) {
+
+========================================
+=== main.txt LÍNEA 4371 — createDecipher ===
+========================================
+    4361:             var e = i.cipher.createCipher("AES-ECB", this.getHashDevice());
+    4362:             return e.start(),
+    4363:             e.update(i.util.createBuffer(JSON.stringify(t))),
+    4364:             e.finish(),
+    4365:             e.output.data
+    4366:         }
+    4367:         ,
+    4368:         t.prototype.decrypt = function(t) {
+    4369:             try {
+    4370:                 var e = i.cipher.createDecipher("AES-ECB", this.getHashDevice());
+>>> 4371:                 return e.start(),
+    4372:                 e.update(i.util.createBuffer(t)),
+    4373:                 e.finish(),
+    4374:                 this.parseItem(e.output.data)
+    4375:             } catch (t) {
+    4376:                 return null
+    4377:             }
+    4378:         }
+    4379:         ,
+    4380:         t.prototype.parseItem = function(t) {
+    4381:             return null === t || void 0 === t || "" === t ? null : JSON.parse(t)
+    4382:         }
+    4383:         ,
+    4384:         t.prototype.encryptId = function(t) {
+    4385:             var e = i.cipher.createCipher("AES-ECB", this.getHashDevice());
+    4386:             return e.start(),
+    4387:             e.update(i.util.createBuffer(t)),
+    4388:             e.finish(),
+    4389:             e.output.data
+    4390:         }
+    4391:         ,
+
+========================================
+=== main.txt LÍNEA 6319 — createDecipher ===
+========================================
+    6309:             var e = r.cipher.createCipher("AES-ECB", this.getHashDevice());
+    6310:             return e.start(),
+    6311:             e.update(r.util.createBuffer(t)),
+    6312:             e.finish(),
+    6313:             e.output.data
+    6314:         }
+    6315:         ,
+    6316:         t.prototype.bdbDecrypt = function(t) {
+    6317:             try {
+    6318:                 var e = r.cipher.createDecipher("AES-ECB", this.getHashDevice());
+>>> 6319:                 return e.start(),
+    6320:                 e.update(r.util.createBuffer(t)),
+    6321:                 e.finish(),
+    6322:                 this.parseItem(e.output.data)
+    6323:             } catch (t) {
+    6324:                 return null
+    6325:             }
+    6326:         }
+    6327:         ,
+    6328:         t.prototype.parseItem = function(t) {
+    6329:             return null === t || void 0 === t || "" === t ? null : JSON.parse(t)
+    6330:         }
+    6331:         ,
+    6332:         t.prototype.getHashDevice = function() {
+    6333:             if (this.hashBaseDevice = this.hashBaseDevice ? this.hashBaseDevice : this.getHashFromDevice(),
+    6334:             !this.sha1HashKey) {
+    6335:                 r.options.usePureJavaScript = !0;
+    6336:                 var t = r.md.sha1.create();
+    6337:                 t.update(this.hashBaseDevice),
+    6338:                 this.sha1HashKey = t.digest().getBytes(16)
+    6339:             }
+
+========================================
+=== main.txt LÍNEA 13275 — createDecipher ===
+========================================
+    13265:             }),
+    13266:             o.update(r.util.createBuffer(t, "utf8")),
+    13267:             o.finish();
+    13268:             var i = o.output;
+    13269:             return i = r.util.encode64(i.data)
+    13270:         }
+    13271:         ,
+    13272:         t.prototype.decryptBody = function(t, e, n) {
+    13273:             t = r.util.decode64(t);
+    13274:             var o = r.cipher.createDecipher("AES-CBC", e);
+>>> 13275:             o.start({
+    13276:                 iv: n
+    13277:             }),
+    13278:             o.update(r.util.createBuffer(t)),
+    13279:             o.finish();
+    13280:             var i = r.util.decodeUtf8(o.output.data.toString());
+    13281:             try {
+    13282:                 return JSON.parse(i)
+    13283:             } catch (t) {
+    13284:                 return console.error(t),
+    13285:                 i
+    13286:             }
+    13287:         }
+    13288:         ,
+    13289:         t = a([Object(o.Injectable)(), c("design:paramtypes", [])], t)
+    13290:     }()
+    13291: }
+    13292: , function(t, e, n) {
+    13293:     "use strict";
+    13294:     n.d(e, "a", function() {
+    13295:         return o
+
+========================================
+=== main.txt LÍNEA 15356 — createDecipher ===
+========================================
+    15346:             }),
+    15347:             o.update(r.util.createBuffer(t, "utf8")),
+    15348:             o.finish();
+    15349:             var i = o.output;
+    15350:             return i = r.util.encode64(i.data)
+    15351:         }
+    15352:         ,
+    15353:         t.prototype.desencrypt = function(t, e, n) {
+    15354:             t = r.util.decode64(t);
+    15355:             var o = r.cipher.createDecipher("AES-CBC", e);
+>>> 15356:             o.start({
+    15357:                 iv: n
+    15358:             }),
+    15359:             o.update(r.util.createBuffer(t)),
+    15360:             o.finish();
+    15361:             var i = r.util.decodeUtf8(o.output.data.toString());
+    15362:             try {
+    15363:                 return JSON.parse(i)
+    15364:             } catch (t) {
+    15365:                 return console.error(t),
+    15366:                 i
+    15367:             }
+    15368:         }
+    15369:         ,
+    15370:         t.prototype.storePublickKey = function(t) {
+    15371:             this.bdbInMemory.setItemByKey(i.a.PublicKeyBack, t.body);
+    15372:             var e = Number(t.headers.get("Last-Modified")) - (new Date).getTime();
+    15373:             this.bdbInMemory.setItemByKey(i.a.ServerDiffTime, e)
+    15374:         }
+    15375:         ,
+    15376:         t = s([Object(o.Injectable)(), l("design:paramtypes", [a.a])], t)
+
+========================================
+=== main.txt LÍNEA 42186 — createDecipher ===
+========================================
+    42176:             var e = i.cipher.createCipher("AES-ECB", this.getHashDevice());
+    42177:             return e.start(),
+    42178:             e.update(i.util.createBuffer(JSON.stringify(t))),
+    42179:             e.finish(),
+    42180:             e.output.data
+    42181:         }
+    42182:         ,
+    42183:         t.prototype.decrypt = function(t) {
+    42184:             try {
+    42185:                 var e = i.cipher.createDecipher("AES-ECB", this.getHashDevice());
+>>> 42186:                 return e.start(),
+    42187:                 e.update(i.util.createBuffer(t)),
+    42188:                 e.finish(),
+    42189:                 this.parseItem(e.output.data)
+    42190:             } catch (t) {
+    42191:                 return null
+    42192:             }
+    42193:         }
+    42194:         ,
+    42195:         t.prototype.parseItem = function(t) {
+    42196:             return null === t || void 0 === t || "" === t ? null : JSON.parse(t)
+    42197:         }
+    42198:         ,
+    42199:         t.prototype.encryptId = function(t) {
+    42200:             var e = i.cipher.createCipher("AES-ECB", this.getHashDevice());
+    42201:             return e.start(),
+    42202:             e.update(i.util.createBuffer(t)),
+    42203:             e.finish(),
+    42204:             e.output.data
+    42205:         }
+    42206:         ,
+
+========================================
+=== main.txt LÍNEA 44134 — createDecipher ===
+========================================
+    44124:             var e = r.cipher.createCipher("AES-ECB", this.getHashDevice());
+    44125:             return e.start(),
+    44126:             e.update(r.util.createBuffer(t)),
+    44127:             e.finish(),
+    44128:             e.output.data
+    44129:         }
+    44130:         ,
+    44131:         t.prototype.bdbDecrypt = function(t) {
+    44132:             try {
+    44133:                 var e = r.cipher.createDecipher("AES-ECB", this.getHashDevice());
+>>> 44134:                 return e.start(),
+    44135:                 e.update(r.util.createBuffer(t)),
+    44136:                 e.finish(),
+    44137:                 this.parseItem(e.output.data)
+    44138:             } catch (t) {
+    44139:                 return null
+    44140:             }
+    44141:         }
+    44142:         ,
+    44143:         t.prototype.parseItem = function(t) {
+    44144:             return null === t || void 0 === t || "" === t ? null : JSON.parse(t)
+    44145:         }
+    44146:         ,
+    44147:         t.prototype.getHashDevice = function() {
+    44148:             if (this.hashBaseDevice = this.hashBaseDevice ? this.hashBaseDevice : this.getHashFromDevice(),
+    44149:             !this.sha1HashKey) {
+    44150:                 r.options.usePureJavaScript = !0;
+    44151:                 var t = r.md.sha1.create();
+    44152:                 t.update(this.hashBaseDevice),
+    44153:                 this.sha1HashKey = t.digest().getBytes(16)
+    44154:             }
+
+========================================
+=== main.txt LÍNEA 51090 — createDecipher ===
+========================================
+    51080:             }),
+    51081:             o.update(r.util.createBuffer(t, "utf8")),
+    51082:             o.finish();
+    51083:             var i = o.output;
+    51084:             return i = r.util.encode64(i.data)
+    51085:         }
+    51086:         ,
+    51087:         t.prototype.decryptBody = function(t, e, n) {
+    51088:             t = r.util.decode64(t);
+    51089:             var o = r.cipher.createDecipher("AES-CBC", e);
+>>> 51090:             o.start({
+    51091:                 iv: n
+    51092:             }),
+    51093:             o.update(r.util.createBuffer(t)),
+    51094:             o.finish();
+    51095:             var i = r.util.decodeUtf8(o.output.data.toString());
+    51096:             try {
+    51097:                 return JSON.parse(i)
+    51098:             } catch (t) {
+    51099:                 return console.error(t),
+    51100:                 i
+    51101:             }
+    51102:         }
+    51103:         ,
+    51104:         t = a([Object(o.Injectable)(), c("design:paramtypes", [])], t)
+    51105:     }()
+    51106: }
+    51107: , function(t, e, n) {
+    51108:     "use strict";
+    51109:     n.d(e, "a", function() {
+    51110:         return o
+
+========================================
+=== main.txt LÍNEA 53171 — createDecipher ===
+========================================
+    53161:             }),
+    53162:             o.update(r.util.createBuffer(t, "utf8")),
+    53163:             o.finish();
+    53164:             var i = o.output;
+    53165:             return i = r.util.encode64(i.data)
+    53166:         }
+    53167:         ,
+    53168:         t.prototype.desencrypt = function(t, e, n) {
+    53169:             t = r.util.decode64(t);
+    53170:             var o = r.cipher.createDecipher("AES-CBC", e);
+>>> 53171:             o.start({
+    53172:                 iv: n
+    53173:             }),
+    53174:             o.update(r.util.createBuffer(t)),
+    53175:             o.finish();
+    53176:             var i = r.util.decodeUtf8(o.output.data.toString());
+    53177:             try {
+    53178:                 return JSON.parse(i)
+    53179:             } catch (t) {
+    53180:                 return console.error(t),
+    53181:                 i
+    53182:             }
+    53183:         }
+    53184:         ,
+    53185:         t.prototype.storePublickKey = function(t) {
+    53186:             this.bdbInMemory.setItemByKey(i.a.PublicKeyBack, t.body);
+    53187:             var e = Number(t.headers.get("Last-Modified")) - (new Date).getTime();
+    53188:             this.bdbInMemory.setItemByKey(i.a.ServerDiffTime, e)
+    53189:         }
+    53190:         ,
+    53191:         t = s([Object(o.Injectable)(), l("design:paramtypes", [a.a])], t)
+
+========================================
+=== 3188.js LÍNEA 1268 — createCipher ===
+========================================
+    1258:                             }
+    1259:                             return e
+    1260:                         }
+    1261:                         var Q = function(e) {
+    1262:                             var t = q.md.sha256.create();
+    1263:                             return t.update(e),
+    1264:                             t.digest().toHex()
+    1265:                         }
+    1266:                           , Y = function(e) {
+    1267:                             var t = q.cipher.createCipher("AES-ECB", $());
+>>> 1268:                             return t.start(),
+    1269:                             t.update(q.util.createBuffer(JSON.stringify(e))),
+    1270:                             t.finish(),
+    1271:                             t.output.data
+    1272:                         }
+    1273:                           , X = function(e) {
+    1274:                             try {
+    1275:                                 var t = q.cipher.createDecipher("AES-ECB", $());
+    1276:                                 return t.start(),
+    1277:                                 t.update(q.util.createBuffer(e)),
+    1278:                                 t.finish(),
+    1279:                                 J(t.output.data)
+    1280:                             } catch (e) {
+    1281:                                 return null
+    1282:                             }
+    1283:                         }
+    1284:                           , Z = function(e) {
+    1285:                             var t = e.request
+    1286:                               , r = e.encryptionData
+    1287:                               , n = G(32)
+    1288:                               , i = G(16)
+
+========================================
+=== 3188.js LÍNEA 1292 — createCipher ===
+========================================
+    1282:                             }
+    1283:                         }
+    1284:                           , Z = function(e) {
+    1285:                             var t = e.request
+    1286:                               , r = e.encryptionData
+    1287:                               , n = G(32)
+    1288:                               , i = G(16)
+    1289:                               , a = null != t && t.body ? t.body : {}
+    1290:                               , o = function(e, t, r) {
+    1291:                                 var n = q.cipher.createCipher("AES-CBC", t);
+>>> 1292:                                 n.start({
+    1293:                                     iv: r
+    1294:                                 }),
+    1295:                                 n.update(q.util.createBuffer(e, "utf8")),
+    1296:                                 n.finish();
+    1297:                                 var i = n.output;
+    1298:                                 return q.util.encode64(i.data)
+    1299:                             }(JSON.stringify(a), n, i)
+    1300:                               , s = function(e, t, r, n) {
+    1301:                                 var i = {
+    1302:                                     aesKey: "",
+    1303:                                     hash: "",
+    1304:                                     aesInitialVector: ""
+    1305:                                 };
+    1306:                                 i.aesKey = q.util.encode64(e),
+    1307:                                 i.timestamp = (new Date).getTime() + n;
+    1308:                                 var a = q.md.md5.create();
+    1309:                                 return a.update(t),
+    1310:                                 i.hash = a.digest().toHex(),
+    1311:                                 i.aesInitialVector = q.util.encode64(r),
+    1312:                                 i.cypherVersion = 4,
+
+========================================
+=== 3188.js LÍNEA 9769 — createCipher ===
+========================================
+    9759:                                 p = v,
+    9760:                                 d = m,
+    9761:                                 g = b;
+    9762:                             r[0] = h[p >>> 24] << 24 ^ h[d >>> 16 & 255] << 16 ^ h[g >>> 8 & 255] << 8 ^ h[255 & y] ^ e[++C],
+    9763:                             r[n ? 3 : 1] = h[d >>> 24] << 24 ^ h[g >>> 16 & 255] << 16 ^ h[y >>> 8 & 255] << 8 ^ h[255 & p] ^ e[++C],
+    9764:                             r[2] = h[g >>> 24] << 24 ^ h[y >>> 16 & 255] << 16 ^ h[p >>> 8 & 255] << 8 ^ h[255 & d] ^ e[++C],
+    9765:                             r[n ? 1 : 3] = h[y >>> 24] << 24 ^ h[p >>> 16 & 255] << 16 ^ h[d >>> 8 & 255] << 8 ^ h[255 & g] ^ e[++C]
+    9766:                         }
+    9767:                         function d(e) {
+    9768:                             var t, r = "AES-" + ((e = e || {}).mode || "CBC").toUpperCase(), i = (t = e.decrypt ? n.cipher.createDecipher(r, e.key) : n.cipher.createCipher(r, e.key)).start;
+>>> 9769:                             return t.start = function(e, r) {
+    9770:                                 var a = null;
+    9771:                                 r instanceof n.util.ByteBuffer && (a = r,
+    9772:                                 r = {}),
+    9773:                                 (r = r || {}).output = a,
+    9774:                                 r.iv = e,
+    9775:                                 i.call(t, r)
+    9776:                             }
+    9777:                             ,
+    9778:                             t
+    9779:                         }
+    9780:                     }
+    9781:                     ,
+    9782:                     492: (e, t, r) => {
+    9783:                         var n = r(3610);
+    9784:                         r(548),
+    9785:                         r(2778);
+    9786:                         var i = e.exports = n.tls;
+    9787:                         function a(e, t, r) {
+    9788:                             var a = t.entity === n.tls.ConnectionEnd.client;
+    9789:                             e.read.cipherState = {
+
+========================================
+=== 3188.js LÍNEA 9797 — createCipher ===
+========================================
+    9787:                         function a(e, t, r) {
+    9788:                             var a = t.entity === n.tls.ConnectionEnd.client;
+    9789:                             e.read.cipherState = {
+    9790:                                 init: !1,
+    9791:                                 cipher: n.cipher.createDecipher("AES-CBC", a ? r.keys.server_write_key : r.keys.client_write_key),
+    9792:                                 iv: a ? r.keys.server_write_IV : r.keys.client_write_IV
+    9793:                             },
+    9794:                             e.write.cipherState = {
+    9795:                                 init: !1,
+    9796:                                 cipher: n.cipher.createCipher("AES-CBC", a ? r.keys.client_write_key : r.keys.server_write_key),
+>>> 9797:                                 iv: a ? r.keys.client_write_IV : r.keys.server_write_IV
+    9798:                             },
+    9799:                             e.read.cipherFunction = c,
+    9800:                             e.write.cipherFunction = o,
+    9801:                             e.read.macLength = e.write.macLength = r.mac_length,
+    9802:                             e.read.macFunction = e.write.macFunction = i.hmac_sha1
+    9803:                         }
+    9804:                         function o(e, t) {
+    9805:                             var r, a = !1, o = t.macFunction(t.macKey, t.sequenceNumber, e);
+    9806:                             e.fragment.putBytes(o),
+    9807:                             t.updateSequenceNumber(),
+    9808:                             r = e.version.minor === i.Versions.TLS_1_0.minor ? t.cipherState.init ? null : t.cipherState.iv : n.random.getBytesSync(16),
+    9809:                             t.cipherState.init = !0;
+    9810:                             var u = t.cipherState.cipher;
+    9811:                             return u.start({
+    9812:                                 iv: r
+    9813:                             }),
+    9814:                             e.version.minor >= i.Versions.TLS_1_1.minor && u.output.putBytes(r),
+    9815:                             u.update(e.fragment),
+    9816:                             u.finish(s) && (e.fragment = u.output,
+    9817:                             e.length = e.fragment.length(),
+
+========================================
+=== 3188.js LÍNEA 10631 — createCipher ===
+========================================
+    10621:                             return "undefined" != typeof Buffer ? Buffer.from(s.reverse()) : new Uint8Array(s.reverse())
+    10622:                         }
+    10623:                     }
+    10624:                     ,
+    10625:                     3665: (e, t, r) => {
+    10626:                         var n = r(3610);
+    10627:                         r(9934),
+    10628:                         e.exports = n.cipher = n.cipher || {},
+    10629:                         n.cipher.algorithms = n.cipher.algorithms || {},
+    10630:                         n.cipher.createCipher = function(e, t) {
+>>> 10631:                             var r = e;
+    10632:                             if ("string" == typeof r && (r = n.cipher.getAlgorithm(r)) && (r = r()),
+    10633:                             !r)
+    10634:                                 throw new Error("Unsupported algorithm: " + e);
+    10635:                             return new n.cipher.BlockCipher({
+    10636:                                 algorithm: r,
+    10637:                                 key: t,
+    10638:                                 decrypt: !1
+    10639:                             })
+    10640:                         }
+    10641:                         ,
+    10642:                         n.cipher.createDecipher = function(e, t) {
+    10643:                             var r = e;
+    10644:                             if ("string" == typeof r && (r = n.cipher.getAlgorithm(r)) && (r = r()),
+    10645:                             !r)
+    10646:                                 throw new Error("Unsupported algorithm: " + e);
+    10647:                             return new n.cipher.BlockCipher({
+    10648:                                 algorithm: r,
+    10649:                                 key: t,
+    10650:                                 decrypt: !0
+    10651:                             })
+
+========================================
+=== 3188.js LÍNEA 11376 — createCipher ===
+========================================
+    11366:                             y ^= (p = 16711935 & (y >>> 8 ^ (g ^= p << 1))) << 8,
+    11367:                             y ^= (p = 858993459 & (y >>> 2 ^ (g ^= p))) << 2,
+    11368:                             y ^= p = 65535 & ((g ^= p) >>> 16 ^ y),
+    11369:                             y ^= p = 252645135 & ((g ^= p << 16) >>> 4 ^ y),
+    11370:                             g ^= p << 4,
+    11371:                             r[0] = g,
+    11372:                             r[1] = y
+    11373:                         }
+    11374:                         function d(e) {
+    11375:                             var t, r = "DES-" + ((e = e || {}).mode || "CBC").toUpperCase(), i = (t = e.decrypt ? n.cipher.createDecipher(r, e.key) : n.cipher.createCipher(r, e.key)).start;
+>>> 11376:                             return t.start = function(e, r) {
+    11377:                                 var a = null;
+    11378:                                 r instanceof n.util.ByteBuffer && (a = r,
+    11379:                                 r = {}),
+    11380:                                 (r = r || {}).output = a,
+    11381:                                 r.iv = e,
+    11382:                                 i.call(t, r)
+    11383:                             }
+    11384:                             ,
+    11385:                             t
+    11386:                         }
+    11387:                     }
+    11388:                     ,
+    11389:                     6713: (e, t, r) => {
+    11390:                         var n = r(3610);
+    11391:                         r(26),
+    11392:                         r(625),
+    11393:                         r(4823),
+    11394:                         r(9934);
+    11395:                         var i = r(2176)
+    11396:                           , a = i.publicKeyValidator
+
+========================================
+=== 3188.js LÍNEA 1276 — createDecipher ===
+========================================
+    1266:                           , Y = function(e) {
+    1267:                             var t = q.cipher.createCipher("AES-ECB", $());
+    1268:                             return t.start(),
+    1269:                             t.update(q.util.createBuffer(JSON.stringify(e))),
+    1270:                             t.finish(),
+    1271:                             t.output.data
+    1272:                         }
+    1273:                           , X = function(e) {
+    1274:                             try {
+    1275:                                 var t = q.cipher.createDecipher("AES-ECB", $());
+>>> 1276:                                 return t.start(),
+    1277:                                 t.update(q.util.createBuffer(e)),
+    1278:                                 t.finish(),
+    1279:                                 J(t.output.data)
+    1280:                             } catch (e) {
+    1281:                                 return null
+    1282:                             }
+    1283:                         }
+    1284:                           , Z = function(e) {
+    1285:                             var t = e.request
+    1286:                               , r = e.encryptionData
+    1287:                               , n = G(32)
+    1288:                               , i = G(16)
+    1289:                               , a = null != t && t.body ? t.body : {}
+    1290:                               , o = function(e, t, r) {
+    1291:                                 var n = q.cipher.createCipher("AES-CBC", t);
+    1292:                                 n.start({
+    1293:                                     iv: r
+    1294:                                 }),
+    1295:                                 n.update(q.util.createBuffer(e, "utf8")),
+    1296:                                 n.finish();
+
+========================================
+=== 3188.js LÍNEA 1328 — createDecipher ===
+========================================
+    1318:                             }(JSON.stringify(s), r.publicKey);
+    1319:                             return {
+    1320:                                 headers: W(W({}, null != t && t.headers ? t.headers : {}), {}, {
+    1321:                                     stat_ref: "".concat(u)
+    1322:                                 }),
+    1323:                                 body: o,
+    1324:                                 decryptBody: function(e) {
+    1325:                                     return function(e, t, r) {
+    1326:                                         e = q.util.decode64(e);
+    1327:                                         var n = q.cipher.createDecipher("AES-CBC", t);
+>>> 1328:                                         n.start({
+    1329:                                             iv: r
+    1330:                                         }),
+    1331:                                         n.update(q.util.createBuffer(e)),
+    1332:                                         n.finish();
+    1333:                                         var i = n.output.data
+    1334:                                           , a = q.util.decodeUtf8(i.toString());
+    1335:                                         try {
+    1336:                                             return a ? JSON.parse(a) : ""
+    1337:                                         } catch (e) {
+    1338:                                             return console.error(e),
+    1339:                                             null
+    1340:                                         }
+    1341:                                     }(e, n, i)
+    1342:                                 }
+    1343:                             }
+    1344:                         }
+    1345:                           , J = function(e) {
+    1346:                             return null == e || "" === e ? null : JSON.parse(e)
+    1347:                         }
+    1348:                           , $ = function() {
+
+========================================
+=== 3188.js LÍNEA 9769 — createDecipher ===
+========================================
+    9759:                                 p = v,
+    9760:                                 d = m,
+    9761:                                 g = b;
+    9762:                             r[0] = h[p >>> 24] << 24 ^ h[d >>> 16 & 255] << 16 ^ h[g >>> 8 & 255] << 8 ^ h[255 & y] ^ e[++C],
+    9763:                             r[n ? 3 : 1] = h[d >>> 24] << 24 ^ h[g >>> 16 & 255] << 16 ^ h[y >>> 8 & 255] << 8 ^ h[255 & p] ^ e[++C],
+    9764:                             r[2] = h[g >>> 24] << 24 ^ h[y >>> 16 & 255] << 16 ^ h[p >>> 8 & 255] << 8 ^ h[255 & d] ^ e[++C],
+    9765:                             r[n ? 1 : 3] = h[y >>> 24] << 24 ^ h[p >>> 16 & 255] << 16 ^ h[d >>> 8 & 255] << 8 ^ h[255 & g] ^ e[++C]
+    9766:                         }
+    9767:                         function d(e) {
+    9768:                             var t, r = "AES-" + ((e = e || {}).mode || "CBC").toUpperCase(), i = (t = e.decrypt ? n.cipher.createDecipher(r, e.key) : n.cipher.createCipher(r, e.key)).start;
+>>> 9769:                             return t.start = function(e, r) {
+    9770:                                 var a = null;
+    9771:                                 r instanceof n.util.ByteBuffer && (a = r,
+    9772:                                 r = {}),
+    9773:                                 (r = r || {}).output = a,
+    9774:                                 r.iv = e,
+    9775:                                 i.call(t, r)
+    9776:                             }
+    9777:                             ,
+    9778:                             t
+    9779:                         }
+    9780:                     }
+    9781:                     ,
+    9782:                     492: (e, t, r) => {
+    9783:                         var n = r(3610);
+    9784:                         r(548),
+    9785:                         r(2778);
+    9786:                         var i = e.exports = n.tls;
+    9787:                         function a(e, t, r) {
+    9788:                             var a = t.entity === n.tls.ConnectionEnd.client;
+    9789:                             e.read.cipherState = {
+
+========================================
+=== 3188.js LÍNEA 9792 — createDecipher ===
+========================================
+    9782:                     492: (e, t, r) => {
+    9783:                         var n = r(3610);
+    9784:                         r(548),
+    9785:                         r(2778);
+    9786:                         var i = e.exports = n.tls;
+    9787:                         function a(e, t, r) {
+    9788:                             var a = t.entity === n.tls.ConnectionEnd.client;
+    9789:                             e.read.cipherState = {
+    9790:                                 init: !1,
+    9791:                                 cipher: n.cipher.createDecipher("AES-CBC", a ? r.keys.server_write_key : r.keys.client_write_key),
+>>> 9792:                                 iv: a ? r.keys.server_write_IV : r.keys.client_write_IV
+    9793:                             },
+    9794:                             e.write.cipherState = {
+    9795:                                 init: !1,
+    9796:                                 cipher: n.cipher.createCipher("AES-CBC", a ? r.keys.client_write_key : r.keys.server_write_key),
+    9797:                                 iv: a ? r.keys.client_write_IV : r.keys.server_write_IV
+    9798:                             },
+    9799:                             e.read.cipherFunction = c,
+    9800:                             e.write.cipherFunction = o,
+    9801:                             e.read.macLength = e.write.macLength = r.mac_length,
+    9802:                             e.read.macFunction = e.write.macFunction = i.hmac_sha1
+    9803:                         }
+    9804:                         function o(e, t) {
+    9805:                             var r, a = !1, o = t.macFunction(t.macKey, t.sequenceNumber, e);
+    9806:                             e.fragment.putBytes(o),
+    9807:                             t.updateSequenceNumber(),
+    9808:                             r = e.version.minor === i.Versions.TLS_1_0.minor ? t.cipherState.init ? null : t.cipherState.iv : n.random.getBytesSync(16),
+    9809:                             t.cipherState.init = !0;
+    9810:                             var u = t.cipherState.cipher;
+    9811:                             return u.start({
+    9812:                                 iv: r
+
+========================================
+=== 3188.js LÍNEA 10643 — createDecipher ===
+========================================
+    10633:                             !r)
+    10634:                                 throw new Error("Unsupported algorithm: " + e);
+    10635:                             return new n.cipher.BlockCipher({
+    10636:                                 algorithm: r,
+    10637:                                 key: t,
+    10638:                                 decrypt: !1
+    10639:                             })
+    10640:                         }
+    10641:                         ,
+    10642:                         n.cipher.createDecipher = function(e, t) {
+>>> 10643:                             var r = e;
+    10644:                             if ("string" == typeof r && (r = n.cipher.getAlgorithm(r)) && (r = r()),
+    10645:                             !r)
+    10646:                                 throw new Error("Unsupported algorithm: " + e);
+    10647:                             return new n.cipher.BlockCipher({
+    10648:                                 algorithm: r,
+    10649:                                 key: t,
+    10650:                                 decrypt: !0
+    10651:                             })
+    10652:                         }
+    10653:                         ,
+    10654:                         n.cipher.registerAlgorithm = function(e, t) {
+    10655:                             e = e.toUpperCase(),
+    10656:                             n.cipher.algorithms[e] = t
+    10657:                         }
+    10658:                         ,
+    10659:                         n.cipher.getAlgorithm = function(e) {
+    10660:                             return (e = e.toUpperCase())in n.cipher.algorithms ? n.cipher.algorithms[e] : null
+    10661:                         }
+    10662:                         ;
+    10663:                         var i = n.cipher.BlockCipher = function(e) {
+
+========================================
+=== 3188.js LÍNEA 11376 — createDecipher ===
+========================================
+    11366:                             y ^= (p = 16711935 & (y >>> 8 ^ (g ^= p << 1))) << 8,
+    11367:                             y ^= (p = 858993459 & (y >>> 2 ^ (g ^= p))) << 2,
+    11368:                             y ^= p = 65535 & ((g ^= p) >>> 16 ^ y),
+    11369:                             y ^= p = 252645135 & ((g ^= p << 16) >>> 4 ^ y),
+    11370:                             g ^= p << 4,
+    11371:                             r[0] = g,
+    11372:                             r[1] = y
+    11373:                         }
+    11374:                         function d(e) {
+    11375:                             var t, r = "DES-" + ((e = e || {}).mode || "CBC").toUpperCase(), i = (t = e.decrypt ? n.cipher.createDecipher(r, e.key) : n.cipher.createCipher(r, e.key)).start;
+>>> 11376:                             return t.start = function(e, r) {
+    11377:                                 var a = null;
+    11378:                                 r instanceof n.util.ByteBuffer && (a = r,
+    11379:                                 r = {}),
+    11380:                                 (r = r || {}).output = a,
+    11381:                                 r.iv = e,
+    11382:                                 i.call(t, r)
+    11383:                             }
+    11384:                             ,
+    11385:                             t
+    11386:                         }
+    11387:                     }
+    11388:                     ,
+    11389:                     6713: (e, t, r) => {
+    11390:                         var n = r(3610);
+    11391:                         r(26),
+    11392:                         r(625),
+    11393:                         r(4823),
+    11394:                         r(9934);
+    11395:                         var i = r(2176)
+    11396:                           , a = i.publicKeyValidator
+
+========================================
+=== 989.js LÍNEA 7336 — createCipher ===
+========================================
+    7326:                     }(a, t)),
+    7327:                     e(i, o - 1, a)
+    7328:                 })
+    7329:             }([], 5, 16)
+    7330:         }
+    7331:         ;
+    7332:         var forge$A = forge$C;
+    7333:         forge$A.cipher = forge$A.cipher || {},
+    7334:         forge$A.cipher.algorithms = forge$A.cipher.algorithms || {},
+    7335:         forge$A.cipher.createCipher = function(e, M) {
+>>> 7336:             var t = e;
+    7337:             if ("string" == typeof t && (t = forge$A.cipher.getAlgorithm(t)) && (t = t()),
+    7338:             !t)
+    7339:                 throw new Error("Unsupported algorithm: " + e);
+    7340:             return new forge$A.cipher.BlockCipher({
+    7341:                 algorithm: t,
+    7342:                 key: M,
+    7343:                 decrypt: !1
+    7344:             })
+    7345:         }
+    7346:         ,
+    7347:         forge$A.cipher.createDecipher = function(e, M) {
+    7348:             var t = e;
+    7349:             if ("string" == typeof t && (t = forge$A.cipher.getAlgorithm(t)) && (t = t()),
+    7350:             !t)
+    7351:                 throw new Error("Unsupported algorithm: " + e);
+    7352:             return new forge$A.cipher.BlockCipher({
+    7353:                 algorithm: t,
+    7354:                 key: M,
+    7355:                 decrypt: !0
+    7356:             })
+
+========================================
+=== 989.js LÍNEA 7930 — createCipher ===
+========================================
+    7920:         ;
+    7921:         var forge$y = forge$C;
+    7922:         function registerAlgorithm$1(e, M) {
+    7923:             forge$y.cipher.registerAlgorithm(e, function() {
+    7924:                 return new forge$y.aes.Algorithm(e,M)
+    7925:             })
+    7926:         }
+    7927:         forge$y.aes = forge$y.aes || {},
+    7928:         forge$y.aes.startEncrypting = function(e, M, t, i) {
+    7929:             var o = _createCipher$1({
+>>> 7930:                 key: e,
+    7931:                 output: t,
+    7932:                 decrypt: !1,
+    7933:                 mode: i
+    7934:             });
+    7935:             return o.start(M),
+    7936:             o
+    7937:         }
+    7938:         ,
+    7939:         forge$y.aes.createEncryptionCipher = function(e, M) {
+    7940:             return _createCipher$1({
+    7941:                 key: e,
+    7942:                 output: null,
+    7943:                 decrypt: !1,
+    7944:                 mode: M
+    7945:             })
+    7946:         }
+    7947:         ,
+    7948:         forge$y.aes.startDecrypting = function(e, M, t, i) {
+    7949:             var o = _createCipher$1({
+    7950:                 key: e,
+
+========================================
+=== 989.js LÍNEA 7941 — createCipher ===
+========================================
+    7931:                 output: t,
+    7932:                 decrypt: !1,
+    7933:                 mode: i
+    7934:             });
+    7935:             return o.start(M),
+    7936:             o
+    7937:         }
+    7938:         ,
+    7939:         forge$y.aes.createEncryptionCipher = function(e, M) {
+    7940:             return _createCipher$1({
+>>> 7941:                 key: e,
+    7942:                 output: null,
+    7943:                 decrypt: !1,
+    7944:                 mode: M
+    7945:             })
+    7946:         }
+    7947:         ,
+    7948:         forge$y.aes.startDecrypting = function(e, M, t, i) {
+    7949:             var o = _createCipher$1({
+    7950:                 key: e,
+    7951:                 output: t,
+    7952:                 decrypt: !0,
+    7953:                 mode: i
+    7954:             });
+    7955:             return o.start(M),
+    7956:             o
+    7957:         }
+    7958:         ,
+    7959:         forge$y.aes.createDecryptionCipher = function(e, M) {
+    7960:             return _createCipher$1({
+    7961:                 key: e,
+
+========================================
+=== 989.js LÍNEA 7950 — createCipher ===
+========================================
+    7940:             return _createCipher$1({
+    7941:                 key: e,
+    7942:                 output: null,
+    7943:                 decrypt: !1,
+    7944:                 mode: M
+    7945:             })
+    7946:         }
+    7947:         ,
+    7948:         forge$y.aes.startDecrypting = function(e, M, t, i) {
+    7949:             var o = _createCipher$1({
+>>> 7950:                 key: e,
+    7951:                 output: t,
+    7952:                 decrypt: !0,
+    7953:                 mode: i
+    7954:             });
+    7955:             return o.start(M),
+    7956:             o
+    7957:         }
+    7958:         ,
+    7959:         forge$y.aes.createDecryptionCipher = function(e, M) {
+    7960:             return _createCipher$1({
+    7961:                 key: e,
+    7962:                 output: null,
+    7963:                 decrypt: !0,
+    7964:                 mode: M
+    7965:             })
+    7966:         }
+    7967:         ,
+    7968:         forge$y.aes.Algorithm = function(e, M) {
+    7969:             init || initialize();
+    7970:             var t = this;
+
+========================================
+=== 989.js LÍNEA 7961 — createCipher ===
+========================================
+    7951:                 output: t,
+    7952:                 decrypt: !0,
+    7953:                 mode: i
+    7954:             });
+    7955:             return o.start(M),
+    7956:             o
+    7957:         }
+    7958:         ,
+    7959:         forge$y.aes.createDecryptionCipher = function(e, M) {
+    7960:             return _createCipher$1({
+>>> 7961:                 key: e,
+    7962:                 output: null,
+    7963:                 decrypt: !0,
+    7964:                 mode: M
+    7965:             })
+    7966:         }
+    7967:         ,
+    7968:         forge$y.aes.Algorithm = function(e, M) {
+    7969:             init || initialize();
+    7970:             var t = this;
+    7971:             t.name = e,
+    7972:             t.mode = new M({
+    7973:                 blockSize: 16,
+    7974:                 cipher: {
+    7975:                     encrypt: function(e, M) {
+    7976:                         return _updateBlock$1(t._w, e, M, !1)
+    7977:                     },
+    7978:                     decrypt: function(e, M) {
+    7979:                         return _updateBlock$1(t._w, e, M, !0)
+    7980:                     }
+    7981:                 }
+
+========================================
+=== 989.js LÍNEA 8110 — createCipher ===
+========================================
+    8100:                 s = o[s >>> 24] ^ a[c >>> 16 & 255] ^ r[g >>> 8 & 255] ^ N[255 & D] ^ e[++u],
+    8101:                 c = j,
+    8102:                 g = I,
+    8103:                 D = l;
+    8104:             t[0] = n[c >>> 24] << 24 ^ n[g >>> 16 & 255] << 16 ^ n[D >>> 8 & 255] << 8 ^ n[255 & s] ^ e[++u],
+    8105:             t[i ? 3 : 1] = n[g >>> 24] << 24 ^ n[D >>> 16 & 255] << 16 ^ n[s >>> 8 & 255] << 8 ^ n[255 & c] ^ e[++u],
+    8106:             t[2] = n[D >>> 24] << 24 ^ n[s >>> 16 & 255] << 16 ^ n[c >>> 8 & 255] << 8 ^ n[255 & g] ^ e[++u],
+    8107:             t[i ? 1 : 3] = n[s >>> 24] << 24 ^ n[c >>> 16 & 255] << 16 ^ n[g >>> 8 & 255] << 8 ^ n[255 & D] ^ e[++u]
+    8108:         }
+    8109:         function _createCipher$1(e) {
+>>> 8110:             var M, t = "AES-" + ((e = e || {}).mode || "CBC").toUpperCase(), i = (M = e.decrypt ? forge$y.cipher.createDecipher(t, e.key) : forge$y.cipher.createCipher(t, e.key)).start;
+    8111:             return M.start = function(e, t) {
+    8112:                 var o = null;
+    8113:                 t instanceof forge$y.util.ByteBuffer && (o = t,
+    8114:                 t = {}),
+    8115:                 (t = t || {}).output = o,
+    8116:                 t.iv = e,
+    8117:                 i.call(M, t)
+    8118:             }
+    8119:             ,
+    8120:             M
+    8121:         }
+    8122:         var forge$x = forge$C;
+    8123:         forge$x.pki = forge$x.pki || {};
+    8124:         var oids$2 = forge$x.pki.oids = forge$x.oids = forge$x.oids || {};
+    8125:         function _IN(e, M) {
+    8126:             oids$2[e] = M,
+    8127:             oids$2[M] = e
+    8128:         }
+    8129:         function _I_(e, M) {
+    8130:             oids$2[e] = M
+
+========================================
+=== 989.js LÍNEA 8111 — createCipher ===
+========================================
+    8101:                 c = j,
+    8102:                 g = I,
+    8103:                 D = l;
+    8104:             t[0] = n[c >>> 24] << 24 ^ n[g >>> 16 & 255] << 16 ^ n[D >>> 8 & 255] << 8 ^ n[255 & s] ^ e[++u],
+    8105:             t[i ? 3 : 1] = n[g >>> 24] << 24 ^ n[D >>> 16 & 255] << 16 ^ n[s >>> 8 & 255] << 8 ^ n[255 & c] ^ e[++u],
+    8106:             t[2] = n[D >>> 24] << 24 ^ n[s >>> 16 & 255] << 16 ^ n[c >>> 8 & 255] << 8 ^ n[255 & g] ^ e[++u],
+    8107:             t[i ? 1 : 3] = n[s >>> 24] << 24 ^ n[c >>> 16 & 255] << 16 ^ n[g >>> 8 & 255] << 8 ^ n[255 & D] ^ e[++u]
+    8108:         }
+    8109:         function _createCipher$1(e) {
+    8110:             var M, t = "AES-" + ((e = e || {}).mode || "CBC").toUpperCase(), i = (M = e.decrypt ? forge$y.cipher.createDecipher(t, e.key) : forge$y.cipher.createCipher(t, e.key)).start;
+>>> 8111:             return M.start = function(e, t) {
+    8112:                 var o = null;
+    8113:                 t instanceof forge$y.util.ByteBuffer && (o = t,
+    8114:                 t = {}),
+    8115:                 (t = t || {}).output = o,
+    8116:                 t.iv = e,
+    8117:                 i.call(M, t)
+    8118:             }
+    8119:             ,
+    8120:             M
+    8121:         }
+    8122:         var forge$x = forge$C;
+    8123:         forge$x.pki = forge$x.pki || {};
+    8124:         var oids$2 = forge$x.pki.oids = forge$x.oids = forge$x.oids || {};
+    8125:         function _IN(e, M) {
+    8126:             oids$2[e] = M,
+    8127:             oids$2[M] = e
+    8128:         }
+    8129:         function _I_(e, M) {
+    8130:             oids$2[e] = M
+    8131:         }
+
+========================================
+=== 989.js LÍNEA 9146 — createCipher ===
+========================================
+    9136:         ;
+    9137:         var forge$r = forge$C;
+    9138:         function registerAlgorithm(e, M) {
+    9139:             forge$r.cipher.registerAlgorithm(e, function() {
+    9140:                 return new forge$r.des.Algorithm(e,M)
+    9141:             })
+    9142:         }
+    9143:         forge$r.des = forge$r.des || {},
+    9144:         forge$r.des.startEncrypting = function(e, M, t, i) {
+    9145:             var o = _createCipher({
+>>> 9146:                 key: e,
+    9147:                 output: t,
+    9148:                 decrypt: !1,
+    9149:                 mode: i || (null === M ? "ECB" : "CBC")
+    9150:             });
+    9151:             return o.start(M),
+    9152:             o
+    9153:         }
+    9154:         ,
+    9155:         forge$r.des.createEncryptionCipher = function(e, M) {
+    9156:             return _createCipher({
+    9157:                 key: e,
+    9158:                 output: null,
+    9159:                 decrypt: !1,
+    9160:                 mode: M
+    9161:             })
+    9162:         }
+    9163:         ,
+    9164:         forge$r.des.startDecrypting = function(e, M, t, i) {
+    9165:             var o = _createCipher({
+    9166:                 key: e,
+
+========================================
+=== 989.js LÍNEA 9157 — createCipher ===
+========================================
+    9147:                 output: t,
+    9148:                 decrypt: !1,
+    9149:                 mode: i || (null === M ? "ECB" : "CBC")
+    9150:             });
+    9151:             return o.start(M),
+    9152:             o
+    9153:         }
+    9154:         ,
+    9155:         forge$r.des.createEncryptionCipher = function(e, M) {
+    9156:             return _createCipher({
+>>> 9157:                 key: e,
+    9158:                 output: null,
+    9159:                 decrypt: !1,
+    9160:                 mode: M
+    9161:             })
+    9162:         }
+    9163:         ,
+    9164:         forge$r.des.startDecrypting = function(e, M, t, i) {
+    9165:             var o = _createCipher({
+    9166:                 key: e,
+    9167:                 output: t,
+    9168:                 decrypt: !0,
+    9169:                 mode: i || (null === M ? "ECB" : "CBC")
+    9170:             });
+    9171:             return o.start(M),
+    9172:             o
+    9173:         }
+    9174:         ,
+    9175:         forge$r.des.createDecryptionCipher = function(e, M) {
+    9176:             return _createCipher({
+    9177:                 key: e,
+
+========================================
+=== 989.js LÍNEA 9166 — createCipher ===
+========================================
+    9156:             return _createCipher({
+    9157:                 key: e,
+    9158:                 output: null,
+    9159:                 decrypt: !1,
+    9160:                 mode: M
+    9161:             })
+    9162:         }
+    9163:         ,
+    9164:         forge$r.des.startDecrypting = function(e, M, t, i) {
+    9165:             var o = _createCipher({
+>>> 9166:                 key: e,
+    9167:                 output: t,
+    9168:                 decrypt: !0,
+    9169:                 mode: i || (null === M ? "ECB" : "CBC")
+    9170:             });
+    9171:             return o.start(M),
+    9172:             o
+    9173:         }
+    9174:         ,
+    9175:         forge$r.des.createDecryptionCipher = function(e, M) {
+    9176:             return _createCipher({
+    9177:                 key: e,
+    9178:                 output: null,
+    9179:                 decrypt: !0,
+    9180:                 mode: M
+    9181:             })
+    9182:         }
+    9183:         ,
+    9184:         forge$r.des.Algorithm = function(e, M) {
+    9185:             var t = this;
+    9186:             t.name = e,
+
+========================================
+=== 989.js LÍNEA 9177 — createCipher ===
+========================================
+    9167:                 output: t,
+    9168:                 decrypt: !0,
+    9169:                 mode: i || (null === M ? "ECB" : "CBC")
+    9170:             });
+    9171:             return o.start(M),
+    9172:             o
+    9173:         }
+    9174:         ,
+    9175:         forge$r.des.createDecryptionCipher = function(e, M) {
+    9176:             return _createCipher({
+>>> 9177:                 key: e,
+    9178:                 output: null,
+    9179:                 decrypt: !0,
+    9180:                 mode: M
+    9181:             })
+    9182:         }
+    9183:         ,
+    9184:         forge$r.des.Algorithm = function(e, M) {
+    9185:             var t = this;
+    9186:             t.name = e,
+    9187:             t.mode = new M({
+    9188:                 blockSize: 8,
+    9189:                 cipher: {
+    9190:                     encrypt: function(e, M) {
+    9191:                         return _updateBlock(t._keys, e, M, !1)
+    9192:                     },
+    9193:                     decrypt: function(e, M) {
+    9194:                         return _updateBlock(t._keys, e, M, !0)
+    9195:                     }
+    9196:                 }
+    9197:             }),
+
+========================================
+=== 989.js LÍNEA 9289 — createCipher ===
+========================================
+    9279:             n ^= a = 1431655765 & ((N = N >>> 1 | N << 31) >>> 1 ^ n),
+    9280:             n ^= (a = 16711935 & (n >>> 8 ^ (N ^= a << 1))) << 8,
+    9281:             n ^= (a = 858993459 & (n >>> 2 ^ (N ^= a))) << 2,
+    9282:             n ^= a = 65535 & ((N ^= a) >>> 16 ^ n),
+    9283:             n ^= a = 252645135 & ((N ^= a << 16) >>> 4 ^ n),
+    9284:             N ^= a << 4,
+    9285:             t[0] = N,
+    9286:             t[1] = n
+    9287:         }
+    9288:         function _createCipher(e) {
+>>> 9289:             var M, t = "DES-" + ((e = e || {}).mode || "CBC").toUpperCase(), i = (M = e.decrypt ? forge$r.cipher.createDecipher(t, e.key) : forge$r.cipher.createCipher(t, e.key)).start;
+    9290:             return M.start = function(e, t) {
+    9291:                 var o = null;
+    9292:                 t instanceof forge$r.util.ByteBuffer && (o = t,
+    9293:                 t = {}),
+    9294:                 (t = t || {}).output = o,
+    9295:                 t.iv = e,
+    9296:                 i.call(M, t)
+    9297:             }
+    9298:             ,
+    9299:             M
+    9300:         }
+    9301:         var empty = {}, empty$1 = Object.freeze({
+    9302:             __proto__: null,
+    9303:             default: empty
+    9304:         }), require$$8$1 = getAugmentedNamespace(empty$1), forge$q = forge$C, pkcs5 = forge$q.pkcs5 = forge$q.pkcs5 || {}, crypto;
+    9305:         forge$q.util.isNodejs && !forge$q.options.usePureJavaScript && (crypto = require$$8$1),
+    9306:         forge$q.pbkdf2 = pkcs5.pbkdf2 = function(e, M, t, i, o, a) {
+    9307:             if ("function" == typeof o && (a = o,
+    9308:             o = null),
+    9309:             forge$q.util.isNodejs && !forge$q.options.usePureJavaScript && crypto.pbkdf2 && (null === o || "object" != typeof o) && (crypto.pbkdf2Sync.length > 4 || !o || "sha1" === o))
+
+========================================
+=== 989.js LÍNEA 9290 — createCipher ===
+========================================
+    9280:             n ^= (a = 16711935 & (n >>> 8 ^ (N ^= a << 1))) << 8,
+    9281:             n ^= (a = 858993459 & (n >>> 2 ^ (N ^= a))) << 2,
+    9282:             n ^= a = 65535 & ((N ^= a) >>> 16 ^ n),
+    9283:             n ^= a = 252645135 & ((N ^= a << 16) >>> 4 ^ n),
+    9284:             N ^= a << 4,
+    9285:             t[0] = N,
+    9286:             t[1] = n
+    9287:         }
+    9288:         function _createCipher(e) {
+    9289:             var M, t = "DES-" + ((e = e || {}).mode || "CBC").toUpperCase(), i = (M = e.decrypt ? forge$r.cipher.createDecipher(t, e.key) : forge$r.cipher.createCipher(t, e.key)).start;
+>>> 9290:             return M.start = function(e, t) {
+    9291:                 var o = null;
+    9292:                 t instanceof forge$r.util.ByteBuffer && (o = t,
+    9293:                 t = {}),
+    9294:                 (t = t || {}).output = o,
+    9295:                 t.iv = e,
+    9296:                 i.call(M, t)
+    9297:             }
+    9298:             ,
+    9299:             M
+    9300:         }
+    9301:         var empty = {}, empty$1 = Object.freeze({
+    9302:             __proto__: null,
+    9303:             default: empty
+    9304:         }), require$$8$1 = getAugmentedNamespace(empty$1), forge$q = forge$C, pkcs5 = forge$q.pkcs5 = forge$q.pkcs5 || {}, crypto;
+    9305:         forge$q.util.isNodejs && !forge$q.options.usePureJavaScript && (crypto = require$$8$1),
+    9306:         forge$q.pbkdf2 = pkcs5.pbkdf2 = function(e, M, t, i, o, a) {
+    9307:             if ("function" == typeof o && (a = o,
+    9308:             o = null),
+    9309:             forge$q.util.isNodejs && !forge$q.options.usePureJavaScript && crypto.pbkdf2 && (null === o || "object" != typeof o) && (crypto.pbkdf2Sync.length > 4 || !o || "sha1" === o))
+    9310:                 return "string" != typeof o && (o = "sha1"),
+
+========================================
+=== 989.js LÍNEA 9822 — createCipher ===
+========================================
+    9812:             var t, i = e, o = e.length(), a = M, r = Math.ceil(a / 8), N = 255 >> (7 & a);
+    9813:             for (t = o; t < 128; t++)
+    9814:                 i.putByte(piTable[i.at(t - 1) + i.at(t - o) & 255]);
+    9815:             for (i.setAt(128 - r, piTable[i.at(128 - r) & N]),
+    9816:             t = 127 - r; t >= 0; t--)
+    9817:                 i.setAt(t, piTable[i.at(t + 1) ^ i.at(t + r)]);
+    9818:             return i
+    9819:         }
+    9820:         ;
+    9821:         var createCipher = function(e, M, t) {
+>>> 9822:             var i, o, a, r, N = !1, n = null, c = null, g = null, D = [];
+    9823:             for (e = forge$m.rc2.expandKey(e, M),
+    9824:             a = 0; a < 64; a++)
+    9825:                 D.push(e.getInt16Le());
+    9826:             t ? (i = function(e) {
+    9827:                 for (a = 0; a < 4; a++)
+    9828:                     e[a] += D[r] + (e[(a + 3) % 4] & e[(a + 2) % 4]) + (~e[(a + 3) % 4] & e[(a + 1) % 4]),
+    9829:                     e[a] = rol(e[a], s[a]),
+    9830:                     r++
+    9831:             }
+    9832:             ,
+    9833:             o = function(e) {
+    9834:                 for (a = 0; a < 4; a++)
+    9835:                     e[a] += D[63 & e[(a + 3) % 4]]
+    9836:             }
+    9837:             ) : (i = function(e) {
+    9838:                 for (a = 3; a >= 0; a--)
+    9839:                     e[a] = ror(e[a], s[a]),
+    9840:                     e[a] -= D[r] + (e[(a + 3) % 4] & e[(a + 2) % 4]) + (~e[(a + 3) % 4] & e[(a + 1) % 4]),
+    9841:                     r--
+    9842:             }
+
+========================================
+=== 989.js LÍNEA 9910 — createCipher ===
+========================================
+    9900:             I
+    9901:         };
+    9902:         forge$m.rc2.startEncrypting = function(e, M, t) {
+    9903:             var i = forge$m.rc2.createEncryptionCipher(e, 128);
+    9904:             return i.start(M, t),
+    9905:             i
+    9906:         }
+    9907:         ,
+    9908:         forge$m.rc2.createEncryptionCipher = function(e, M) {
+    9909:             return createCipher(e, M, !0)
+>>> 9910:         }
+    9911:         ,
+    9912:         forge$m.rc2.startDecrypting = function(e, M, t) {
+    9913:             var i = forge$m.rc2.createDecryptionCipher(e, 128);
+    9914:             return i.start(M, t),
+    9915:             i
+    9916:         }
+    9917:         ,
+    9918:         forge$m.rc2.createDecryptionCipher = function(e, M) {
+    9919:             return createCipher(e, M, !1)
+    9920:         }
+    9921:         ;
+    9922:         var forge$l = forge$C, dbits;
+    9923:         function BigInteger$4(e, M, t) {
+    9924:             this.data = [],
+    9925:             null != e && ("number" == typeof e ? this.fromNumber(e, M, t) : null == M && "string" != typeof e ? this.fromString(e, 256) : this.fromString(e, M))
+    9926:         }
+    9927:         function nbi() {
+    9928:             return new BigInteger$4(null)
+    9929:         }
+    9930:         function am1(e, M, t, i, o, a) {
+
+========================================
+=== 989.js LÍNEA 9920 — createCipher ===
+========================================
+    9910:         }
+    9911:         ,
+    9912:         forge$m.rc2.startDecrypting = function(e, M, t) {
+    9913:             var i = forge$m.rc2.createDecryptionCipher(e, 128);
+    9914:             return i.start(M, t),
+    9915:             i
+    9916:         }
+    9917:         ,
+    9918:         forge$m.rc2.createDecryptionCipher = function(e, M) {
+    9919:             return createCipher(e, M, !1)
+>>> 9920:         }
+    9921:         ;
+    9922:         var forge$l = forge$C, dbits;
+    9923:         function BigInteger$4(e, M, t) {
+    9924:             this.data = [],
+    9925:             null != e && ("number" == typeof e ? this.fromNumber(e, M, t) : null == M && "string" != typeof e ? this.fromString(e, 256) : this.fromString(e, M))
+    9926:         }
+    9927:         function nbi() {
+    9928:             return new BigInteger$4(null)
+    9929:         }
+    9930:         function am1(e, M, t, i, o, a) {
+    9931:             for (; --a >= 0; ) {
+    9932:                 var r = M * this.data[e++] + t.data[i] + o;
+    9933:                 o = Math.floor(r / 67108864),
+    9934:                 t.data[i++] = 67108863 & r
+    9935:             }
+    9936:             return o
+    9937:         }
+    9938:         function am2(e, M, t, i, o, a) {
+    9939:             for (var r = 32767 & M, N = M >> 15; --a >= 0; ) {
+    9940:                 var n = 32767 & this.data[e]
+
+========================================
+=== 989.js LÍNEA 16558 — createCipher ===
+========================================
+    16548:         function initConnectionState(e, M, t) {
+    16549:             var i = M.entity === forge$7.tls.ConnectionEnd.client;
+    16550:             e.read.cipherState = {
+    16551:                 init: !1,
+    16552:                 cipher: forge$7.cipher.createDecipher("AES-CBC", i ? t.keys.server_write_key : t.keys.client_write_key),
+    16553:                 iv: i ? t.keys.server_write_IV : t.keys.client_write_IV
+    16554:             },
+    16555:             e.write.cipherState = {
+    16556:                 init: !1,
+    16557:                 cipher: forge$7.cipher.createCipher("AES-CBC", i ? t.keys.client_write_key : t.keys.server_write_key),
+>>> 16558:                 iv: i ? t.keys.client_write_IV : t.keys.server_write_IV
+    16559:             },
+    16560:             e.read.cipherFunction = decrypt_aes_cbc_sha1,
+    16561:             e.write.cipherFunction = encrypt_aes_cbc_sha1,
+    16562:             e.read.macLength = e.write.macLength = t.mac_length,
+    16563:             e.read.macFunction = e.write.macFunction = tls.hmac_sha1
+    16564:         }
+    16565:         function encrypt_aes_cbc_sha1(e, M) {
+    16566:             var t, i = !1, o = M.macFunction(M.macKey, M.sequenceNumber, e);
+    16567:             e.fragment.putBytes(o),
+    16568:             M.updateSequenceNumber(),
+    16569:             t = e.version.minor === tls.Versions.TLS_1_0.minor ? M.cipherState.init ? null : M.cipherState.iv : forge$7.random.getBytesSync(16),
+    16570:             M.cipherState.init = !0;
+    16571:             var a = M.cipherState.cipher;
+    16572:             return a.start({
+    16573:                 iv: t
+    16574:             }),
+    16575:             e.version.minor >= tls.Versions.TLS_1_1.minor && a.output.putBytes(t),
+    16576:             a.update(e.fragment),
+    16577:             a.finish(encrypt_aes_cbc_sha1_padding) && (e.fragment = a.output,
+    16578:             e.length = e.fragment.length(),
+
+========================================
+=== 989.js LÍNEA 18517 — createCipher ===
+========================================
+    18507:             Object.defineProperty(e, "__esModule", {
+    18508:                 value: !0
+    18509:             }),
+    18510:             e.getCanvasProps = e.getChannelEncryption = e.decryptSessionStore = e.encryptSessionStore = e.generateCypheringStrategy = e.generateCypherFrontPrivateKey = e.generateFrontPrivateKey = e.decrypt = e.encrypt = void 0;
+    18511:             const o = i(lib.exports)
+    18512:               , a = channel_enum
+    18513:               , r = "AES-CBC"
+    18514:               , N = "AES-ECB";
+    18515:             e.encrypt = (e, M, t) => {
+    18516:                 const i = o.cipher.createCipher(r, M);
+>>> 18517:                 i.start({
+    18518:                     iv: t
+    18519:                 }),
+    18520:                 i.update(o.util.createBuffer(e, "utf8")),
+    18521:                 i.finish();
+    18522:                 const a = i.output;
+    18523:                 return o.util.encode64(a.data)
+    18524:             }
+    18525:             ,
+    18526:             e.decrypt = (e, M, t) => {
+    18527:                 e = o.util.decode64(e);
+    18528:                 const i = o.cipher.createDecipher(r, M);
+    18529:                 i.start({
+    18530:                     iv: t
+    18531:                 }),
+    18532:                 i.update(o.util.createBuffer(e)),
+    18533:                 i.finish();
+    18534:                 const a = i.output.data
+    18535:                   , N = o.util.decodeUtf8(a.toString());
+    18536:                 try {
+    18537:                     return JSON.parse(N)
+
+========================================
+=== 989.js LÍNEA 18563 — createCipher ===
+========================================
+    18553:                     aesKey: o.util.encode64(e),
+    18554:                     timestamp: (new Date).getTime() + i,
+    18555:                     hash: a.digest().toHex(),
+    18556:                     aesInitialVector: o.util.encode64(t),
+    18557:                     cypherVersion: 4
+    18558:                 }
+    18559:             }
+    18560:             ,
+    18561:             e.encryptSessionStore = (e, M) => {
+    18562:                 const t = o.cipher.createCipher(N, c(M));
+>>> 18563:                 return t.start(),
+    18564:                 t.update(o.util.createBuffer(JSON.stringify(e))),
+    18565:                 t.finish(),
+    18566:                 t.output.data
+    18567:             }
+    18568:             ,
+    18569:             e.decryptSessionStore = (e, M) => {
+    18570:                 try {
+    18571:                     const t = o.cipher.createDecipher(N, c(M));
+    18572:                     return t.start(),
+    18573:                     t.update(o.util.createBuffer(e)),
+    18574:                     t.finish(),
+    18575:                     n(t.output.data)
+    18576:                 } catch (e) {
+    18577:                     return null
+    18578:                 }
+    18579:             }
+    18580:             ;
+    18581:             const n = e => e ? JSON.parse(e) : null
+    18582:               , c = e => {
+    18583:                 const M = e === a.ChannelEnum.PB ? g() : D()
+
+========================================
+=== 989.js LÍNEA 7348 — createDecipher ===
+========================================
+    7338:             !t)
+    7339:                 throw new Error("Unsupported algorithm: " + e);
+    7340:             return new forge$A.cipher.BlockCipher({
+    7341:                 algorithm: t,
+    7342:                 key: M,
+    7343:                 decrypt: !1
+    7344:             })
+    7345:         }
+    7346:         ,
+    7347:         forge$A.cipher.createDecipher = function(e, M) {
+>>> 7348:             var t = e;
+    7349:             if ("string" == typeof t && (t = forge$A.cipher.getAlgorithm(t)) && (t = t()),
+    7350:             !t)
+    7351:                 throw new Error("Unsupported algorithm: " + e);
+    7352:             return new forge$A.cipher.BlockCipher({
+    7353:                 algorithm: t,
+    7354:                 key: M,
+    7355:                 decrypt: !0
+    7356:             })
+    7357:         }
+    7358:         ,
+    7359:         forge$A.cipher.registerAlgorithm = function(e, M) {
+    7360:             e = e.toUpperCase(),
+    7361:             forge$A.cipher.algorithms[e] = M
+    7362:         }
+    7363:         ,
+    7364:         forge$A.cipher.getAlgorithm = function(e) {
+    7365:             return (e = e.toUpperCase())in forge$A.cipher.algorithms ? forge$A.cipher.algorithms[e] : null
+    7366:         }
+    7367:         ;
+    7368:         var BlockCipher = forge$A.cipher.BlockCipher = function(e) {
+
+========================================
+=== 989.js LÍNEA 8111 — createDecipher ===
+========================================
+    8101:                 c = j,
+    8102:                 g = I,
+    8103:                 D = l;
+    8104:             t[0] = n[c >>> 24] << 24 ^ n[g >>> 16 & 255] << 16 ^ n[D >>> 8 & 255] << 8 ^ n[255 & s] ^ e[++u],
+    8105:             t[i ? 3 : 1] = n[g >>> 24] << 24 ^ n[D >>> 16 & 255] << 16 ^ n[s >>> 8 & 255] << 8 ^ n[255 & c] ^ e[++u],
+    8106:             t[2] = n[D >>> 24] << 24 ^ n[s >>> 16 & 255] << 16 ^ n[c >>> 8 & 255] << 8 ^ n[255 & g] ^ e[++u],
+    8107:             t[i ? 1 : 3] = n[s >>> 24] << 24 ^ n[c >>> 16 & 255] << 16 ^ n[g >>> 8 & 255] << 8 ^ n[255 & D] ^ e[++u]
+    8108:         }
+    8109:         function _createCipher$1(e) {
+    8110:             var M, t = "AES-" + ((e = e || {}).mode || "CBC").toUpperCase(), i = (M = e.decrypt ? forge$y.cipher.createDecipher(t, e.key) : forge$y.cipher.createCipher(t, e.key)).start;
+>>> 8111:             return M.start = function(e, t) {
+    8112:                 var o = null;
+    8113:                 t instanceof forge$y.util.ByteBuffer && (o = t,
+    8114:                 t = {}),
+    8115:                 (t = t || {}).output = o,
+    8116:                 t.iv = e,
+    8117:                 i.call(M, t)
+    8118:             }
+    8119:             ,
+    8120:             M
+    8121:         }
+    8122:         var forge$x = forge$C;
+    8123:         forge$x.pki = forge$x.pki || {};
+    8124:         var oids$2 = forge$x.pki.oids = forge$x.oids = forge$x.oids || {};
+    8125:         function _IN(e, M) {
+    8126:             oids$2[e] = M,
+    8127:             oids$2[M] = e
+    8128:         }
+    8129:         function _I_(e, M) {
+    8130:             oids$2[e] = M
+    8131:         }
+
+========================================
+=== 989.js LÍNEA 9290 — createDecipher ===
+========================================
+    9280:             n ^= (a = 16711935 & (n >>> 8 ^ (N ^= a << 1))) << 8,
+    9281:             n ^= (a = 858993459 & (n >>> 2 ^ (N ^= a))) << 2,
+    9282:             n ^= a = 65535 & ((N ^= a) >>> 16 ^ n),
+    9283:             n ^= a = 252645135 & ((N ^= a << 16) >>> 4 ^ n),
+    9284:             N ^= a << 4,
+    9285:             t[0] = N,
+    9286:             t[1] = n
+    9287:         }
+    9288:         function _createCipher(e) {
+    9289:             var M, t = "DES-" + ((e = e || {}).mode || "CBC").toUpperCase(), i = (M = e.decrypt ? forge$r.cipher.createDecipher(t, e.key) : forge$r.cipher.createCipher(t, e.key)).start;
+>>> 9290:             return M.start = function(e, t) {
+    9291:                 var o = null;
+    9292:                 t instanceof forge$r.util.ByteBuffer && (o = t,
+    9293:                 t = {}),
+    9294:                 (t = t || {}).output = o,
+    9295:                 t.iv = e,
+    9296:                 i.call(M, t)
+    9297:             }
+    9298:             ,
+    9299:             M
+    9300:         }
+    9301:         var empty = {}, empty$1 = Object.freeze({
+    9302:             __proto__: null,
+    9303:             default: empty
+    9304:         }), require$$8$1 = getAugmentedNamespace(empty$1), forge$q = forge$C, pkcs5 = forge$q.pkcs5 = forge$q.pkcs5 || {}, crypto;
+    9305:         forge$q.util.isNodejs && !forge$q.options.usePureJavaScript && (crypto = require$$8$1),
+    9306:         forge$q.pbkdf2 = pkcs5.pbkdf2 = function(e, M, t, i, o, a) {
+    9307:             if ("function" == typeof o && (a = o,
+    9308:             o = null),
+    9309:             forge$q.util.isNodejs && !forge$q.options.usePureJavaScript && crypto.pbkdf2 && (null === o || "object" != typeof o) && (crypto.pbkdf2Sync.length > 4 || !o || "sha1" === o))
+    9310:                 return "string" != typeof o && (o = "sha1"),
+
+========================================
+=== 989.js LÍNEA 16553 — createDecipher ===
+========================================
+    16543:         forge$8.tls.hmac_sha1 = hmac_sha1,
+    16544:         forge$8.tls.createSessionCache = tls$1.createSessionCache,
+    16545:         forge$8.tls.createConnection = tls$1.createConnection;
+    16546:         var forge$7 = forge$C
+    16547:           , tls = forge$7.tls;
+    16548:         function initConnectionState(e, M, t) {
+    16549:             var i = M.entity === forge$7.tls.ConnectionEnd.client;
+    16550:             e.read.cipherState = {
+    16551:                 init: !1,
+    16552:                 cipher: forge$7.cipher.createDecipher("AES-CBC", i ? t.keys.server_write_key : t.keys.client_write_key),
+>>> 16553:                 iv: i ? t.keys.server_write_IV : t.keys.client_write_IV
+    16554:             },
+    16555:             e.write.cipherState = {
+    16556:                 init: !1,
+    16557:                 cipher: forge$7.cipher.createCipher("AES-CBC", i ? t.keys.client_write_key : t.keys.server_write_key),
+    16558:                 iv: i ? t.keys.client_write_IV : t.keys.server_write_IV
+    16559:             },
+    16560:             e.read.cipherFunction = decrypt_aes_cbc_sha1,
+    16561:             e.write.cipherFunction = encrypt_aes_cbc_sha1,
+    16562:             e.read.macLength = e.write.macLength = t.mac_length,
+    16563:             e.read.macFunction = e.write.macFunction = tls.hmac_sha1
+    16564:         }
+    16565:         function encrypt_aes_cbc_sha1(e, M) {
+    16566:             var t, i = !1, o = M.macFunction(M.macKey, M.sequenceNumber, e);
+    16567:             e.fragment.putBytes(o),
+    16568:             M.updateSequenceNumber(),
+    16569:             t = e.version.minor === tls.Versions.TLS_1_0.minor ? M.cipherState.init ? null : M.cipherState.iv : forge$7.random.getBytesSync(16),
+    16570:             M.cipherState.init = !0;
+    16571:             var a = M.cipherState.cipher;
+    16572:             return a.start({
+    16573:                 iv: t
+
+========================================
+=== 989.js LÍNEA 18529 — createDecipher ===
+========================================
+    18519:                 }),
+    18520:                 i.update(o.util.createBuffer(e, "utf8")),
+    18521:                 i.finish();
+    18522:                 const a = i.output;
+    18523:                 return o.util.encode64(a.data)
+    18524:             }
+    18525:             ,
+    18526:             e.decrypt = (e, M, t) => {
+    18527:                 e = o.util.decode64(e);
+    18528:                 const i = o.cipher.createDecipher(r, M);
+>>> 18529:                 i.start({
+    18530:                     iv: t
+    18531:                 }),
+    18532:                 i.update(o.util.createBuffer(e)),
+    18533:                 i.finish();
+    18534:                 const a = i.output.data
+    18535:                   , N = o.util.decodeUtf8(a.toString());
+    18536:                 try {
+    18537:                     return JSON.parse(N)
+    18538:                 } catch (e) {
+    18539:                     return N
+    18540:                 }
+    18541:             }
+    18542:             ,
+    18543:             e.generateFrontPrivateKey = e => o.random.getBytesSync(e),
+    18544:             e.generateCypherFrontPrivateKey = (e, M) => {
+    18545:                 const t = o.pki.publicKeyFromPem(`-----BEGIN RSA PUBLIC KEY----- ${M} -----END RSA PUBLIC KEY-----`);
+    18546:                 return o.util.encode64(t.encrypt(e))
+    18547:             }
+    18548:             ,
+    18549:             e.generateCypheringStrategy = (e, M, t, i) => {
+
+========================================
+=== 989.js LÍNEA 18572 — createDecipher ===
+========================================
+    18562:                 const t = o.cipher.createCipher(N, c(M));
+    18563:                 return t.start(),
+    18564:                 t.update(o.util.createBuffer(JSON.stringify(e))),
+    18565:                 t.finish(),
+    18566:                 t.output.data
+    18567:             }
+    18568:             ,
+    18569:             e.decryptSessionStore = (e, M) => {
+    18570:                 try {
+    18571:                     const t = o.cipher.createDecipher(N, c(M));
+>>> 18572:                     return t.start(),
+    18573:                     t.update(o.util.createBuffer(e)),
+    18574:                     t.finish(),
+    18575:                     n(t.output.data)
+    18576:                 } catch (e) {
+    18577:                     return null
+    18578:                 }
+    18579:             }
+    18580:             ;
+    18581:             const n = e => e ? JSON.parse(e) : null
+    18582:               , c = e => {
+    18583:                 const M = e === a.ChannelEnum.PB ? g() : D()
+    18584:                   , t = o.md.sha1.create();
+    18585:                 return t.update(M),
+    18586:                 t.digest().getBytes(16)
+    18587:             }
+    18588:             ;
+    18589:             e.getChannelEncryption = e => (null == e ? void 0 : e.includes("mb-")) ? a.ChannelEnum.SMP : a.ChannelEnum.PB,
+    18590:             e.getCanvasProps = () => ( () => {
+    18591:                 try {
+    18592:                     const e = document.createElement("canvas")
+
+========================================
+=== vendor.js LÍNEA 27483 — createCipher ===
+========================================
+    27473:             d = g,
+    27474:             y = b,
+    27475:             m = _;
+    27476:         n[0] = c[d >>> 24] << 24 ^ c[y >>> 16 & 255] << 16 ^ c[m >>> 8 & 255] << 8 ^ c[255 & v] ^ t[++w],
+    27477:         n[r ? 3 : 1] = c[y >>> 24] << 24 ^ c[m >>> 16 & 255] << 16 ^ c[v >>> 8 & 255] << 8 ^ c[255 & d] ^ t[++w],
+    27478:         n[2] = c[m >>> 24] << 24 ^ c[v >>> 16 & 255] << 16 ^ c[d >>> 8 & 255] << 8 ^ c[255 & y] ^ t[++w],
+    27479:         n[r ? 1 : 3] = c[v >>> 24] << 24 ^ c[d >>> 16 & 255] << 16 ^ c[y >>> 8 & 255] << 8 ^ c[255 & m] ^ t[++w]
+    27480:     }
+    27481:     function a(t) {
+    27482:         var e, n = "AES-" + ((t = t || {}).mode || "CBC").toUpperCase(), r = (e = t.decrypt ? c.cipher.createDecipher(n, t.key) : c.cipher.createCipher(n, t.key)).start;
+>>> 27483:         return e.start = function(t, n) {
+    27484:             var i = null;
+    27485:             n instanceof c.util.ByteBuffer && (i = n,
+    27486:             n = {}),
+    27487:             (n = n || {}).output = i,
+    27488:             n.iv = t,
+    27489:             r.call(e, n)
+    27490:         }
+    27491:         ,
+    27492:         e
+    27493:     }
+    27494:     var c = n(11);
+    27495:     n(429),
+    27496:     n(951),
+    27497:     n(20),
+    27498:     t.exports = c.aes = c.aes || {},
+    27499:     c.aes.startEncrypting = function(t, e, n, r) {
+    27500:         var i = a({
+    27501:             key: t,
+    27502:             output: n,
+    27503:             decrypt: !1,
+
+========================================
+=== vendor.js LÍNEA 33576 — createCipher ===
+========================================
+    33566:         m ^= s = 1431655765 & ((y = y >>> 1 | y << 31) >>> 1 ^ m),
+    33567:         m ^= (s = 16711935 & (m >>> 8 ^ (y ^= s << 1))) << 8,
+    33568:         m ^= (s = 858993459 & (m >>> 2 ^ (y ^= s))) << 2,
+    33569:         m ^= s = 65535 & ((y ^= s) >>> 16 ^ m),
+    33570:         m ^= s = 252645135 & ((y ^= s << 16) >>> 4 ^ m),
+    33571:         n[0] = y ^= s << 4,
+    33572:         n[1] = m
+    33573:     }
+    33574:     function o(t) {
+    33575:         var e, n = "DES-" + ((t = t || {}).mode || "CBC").toUpperCase(), r = (e = t.decrypt ? s.cipher.createDecipher(n, t.key) : s.cipher.createCipher(n, t.key)).start;
+>>> 33576:         return e.start = function(t, n) {
+    33577:             var i = null;
+    33578:             n instanceof s.util.ByteBuffer && (i = n,
+    33579:             n = {}),
+    33580:             (n = n || {}).output = i,
+    33581:             n.iv = t,
+    33582:             r.call(e, n)
+    33583:         }
+    33584:         ,
+    33585:         e
+    33586:     }
+    33587:     var s = n(11);
+    33588:     n(429),
+    33589:     n(951),
+    33590:     n(20),
+    33591:     t.exports = s.des = s.des || {},
+    33592:     s.des.startEncrypting = function(t, e, n, r) {
+    33593:         var i = o({
+    33594:             key: t,
+    33595:             output: n,
+    33596:             decrypt: !1,
+
+========================================
+=== vendor.js LÍNEA 41671 — createCipher ===
+========================================
+    41661:       , i = n(1317);
+    41662:     r.Observable.prototype.catch = i._catch,
+    41663:     r.Observable.prototype._catch = i._catch
+    41664: }
+    41665: , function(t, e, n) {
+    41666:     var r = n(11);
+    41667:     n(20),
+    41668:     t.exports = r.cipher = r.cipher || {},
+    41669:     r.cipher.algorithms = r.cipher.algorithms || {},
+    41670:     r.cipher.createCipher = function(t, e) {
+>>> 41671:         var n = t;
+    41672:         if ("string" == typeof n && (n = r.cipher.getAlgorithm(n)) && (n = n()),
+    41673:         !n)
+    41674:             throw new Error("Unsupported algorithm: " + t);
+    41675:         return new r.cipher.BlockCipher({
+    41676:             algorithm: n,
+    41677:             key: e,
+    41678:             decrypt: !1
+    41679:         })
+    41680:     }
+    41681:     ,
+    41682:     r.cipher.createDecipher = function(t, e) {
+    41683:         var n = t;
+    41684:         if ("string" == typeof n && (n = r.cipher.getAlgorithm(n)) && (n = n()),
+    41685:         !n)
+    41686:             throw new Error("Unsupported algorithm: " + t);
+    41687:         return new r.cipher.BlockCipher({
+    41688:             algorithm: n,
+    41689:             key: e,
+    41690:             decrypt: !0
+    41691:         })
+
+========================================
+=== vendor.js LÍNEA 79946 — createCipher ===
+========================================
+    79936:                 c.options.usePureJavaScript = !0;
+    79937:                 var t = c.md.sha1.create();
+    79938:                 t.update(this.hashBaseDevice),
+    79939:                 this.sha1HashKey = t.digest().getBytes(16)
+    79940:             }
+    79941:             return this.sha1HashKey
+    79942:         }
+    79943:         ,
+    79944:         t.prototype.encrypt = function(t) {
+    79945:             var e = c.cipher.createCipher("AES-ECB", this.getHashDevice());
+>>> 79946:             return e.start(),
+    79947:             e.update(c.util.createBuffer(JSON.stringify(t))),
+    79948:             e.finish(),
+    79949:             e.output.data
+    79950:         }
+    79951:         ,
+    79952:         t.prototype.decrypt = function(t) {
+    79953:             try {
+    79954:                 var e = c.cipher.createDecipher("AES-ECB", this.getHashDevice());
+    79955:                 return e.start(),
+    79956:                 e.update(c.util.createBuffer(t)),
+    79957:                 e.finish(),
+    79958:                 this.parseItem(e.output.data)
+    79959:             } catch (t) {
+    79960:                 return null
+    79961:             }
+    79962:         }
+    79963:         ,
+    79964:         t.prototype.parseItem = function(t) {
+    79965:             return null === t || void 0 === t || "" === t ? null : JSON.parse(t)
+    79966:         }
+
+========================================
+=== vendor.js LÍNEA 79970 — createCipher ===
+========================================
+    79960:                 return null
+    79961:             }
+    79962:         }
+    79963:         ,
+    79964:         t.prototype.parseItem = function(t) {
+    79965:             return null === t || void 0 === t || "" === t ? null : JSON.parse(t)
+    79966:         }
+    79967:         ,
+    79968:         t.prototype.encryptId = function(t) {
+    79969:             var e = c.cipher.createCipher("AES-ECB", this.getHashDevice());
+>>> 79970:             return e.start(),
+    79971:             e.update(c.util.createBuffer(t)),
+    79972:             e.finish(),
+    79973:             e.output.data
+    79974:         }
+    79975:         ,
+    79976:         t.decorators = [{
+    79977:             type: r.Injectable
+    79978:         }],
+    79979:         t.ctorParameters = function() {
+    79980:             return [{
+    79981:                 type: L
+    79982:             }]
+    79983:         }
+    79984:         ,
+    79985:         t
+    79986:     }();
+    79987:     var V = function() {
+    79988:         function t(t) {
+    79989:             this.bdbCryptoForgeProvider = t
+    79990:         }
+
+========================================
+=== vendor.js LÍNEA 111268 — createCipher ===
+========================================
+    111258:     function r(t, e, n) {
+    111259:         var r = e.entity === c.tls.ConnectionEnd.client;
+    111260:         t.read.cipherState = {
+    111261:             init: !1,
+    111262:             cipher: c.cipher.createDecipher("AES-CBC", r ? n.keys.server_write_key : n.keys.client_write_key),
+    111263:             iv: r ? n.keys.server_write_IV : n.keys.client_write_IV
+    111264:         },
+    111265:         t.write.cipherState = {
+    111266:             init: !1,
+    111267:             cipher: c.cipher.createCipher("AES-CBC", r ? n.keys.client_write_key : n.keys.server_write_key),
+>>> 111268:             iv: r ? n.keys.client_write_IV : n.keys.server_write_IV
+    111269:         },
+    111270:         t.read.cipherFunction = a,
+    111271:         t.write.cipherFunction = i,
+    111272:         t.read.macLength = t.write.macLength = n.mac_length,
+    111273:         t.read.macFunction = t.write.macFunction = u.hmac_sha1
+    111274:     }
+    111275:     function i(t, e) {
+    111276:         var n = !1
+    111277:           , r = e.macFunction(e.macKey, e.sequenceNumber, t);
+    111278:         t.fragment.putBytes(r),
+    111279:         e.updateSequenceNumber();
+    111280:         var i;
+    111281:         i = t.version.minor === u.Versions.TLS_1_0.minor ? e.cipherState.init ? null : e.cipherState.iv : c.random.getBytesSync(16),
+    111282:         e.cipherState.init = !0;
+    111283:         var s = e.cipherState.cipher;
+    111284:         return s.start({
+    111285:             iv: i
+    111286:         }),
+    111287:         t.version.minor >= u.Versions.TLS_1_1.minor && s.output.putBytes(i),
+    111288:         s.update(t.fragment),
+
+========================================
+=== vendor.js LÍNEA 27483 — createDecipher ===
+========================================
+    27473:             d = g,
+    27474:             y = b,
+    27475:             m = _;
+    27476:         n[0] = c[d >>> 24] << 24 ^ c[y >>> 16 & 255] << 16 ^ c[m >>> 8 & 255] << 8 ^ c[255 & v] ^ t[++w],
+    27477:         n[r ? 3 : 1] = c[y >>> 24] << 24 ^ c[m >>> 16 & 255] << 16 ^ c[v >>> 8 & 255] << 8 ^ c[255 & d] ^ t[++w],
+    27478:         n[2] = c[m >>> 24] << 24 ^ c[v >>> 16 & 255] << 16 ^ c[d >>> 8 & 255] << 8 ^ c[255 & y] ^ t[++w],
+    27479:         n[r ? 1 : 3] = c[v >>> 24] << 24 ^ c[d >>> 16 & 255] << 16 ^ c[y >>> 8 & 255] << 8 ^ c[255 & m] ^ t[++w]
+    27480:     }
+    27481:     function a(t) {
+    27482:         var e, n = "AES-" + ((t = t || {}).mode || "CBC").toUpperCase(), r = (e = t.decrypt ? c.cipher.createDecipher(n, t.key) : c.cipher.createCipher(n, t.key)).start;
+>>> 27483:         return e.start = function(t, n) {
+    27484:             var i = null;
+    27485:             n instanceof c.util.ByteBuffer && (i = n,
+    27486:             n = {}),
+    27487:             (n = n || {}).output = i,
+    27488:             n.iv = t,
+    27489:             r.call(e, n)
+    27490:         }
+    27491:         ,
+    27492:         e
+    27493:     }
+    27494:     var c = n(11);
+    27495:     n(429),
+    27496:     n(951),
+    27497:     n(20),
+    27498:     t.exports = c.aes = c.aes || {},
+    27499:     c.aes.startEncrypting = function(t, e, n, r) {
+    27500:         var i = a({
+    27501:             key: t,
+    27502:             output: n,
+    27503:             decrypt: !1,
+
+========================================
+=== vendor.js LÍNEA 33576 — createDecipher ===
+========================================
+    33566:         m ^= s = 1431655765 & ((y = y >>> 1 | y << 31) >>> 1 ^ m),
+    33567:         m ^= (s = 16711935 & (m >>> 8 ^ (y ^= s << 1))) << 8,
+    33568:         m ^= (s = 858993459 & (m >>> 2 ^ (y ^= s))) << 2,
+    33569:         m ^= s = 65535 & ((y ^= s) >>> 16 ^ m),
+    33570:         m ^= s = 252645135 & ((y ^= s << 16) >>> 4 ^ m),
+    33571:         n[0] = y ^= s << 4,
+    33572:         n[1] = m
+    33573:     }
+    33574:     function o(t) {
+    33575:         var e, n = "DES-" + ((t = t || {}).mode || "CBC").toUpperCase(), r = (e = t.decrypt ? s.cipher.createDecipher(n, t.key) : s.cipher.createCipher(n, t.key)).start;
+>>> 33576:         return e.start = function(t, n) {
+    33577:             var i = null;
+    33578:             n instanceof s.util.ByteBuffer && (i = n,
+    33579:             n = {}),
+    33580:             (n = n || {}).output = i,
+    33581:             n.iv = t,
+    33582:             r.call(e, n)
+    33583:         }
+    33584:         ,
+    33585:         e
+    33586:     }
+    33587:     var s = n(11);
+    33588:     n(429),
+    33589:     n(951),
+    33590:     n(20),
+    33591:     t.exports = s.des = s.des || {},
+    33592:     s.des.startEncrypting = function(t, e, n, r) {
+    33593:         var i = o({
+    33594:             key: t,
+    33595:             output: n,
+    33596:             decrypt: !1,
+
+========================================
+=== vendor.js LÍNEA 41683 — createDecipher ===
+========================================
+    41673:         !n)
+    41674:             throw new Error("Unsupported algorithm: " + t);
+    41675:         return new r.cipher.BlockCipher({
+    41676:             algorithm: n,
+    41677:             key: e,
+    41678:             decrypt: !1
+    41679:         })
+    41680:     }
+    41681:     ,
+    41682:     r.cipher.createDecipher = function(t, e) {
+>>> 41683:         var n = t;
+    41684:         if ("string" == typeof n && (n = r.cipher.getAlgorithm(n)) && (n = n()),
+    41685:         !n)
+    41686:             throw new Error("Unsupported algorithm: " + t);
+    41687:         return new r.cipher.BlockCipher({
+    41688:             algorithm: n,
+    41689:             key: e,
+    41690:             decrypt: !0
+    41691:         })
+    41692:     }
+    41693:     ,
+    41694:     r.cipher.registerAlgorithm = function(t, e) {
+    41695:         t = t.toUpperCase(),
+    41696:         r.cipher.algorithms[t] = e
+    41697:     }
+    41698:     ,
+    41699:     r.cipher.getAlgorithm = function(t) {
+    41700:         return (t = t.toUpperCase())in r.cipher.algorithms ? r.cipher.algorithms[t] : null
+    41701:     }
+    41702:     ;
+    41703:     var i = r.cipher.BlockCipher = function(t) {
+
+========================================
+=== vendor.js LÍNEA 79955 — createDecipher ===
+========================================
+    79945:             var e = c.cipher.createCipher("AES-ECB", this.getHashDevice());
+    79946:             return e.start(),
+    79947:             e.update(c.util.createBuffer(JSON.stringify(t))),
+    79948:             e.finish(),
+    79949:             e.output.data
+    79950:         }
+    79951:         ,
+    79952:         t.prototype.decrypt = function(t) {
+    79953:             try {
+    79954:                 var e = c.cipher.createDecipher("AES-ECB", this.getHashDevice());
+>>> 79955:                 return e.start(),
+    79956:                 e.update(c.util.createBuffer(t)),
+    79957:                 e.finish(),
+    79958:                 this.parseItem(e.output.data)
+    79959:             } catch (t) {
+    79960:                 return null
+    79961:             }
+    79962:         }
+    79963:         ,
+    79964:         t.prototype.parseItem = function(t) {
+    79965:             return null === t || void 0 === t || "" === t ? null : JSON.parse(t)
+    79966:         }
+    79967:         ,
+    79968:         t.prototype.encryptId = function(t) {
+    79969:             var e = c.cipher.createCipher("AES-ECB", this.getHashDevice());
+    79970:             return e.start(),
+    79971:             e.update(c.util.createBuffer(t)),
+    79972:             e.finish(),
+    79973:             e.output.data
+    79974:         }
+    79975:         ,
+
+========================================
+=== vendor.js LÍNEA 111263 — createDecipher ===
+========================================
+    111253:         }
+    111254:     }
+    111255:     ).call(e, n(236).Buffer)
+    111256: }
+    111257: , function(t, e, n) {
+    111258:     function r(t, e, n) {
+    111259:         var r = e.entity === c.tls.ConnectionEnd.client;
+    111260:         t.read.cipherState = {
+    111261:             init: !1,
+    111262:             cipher: c.cipher.createDecipher("AES-CBC", r ? n.keys.server_write_key : n.keys.client_write_key),
+>>> 111263:             iv: r ? n.keys.server_write_IV : n.keys.client_write_IV
+    111264:         },
+    111265:         t.write.cipherState = {
+    111266:             init: !1,
+    111267:             cipher: c.cipher.createCipher("AES-CBC", r ? n.keys.client_write_key : n.keys.server_write_key),
+    111268:             iv: r ? n.keys.client_write_IV : n.keys.server_write_IV
+    111269:         },
+    111270:         t.read.cipherFunction = a,
+    111271:         t.write.cipherFunction = i,
+    111272:         t.read.macLength = t.write.macLength = n.mac_length,
+    111273:         t.read.macFunction = t.write.macFunction = u.hmac_sha1
+    111274:     }
+    111275:     function i(t, e) {
+    111276:         var n = !1
+    111277:           , r = e.macFunction(e.macKey, e.sequenceNumber, t);
+    111278:         t.fragment.putBytes(r),
+    111279:         e.updateSequenceNumber();
+    111280:         var i;
+    111281:         i = t.version.minor === u.Versions.TLS_1_0.minor ? e.cipherState.init ? null : e.cipherState.iv : c.random.getBytesSync(16),
+    111282:         e.cipherState.init = !0;
+    111283:         var s = e.cipherState.cipher;
+
+=== 989.js — forge.cipher ===
+7329:             }([], 5, 16)
+7330:         }
+7331:         ;
+7332:         var forge$A = forge$C;
+7333:         forge$A.cipher = forge$A.cipher || {},
+7334:         forge$A.cipher.algorithms = forge$A.cipher.algorithms || {},
+7335:         forge$A.cipher.createCipher = function(e, M) {
+7336:             var t = e;
+7337:             if ("string" == typeof t && (t = forge$A.cipher.getAlgorithm(t)) && (t = t()),
+7338:             !t)
+7339:                 throw new Error("Unsupported algorithm: " + e);
+7340:             return new forge$A.cipher.BlockCipher({
+7341:                 algorithm: t,
+7342:                 key: M,
+7343:                 decrypt: !1
+7344:             })
+7345:         }
+7346:         ,
+7347:         forge$A.cipher.createDecipher = function(e, M) {
+7348:             var t = e;
+7349:             if ("string" == typeof t && (t = forge$A.cipher.getAlgorithm(t)) && (t = t()),
+---
+7330:         }
+7331:         ;
+7332:         var forge$A = forge$C;
+7333:         forge$A.cipher = forge$A.cipher || {},
+7334:         forge$A.cipher.algorithms = forge$A.cipher.algorithms || {},
+7335:         forge$A.cipher.createCipher = function(e, M) {
+7336:             var t = e;
+7337:             if ("string" == typeof t && (t = forge$A.cipher.getAlgorithm(t)) && (t = t()),
+7338:             !t)
+7339:                 throw new Error("Unsupported algorithm: " + e);
+7340:             return new forge$A.cipher.BlockCipher({
+7341:                 algorithm: t,
+7342:                 key: M,
+7343:                 decrypt: !1
+7344:             })
+7345:         }
+7346:         ,
+7347:         forge$A.cipher.createDecipher = function(e, M) {
+7348:             var t = e;
+7349:             if ("string" == typeof t && (t = forge$A.cipher.getAlgorithm(t)) && (t = t()),
+7350:             !t)
+---
+7331:         ;
+7332:         var forge$A = forge$C;
+7333:         forge$A.cipher = forge$A.cipher || {},
+7334:         forge$A.cipher.algorithms = forge$A.cipher.algorithms || {},
+7335:         forge$A.cipher.createCipher = function(e, M) {
+7336:             var t = e;
+7337:             if ("string" == typeof t && (t = forge$A.cipher.getAlgorithm(t)) && (t = t()),
+7338:             !t)
+7339:                 throw new Error("Unsupported algorithm: " + e);
+7340:             return new forge$A.cipher.BlockCipher({
+7341:                 algorithm: t,
+7342:                 key: M,
+7343:                 decrypt: !1
+7344:             })
+7345:         }
+7346:         ,
+7347:         forge$A.cipher.createDecipher = function(e, M) {
+7348:             var t = e;
+7349:             if ("string" == typeof t && (t = forge$A.cipher.getAlgorithm(t)) && (t = t()),
+7350:             !t)
+7351:                 throw new Error("Unsupported algorithm: " + e);
+---
+7333:         forge$A.cipher = forge$A.cipher || {},
+7334:         forge$A.cipher.algorithms = forge$A.cipher.algorithms || {},
+7335:         forge$A.cipher.createCipher = function(e, M) {
+7336:             var t = e;
+7337:             if ("string" == typeof t && (t = forge$A.cipher.getAlgorithm(t)) && (t = t()),
+7338:             !t)
+7339:                 throw new Error("Unsupported algorithm: " + e);
+7340:             return new forge$A.cipher.BlockCipher({
+7341:                 algorithm: t,
+7342:                 key: M,
+7343:                 decrypt: !1
+7344:             })
+7345:         }
+7346:         ,
+7347:         forge$A.cipher.createDecipher = function(e, M) {
+7348:             var t = e;
+7349:             if ("string" == typeof t && (t = forge$A.cipher.getAlgorithm(t)) && (t = t()),
+7350:             !t)
+7351:                 throw new Error("Unsupported algorithm: " + e);
+7352:             return new forge$A.cipher.BlockCipher({
+7353:                 algorithm: t,
+---
+7336:             var t = e;
+7337:             if ("string" == typeof t && (t = forge$A.cipher.getAlgorithm(t)) && (t = t()),
+7338:             !t)
+7339:                 throw new Error("Unsupported algorithm: " + e);
+7340:             return new forge$A.cipher.BlockCipher({
+7341:                 algorithm: t,
+7342:                 key: M,
+7343:                 decrypt: !1
+7344:             })
+7345:         }
+7346:         ,
+7347:         forge$A.cipher.createDecipher = function(e, M) {
+7348:             var t = e;
+7349:             if ("string" == typeof t && (t = forge$A.cipher.getAlgorithm(t)) && (t = t()),
+7350:             !t)
+7351:                 throw new Error("Unsupported algorithm: " + e);
+7352:             return new forge$A.cipher.BlockCipher({
+7353:                 algorithm: t,
+7354:                 key: M,
+7355:                 decrypt: !0
+7356:             })
+---
+7343:                 decrypt: !1
+7344:             })
+7345:         }
+7346:         ,
+7347:         forge$A.cipher.createDecipher = function(e, M) {
+7348:             var t = e;
+7349:             if ("string" == typeof t && (t = forge$A.cipher.getAlgorithm(t)) && (t = t()),
+7350:             !t)
+7351:                 throw new Error("Unsupported algorithm: " + e);
+7352:             return new forge$A.cipher.BlockCipher({
+7353:                 algorithm: t,
+7354:                 key: M,
+7355:                 decrypt: !0
+7356:             })
+7357:         }
+7358:         ,
+7359:         forge$A.cipher.registerAlgorithm = function(e, M) {
+7360:             e = e.toUpperCase(),
+7361:             forge$A.cipher.algorithms[e] = M
+7362:         }
+7363:         ,
+---
+7345:         }
+7346:         ,
+7347:         forge$A.cipher.createDecipher = function(e, M) {
+7348:             var t = e;
+7349:             if ("string" == typeof t && (t = forge$A.cipher.getAlgorithm(t)) && (t = t()),
+7350:             !t)
+7351:                 throw new Error("Unsupported algorithm: " + e);
+7352:             return new forge$A.cipher.BlockCipher({
+7353:                 algorithm: t,
+7354:                 key: M,
+7355:                 decrypt: !0
+7356:             })
+7357:         }
+7358:         ,
+7359:         forge$A.cipher.registerAlgorithm = function(e, M) {
+7360:             e = e.toUpperCase(),
+7361:             forge$A.cipher.algorithms[e] = M
+7362:         }
+7363:         ,
+7364:         forge$A.cipher.getAlgorithm = function(e) {
+7365:             return (e = e.toUpperCase())in forge$A.cipher.algorithms ? forge$A.cipher.algorithms[e] : null
+---
+7348:             var t = e;
+7349:             if ("string" == typeof t && (t = forge$A.cipher.getAlgorithm(t)) && (t = t()),
+7350:             !t)
+7351:                 throw new Error("Unsupported algorithm: " + e);
+7352:             return new forge$A.cipher.BlockCipher({
+7353:                 algorithm: t,
+7354:                 key: M,
+7355:                 decrypt: !0
+7356:             })
+7357:         }
+7358:         ,
+7359:         forge$A.cipher.registerAlgorithm = function(e, M) {
+7360:             e = e.toUpperCase(),
+7361:             forge$A.cipher.algorithms[e] = M
+7362:         }
+7363:         ,
+7364:         forge$A.cipher.getAlgorithm = function(e) {
+7365:             return (e = e.toUpperCase())in forge$A.cipher.algorithms ? forge$A.cipher.algorithms[e] : null
+7366:         }
+7367:         ;
+7368:         var BlockCipher = forge$A.cipher.BlockCipher = function(e) {
+---
+7355:                 decrypt: !0
+7356:             })
+7357:         }
+7358:         ,
+7359:         forge$A.cipher.registerAlgorithm = function(e, M) {
+7360:             e = e.toUpperCase(),
+7361:             forge$A.cipher.algorithms[e] = M
+7362:         }
+7363:         ,
+7364:         forge$A.cipher.getAlgorithm = function(e) {
+7365:             return (e = e.toUpperCase())in forge$A.cipher.algorithms ? forge$A.cipher.algorithms[e] : null
+7366:         }
+7367:         ;
+7368:         var BlockCipher = forge$A.cipher.BlockCipher = function(e) {
+7369:             this.algorithm = e.algorithm,
+7370:             this.mode = this.algorithm.mode,
+7371:             this.blockSize = this.mode.blockSize,
+7372:             this._finish = !1,
+7373:             this._input = null,
+7374:             this.output = null,
+7375:             this._op = e.decrypt ? this.mode.decrypt : this.mode.encrypt,
+---
+7357:         }
+7358:         ,
+7359:         forge$A.cipher.registerAlgorithm = function(e, M) {
+7360:             e = e.toUpperCase(),
+7361:             forge$A.cipher.algorithms[e] = M
+7362:         }
+7363:         ,
+7364:         forge$A.cipher.getAlgorithm = function(e) {
+7365:             return (e = e.toUpperCase())in forge$A.cipher.algorithms ? forge$A.cipher.algorithms[e] : null
+7366:         }
+7367:         ;
+7368:         var BlockCipher = forge$A.cipher.BlockCipher = function(e) {
+7369:             this.algorithm = e.algorithm,
+7370:             this.mode = this.algorithm.mode,
+7371:             this.blockSize = this.mode.blockSize,
+7372:             this._finish = !1,
+7373:             this._input = null,
+7374:             this.output = null,
+7375:             this._op = e.decrypt ? this.mode.decrypt : this.mode.encrypt,
+7376:             this._decrypt = e.decrypt,
+7377:             this.algorithm.initialize(e)
+---
+7360:             e = e.toUpperCase(),
+7361:             forge$A.cipher.algorithms[e] = M
+7362:         }
+7363:         ,
+7364:         forge$A.cipher.getAlgorithm = function(e) {
+7365:             return (e = e.toUpperCase())in forge$A.cipher.algorithms ? forge$A.cipher.algorithms[e] : null
+7366:         }
+7367:         ;
+7368:         var BlockCipher = forge$A.cipher.BlockCipher = function(e) {
+7369:             this.algorithm = e.algorithm,
+7370:             this.mode = this.algorithm.mode,
+7371:             this.blockSize = this.mode.blockSize,
+7372:             this._finish = !1,
+7373:             this._input = null,
+7374:             this.output = null,
+7375:             this._op = e.decrypt ? this.mode.decrypt : this.mode.encrypt,
+7376:             this._decrypt = e.decrypt,
+7377:             this.algorithm.initialize(e)
+7378:         }
+7379:         ;
+7380:         BlockCipher.prototype.start = function(e) {
+---
+7361:             forge$A.cipher.algorithms[e] = M
+7362:         }
+7363:         ,
+7364:         forge$A.cipher.getAlgorithm = function(e) {
+7365:             return (e = e.toUpperCase())in forge$A.cipher.algorithms ? forge$A.cipher.algorithms[e] : null
+7366:         }
+7367:         ;
+7368:         var BlockCipher = forge$A.cipher.BlockCipher = function(e) {
+7369:             this.algorithm = e.algorithm,
+7370:             this.mode = this.algorithm.mode,
+7371:             this.blockSize = this.mode.blockSize,
+7372:             this._finish = !1,
+7373:             this._input = null,
+7374:             this.output = null,
+7375:             this._op = e.decrypt ? this.mode.decrypt : this.mode.encrypt,
+7376:             this._decrypt = e.decrypt,
+7377:             this.algorithm.initialize(e)
+7378:         }
+7379:         ;
+7380:         BlockCipher.prototype.start = function(e) {
+7381:             e = e || {};
+---
+7364:         forge$A.cipher.getAlgorithm = function(e) {
+7365:             return (e = e.toUpperCase())in forge$A.cipher.algorithms ? forge$A.cipher.algorithms[e] : null
+7366:         }
+7367:         ;
+7368:         var BlockCipher = forge$A.cipher.BlockCipher = function(e) {
+7369:             this.algorithm = e.algorithm,
+7370:             this.mode = this.algorithm.mode,
+7371:             this.blockSize = this.mode.blockSize,
+7372:             this._finish = !1,
+7373:             this._input = null,
+7374:             this.output = null,
+7375:             this._op = e.decrypt ? this.mode.decrypt : this.mode.encrypt,
+7376:             this._decrypt = e.decrypt,
+7377:             this.algorithm.initialize(e)
+7378:         }
+7379:         ;
+7380:         BlockCipher.prototype.start = function(e) {
+7381:             e = e || {};
+7382:             var M = {};
+7383:             for (var t in e)
+7384:                 M[t] = e[t];
+---
+7412:             this._decrypt && this.mode.unpad && !this.mode.unpad(this.output, M) || this.mode.afterFinish && !this.mode.afterFinish(this.output, M)))
+7413:         }
+7414:         ;
+7415:         var forge$z = forge$C;
+7416:         forge$z.cipher = forge$z.cipher || {};
+7417:         var modes = forge$z.cipher.modes = forge$z.cipher.modes || {};
+7418:         function transformIV(e, M) {
+7419:             if ("string" == typeof e && (e = forge$z.util.createBuffer(e)),
+7420:             forge$z.util.isArray(e) && e.length > 4) {
+7421:                 var t = e;
+7422:                 e = forge$z.util.createBuffer();
+7423:                 for (var i = 0; i < t.length; ++i)
+7424:                     e.putByte(t[i])
+7425:             }
+7426:             if (e.length() < M)
+7427:                 throw new Error("Invalid IV length; got " + e.length() + " bytes and expected " + M + " bytes.");
+7428:             if (!forge$z.util.isArray(e)) {
+7429:                 var o = []
+7430:                   , a = M / 4;
+7431:                 for (i = 0; i < a; ++i)
+7432:                     o.push(e.getInt32());
+---
+7413:         }
+7414:         ;
+7415:         var forge$z = forge$C;
+7416:         forge$z.cipher = forge$z.cipher || {};
+7417:         var modes = forge$z.cipher.modes = forge$z.cipher.modes || {};
+7418:         function transformIV(e, M) {
+7419:             if ("string" == typeof e && (e = forge$z.util.createBuffer(e)),
+7420:             forge$z.util.isArray(e) && e.length > 4) {
+7421:                 var t = e;
+7422:                 e = forge$z.util.createBuffer();
+7423:                 for (var i = 0; i < t.length; ++i)
+7424:                     e.putByte(t[i])
+7425:             }
+7426:             if (e.length() < M)
+7427:                 throw new Error("Invalid IV length; got " + e.length() + " bytes and expected " + M + " bytes.");
+7428:             if (!forge$z.util.isArray(e)) {
+7429:                 var o = []
+7430:                   , a = M / 4;
+7431:                 for (i = 0; i < a; ++i)
+7432:                     o.push(e.getInt32());
+7433:                 e = o
+---
+7919:         }
+7920:         ;
+7921:         var forge$y = forge$C;
+7922:         function registerAlgorithm$1(e, M) {
+7923:             forge$y.cipher.registerAlgorithm(e, function() {
+7924:                 return new forge$y.aes.Algorithm(e,M)
+7925:             })
+7926:         }
+7927:         forge$y.aes = forge$y.aes || {},
+7928:         forge$y.aes.startEncrypting = function(e, M, t, i) {
+7929:             var o = _createCipher$1({
+7930:                 key: e,
+7931:                 output: t,
+7932:                 decrypt: !1,
+7933:                 mode: i
+7934:             });
+7935:             return o.start(M),
+7936:             o
+7937:         }
+7938:         ,
+7939:         forge$y.aes.createEncryptionCipher = function(e, M) {
+---
+8018:             _expandKey(e, M)
+8019:         }
+8020:         ,
+8021:         forge$y.aes._updateBlock = _updateBlock$1,
+8022:         registerAlgorithm$1("AES-ECB", forge$y.cipher.modes.ecb),
+8023:         registerAlgorithm$1("AES-CBC", forge$y.cipher.modes.cbc),
+8024:         registerAlgorithm$1("AES-CFB", forge$y.cipher.modes.cfb),
+8025:         registerAlgorithm$1("AES-OFB", forge$y.cipher.modes.ofb),
+8026:         registerAlgorithm$1("AES-CTR", forge$y.cipher.modes.ctr),
+8027:         registerAlgorithm$1("AES-GCM", forge$y.cipher.modes.gcm);
+8028:         var init = !1, Nb = 4, sbox, isbox, rcon, mix, imix;
+8029:         function initialize() {
+8030:             init = !0,
+8031:             rcon = [0, 1, 2, 4, 8, 16, 32, 64, 128, 27, 54];
+8032:             for (var e = new Array(256), M = 0; M < 128; ++M)
+8033:                 e[M] = M << 1,
+8034:                 e[M + 128] = M + 128 << 1 ^ 283;
+8035:             for (sbox = new Array(256),
+8036:             isbox = new Array(256),
+8037:             mix = new Array(4),
+8038:             imix = new Array(4),
+---
+8019:         }
+8020:         ,
+8021:         forge$y.aes._updateBlock = _updateBlock$1,
+8022:         registerAlgorithm$1("AES-ECB", forge$y.cipher.modes.ecb),
+8023:         registerAlgorithm$1("AES-CBC", forge$y.cipher.modes.cbc),
+8024:         registerAlgorithm$1("AES-CFB", forge$y.cipher.modes.cfb),
+8025:         registerAlgorithm$1("AES-OFB", forge$y.cipher.modes.ofb),
+8026:         registerAlgorithm$1("AES-CTR", forge$y.cipher.modes.ctr),
+8027:         registerAlgorithm$1("AES-GCM", forge$y.cipher.modes.gcm);
+8028:         var init = !1, Nb = 4, sbox, isbox, rcon, mix, imix;
+8029:         function initialize() {
+8030:             init = !0,
+8031:             rcon = [0, 1, 2, 4, 8, 16, 32, 64, 128, 27, 54];
+8032:             for (var e = new Array(256), M = 0; M < 128; ++M)
+8033:                 e[M] = M << 1,
+8034:                 e[M + 128] = M + 128 << 1 ^ 283;
+8035:             for (sbox = new Array(256),
+8036:             isbox = new Array(256),
+8037:             mix = new Array(4),
+8038:             imix = new Array(4),
+8039:             M = 0; M < 4; ++M)
+---
+8020:         ,
+8021:         forge$y.aes._updateBlock = _updateBlock$1,
+8022:         registerAlgorithm$1("AES-ECB", forge$y.cipher.modes.ecb),
+8023:         registerAlgorithm$1("AES-CBC", forge$y.cipher.modes.cbc),
+8024:         registerAlgorithm$1("AES-CFB", forge$y.cipher.modes.cfb),
+8025:         registerAlgorithm$1("AES-OFB", forge$y.cipher.modes.ofb),
+8026:         registerAlgorithm$1("AES-CTR", forge$y.cipher.modes.ctr),
+8027:         registerAlgorithm$1("AES-GCM", forge$y.cipher.modes.gcm);
+8028:         var init = !1, Nb = 4, sbox, isbox, rcon, mix, imix;
+8029:         function initialize() {
+8030:             init = !0,
+8031:             rcon = [0, 1, 2, 4, 8, 16, 32, 64, 128, 27, 54];
+8032:             for (var e = new Array(256), M = 0; M < 128; ++M)
+8033:                 e[M] = M << 1,
+8034:                 e[M + 128] = M + 128 << 1 ^ 283;
+8035:             for (sbox = new Array(256),
+8036:             isbox = new Array(256),
+8037:             mix = new Array(4),
+8038:             imix = new Array(4),
+8039:             M = 0; M < 4; ++M)
+8040:                 mix[M] = new Array(256),
+---
+8021:         forge$y.aes._updateBlock = _updateBlock$1,
+8022:         registerAlgorithm$1("AES-ECB", forge$y.cipher.modes.ecb),
+8023:         registerAlgorithm$1("AES-CBC", forge$y.cipher.modes.cbc),
+8024:         registerAlgorithm$1("AES-CFB", forge$y.cipher.modes.cfb),
+8025:         registerAlgorithm$1("AES-OFB", forge$y.cipher.modes.ofb),
+8026:         registerAlgorithm$1("AES-CTR", forge$y.cipher.modes.ctr),
+8027:         registerAlgorithm$1("AES-GCM", forge$y.cipher.modes.gcm);
+8028:         var init = !1, Nb = 4, sbox, isbox, rcon, mix, imix;
+8029:         function initialize() {
+8030:             init = !0,
+8031:             rcon = [0, 1, 2, 4, 8, 16, 32, 64, 128, 27, 54];
+8032:             for (var e = new Array(256), M = 0; M < 128; ++M)
+8033:                 e[M] = M << 1,
+8034:                 e[M + 128] = M + 128 << 1 ^ 283;
+8035:             for (sbox = new Array(256),
+8036:             isbox = new Array(256),
+8037:             mix = new Array(4),
+8038:             imix = new Array(4),
+8039:             M = 0; M < 4; ++M)
+8040:                 mix[M] = new Array(256),
+8041:                 imix[M] = new Array(256);
+---
